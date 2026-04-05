@@ -118,13 +118,13 @@ const App = {
             { key: 'other_books', elId: 'lm-other' },
         ];
 
-        // Pre-load all chapter indexes to get counts (parallel)
+        // Pre-load all chapter indexes to get counts (sequential to avoid overwhelming dev server)
         const allBooks = [
             ...this.books.sunni.the_9_books,
             ...this.books.sunni.forties,
             ...this.books.sunni.other_books,
         ];
-        await Promise.all(allBooks.map(b => this.loadChapterIndex(b.id)));
+        for (const b of allBooks) await this.loadChapterIndex(b.id);
 
         // Find max hadith count for relative bar sizing
         const counts = allBooks.map(b => {
