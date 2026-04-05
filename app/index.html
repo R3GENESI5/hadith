@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=5">
+    <link rel="stylesheet" href="css/style.css?v=6">
     <script>if(localStorage.getItem('hadith-dark')==='true')document.documentElement.classList.add('dark-mode')</script>
 </head>
 <body>
@@ -29,6 +29,7 @@
 
     <div class="header-controls">
         <a href="shia.html" class="shia-link">الشيعة ◎</a>
+        <button id="map-toggle"      class="icon-btn" title="Library Map">⊞</button>
         <button id="theme-toggle"    class="icon-btn" title="Dark mode">☽</button>
         <button id="arabic-toggle"   class="icon-btn active" title="Arabic text">ع</button>
         <button id="narrator-toggle" class="icon-btn active" title="Narrator">سند</button>
@@ -86,6 +87,26 @@
             </div>
 
             <div id="hadith-list"></div>
+
+            <!-- Library Map view -->
+            <div id="library-map" class="library-map" style="display:none">
+                <div class="lm-header">
+                    <div class="lm-title-ar">المكتبة الحديثية</div>
+                    <div class="lm-title-en">Hadith Library — Overview</div>
+                </div>
+                <div class="lm-section">
+                    <div class="lm-section-label">الكتب التسعة · The 9 Books</div>
+                    <div class="lm-grid" id="lm-9books"></div>
+                </div>
+                <div class="lm-section">
+                    <div class="lm-section-label">الأربعينيات · The Forties</div>
+                    <div class="lm-grid" id="lm-forties"></div>
+                </div>
+                <div class="lm-section">
+                    <div class="lm-section-label">كتب أخرى · Other Books</div>
+                    <div class="lm-grid" id="lm-other"></div>
+                </div>
+            </div>
 
             <div id="welcome" class="welcome">
                 <div class="welcome-inner">
@@ -248,6 +269,6 @@
     </div>
 </div>
 
-<script src="js/app.js?v=10"></script>
+<script src="js/app.js?v=11"></script>
 </body>
 </html>

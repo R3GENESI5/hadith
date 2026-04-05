@@ -110,6 +110,102 @@ const App = {
         } catch { this.rootsLexicon = {}; }
     },
 
+    // ── Library Map ───────────────────────────────────────────────────────────
+    async renderLibraryMap() {
+        const groups = [
+            { key: 'the_9_books', elId: 'lm-9books' },
+            { key: 'forties',     elId: 'lm-forties' },
+            { key: 'other_books', elId: 'lm-other' },
+        ];
+
+        // Pre-load all chapter indexes to get counts (parallel)
+        const allBooks = [
+            ...this.books.sunni.the_9_books,
+            ...this.books.sunni.forties,
+            ...this.books.sunni.other_books,
+        ];
+        await Promise.all(allBooks.map(b => this.loadChapterIndex(b.id)));
+
+        // Find max hadith count for relative bar sizing
+        const counts = allBooks.map(b => {
+            const idx = this.chapterIndex[b.id] || [];
+            return idx.reduce((s, ch) => s + (ch.count || 0), 0);
+        });
+        const maxCount = Math.max(...counts, 1);
+
+        groups.forEach(({ key, elId }) => {
+            const el = this.$(elId);
+            if (!el) return;
+            el.innerHTML = '';
+            (this.books.sunni[key] || []).forEach(book => {
+                const idx    = this.chapterIndex[book.id] || [];
+                const total  = idx.reduce((s, ch) => s + (ch.count || 0), 0);
+                const chapters = idx.length;
+                const pct    = Math.round((total / maxCount) * 100);
+                const diedLabel = book.died ? `d. ${book.died} AH` : '';
+
+                const card = document.createElement('div');
+                card.className = 'lm-card' + (this.currentBookId === book.id ? ' active' : '');
+                card.dataset.bookId = book.id;
+                card.innerHTML = `
+                    <div class="lm-card-ar">${this.escHtml(book.name_ar)}</div>
+                    <div class="lm-card-en">${this.escHtml(book.name_en)}</div>
+                    <div class="lm-card-author">${this.escHtml(book.author)}${diedLabel ? ' · ' + diedLabel : ''}</div>
+                    <div class="lm-bar"><div class="lm-bar-fill" style="width:0%"></div></div>
+                    <div class="lm-card-stats">
+                        <div class="lm-stat"><span class="lm-stat-n">${total.toLocaleString()}</span><span class="lm-stat-l">Hadiths</span></div>
+                        <div class="lm-stat"><span class="lm-stat-n">${chapters}</span><span class="lm-stat-l">Chapters</span></div>
+                        ${book.graded ? '<div class="lm-stat"><span class="lm-stat-n" style="color:var(--grade-sahih)">✓</span><span class="lm-stat-l">Graded</span></div>' : ''}
+                    </div>
+                `;
+                card.addEventListener('click', () => {
+                    this.hideMap();
+                    this.selectBook(book.id).then(() => this.loadChapter(0));
+                });
+                card.dataset.pct = pct;
+                el.appendChild(card);
+            });
+        });
+
+        // Animate all bars after the DOM is fully painted
+        setTimeout(() => {
+            document.querySelectorAll('.lm-card[data-pct]').forEach(card => {
+                const bar = card.querySelector('.lm-bar-fill');
+                if (bar) bar.style.width = card.dataset.pct + '%';
+            });
+        }, 50);
+    },
+
+    showMap() {
+        this._mapVisible = true;
+        this.$('library-map').style.display = '';
+        this.$('hadith-list').style.display  = 'none';
+        this.$('welcome').style.display      = 'none';
+        this.$('reader-header').style.display = 'none';
+        this.$('map-toggle').classList.add('active');
+        if (!this._mapRendered) {
+            this._mapRendered = true;
+            this.renderLibraryMap();
+        } else {
+            // Refresh active state
+            document.querySelectorAll('.lm-card').forEach(c =>
+                c.classList.toggle('active', c.dataset.bookId === this.currentBookId));
+        }
+    },
+
+    hideMap() {
+        this._mapVisible = false;
+        this.$('library-map').style.display = 'none';
+        this.$('map-toggle').classList.remove('active');
+        // Restore hadith list or welcome
+        if (this.currentBookId) {
+            this.$('hadith-list').style.display = '';
+            if (this.currentChapterIdx != null) this.$('reader-header').style.display = '';
+        } else {
+            this.$('welcome').style.display = '';
+        }
+    },
+
     // ── Sidebar ───────────────────────────────────────────────────────────────
     renderSidebar() {
         const groups = [
@@ -1113,6 +1209,11 @@ const App = {
 
     // ── UI Setup ──────────────────────────────────────────────────────────────
     setupUI() {
+        // Library Map
+        this.$('map-toggle').addEventListener('click', () => {
+            this._mapVisible ? this.hideMap() : this.showMap();
+        });
+
         // Theme
         this.$('theme-toggle').addEventListener('click', () => {
             this.darkMode = !this.darkMode;
