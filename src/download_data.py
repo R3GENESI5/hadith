@@ -126,6 +126,25 @@ def normalize_grade(raw: str) -> str:
 
 # ── Sunni pipeline ────────────────────────────────────────────────────────────
 
+def list_chapter_files(subfolder: str) -> list[int]:
+    """Use GitHub API to list all chapter file numbers in a subfolder."""
+    api_url = f"https://api.github.com/repos/AhmedBaset/hadith-json/contents/db/by_chapter/{subfolder}"
+    try:
+        r = requests.get(api_url, timeout=15)
+        if not r.ok:
+            return []
+        files = [f["name"] for f in r.json() if isinstance(f, dict) and f.get("name", "").endswith(".json")]
+        nums = []
+        for name in files:
+            try:
+                nums.append(int(name.replace(".json", "")))
+            except ValueError:
+                pass
+        return sorted(nums)
+    except Exception:
+        return []
+
+
 def fetch_chapter_file(book_id: str, subfolder: str, ch_num: int) -> dict | None:
     """Fetch a single by_chapter file. Returns None on 404."""
     url = f"{SUNNI_BASE}/by_chapter/{subfolder}/{ch_num}.json"
@@ -186,14 +205,19 @@ def download_sunni():
                                    "name_en": meta["name_en"], "count": len(clean)})
             total_hadiths = len(clean)
         else:
-            # Numbered chapter files: fetch until 404
-            ch_num = 1
-            while True:
+            # Use GitHub API to list all chapter files (avoids missing non-sequential files)
+            chapter_nums = list_chapter_files(subfolder)
+            if not chapter_nums:
+                # Fallback: sequential fetch until 404
+                chapter_nums = list(range(1, 500))
+            for seq_idx, ch_num in enumerate(chapter_nums, start=1):
                 raw = fetch_chapter_file(book_id, subfolder, ch_num)
                 if raw is None:
-                    break
+                    if not list_chapter_files(subfolder):  # only break on sequential fallback
+                        break
+                    continue
                 meta, clean = process_chapter_file(raw)
-                filename = f"{ch_num}.json"
+                filename = f"{seq_idx}.json"
                 write_json(out_dir / filename, clean)
                 chapter_index.append({
                     "file":    filename,
@@ -202,7 +226,6 @@ def download_sunni():
                     "count":   len(clean),
                 })
                 total_hadiths += len(clean)
-                ch_num += 1
 
         if not chapter_index:
             print(f"    ✗ No chapters fetched")

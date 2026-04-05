@@ -40,5 +40,11 @@
     "name_ar": "مُسْنَدُ الزُّبَيْرِ بْنِ الْعَوَّامِ رَضِيَ اللَّهُ عَنْهُ",
     "name_en": "The Musnad of az-Zubair bin al-'Awwam",
     "count": 31
+  },
+  {
+    "file": "8.json",
+    "name_ar": "حَدِيثُ أَبِي رِمْثَةَ عَنِ النَّبِيِّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ",
+    "name_en": "Hadith of Abu Rimthah (ra)",
+    "count": 15
   }
 ]
