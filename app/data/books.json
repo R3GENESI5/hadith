@@ -21,7 +21,8 @@
       { "id": "aladab_almufrad",    "name_ar": "الأدب المفرد",     "name_en": "Al-Adab Al-Mufrad",       "author": "Imam al-Bukhari",   "died": 256, "graded": false },
       { "id": "bulugh_almaram",     "name_ar": "بلوغ المرام",      "name_en": "Bulugh al-Maram",         "author": "Ibn Hajar al-Asqalani", "died": 852, "graded": false },
       { "id": "mishkat_almasabih",  "name_ar": "مشكاة المصابيح",  "name_en": "Mishkat al-Masabih",      "author": "al-Tabrizi",        "died": 741, "graded": false },
-      { "id": "shamail_muhammadiyah","name_ar": "الشمائل المحمدية","name_en": "Shamail Muhammadiyah",   "author": "Imam at-Tirmidhi",  "died": 279, "graded": false }
+      { "id": "shamail_muhammadiyah","name_ar": "الشمائل المحمدية","name_en": "Shamail Muhammadiyah",   "author": "Imam at-Tirmidhi",  "died": 279, "graded": false },
+      { "id": "musannaf_ibnabi_shaybah","name_ar": "مصنف ابن أبي شيبة","name_en": "Musannaf Ibn Abi Shaybah","author": "Ibn Abi Shaybah",   "died": 235, "graded": false }
     ]
   },
   "shia": [

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hadith — Loading…</title>
+    <meta name="description" content="Hadith from the Hadith Library">
+    <meta property="og:type" content="article">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=6">
+    <script>if(localStorage.getItem('hadith-dark')==='true')document.documentElement.classList.add('dark-mode')</script>
+    <style>
+        body { display: block; min-height: 100vh; }
+        .hp-page { max-width: 680px; margin: 0 auto; padding: 28px 20px 80px; }
+        .hp-page-nav {
+            display: flex; align-items: center; gap: 10px; margin-bottom: 28px;
+            font-size: .82rem; color: var(--text-muted);
+        }
+        .hp-page-nav a { color: var(--gold); text-decoration: none; }
+        .hp-page-nav a:hover { text-decoration: underline; }
+        .hp-page-sep { color: var(--border); }
+        .hp-page-ref { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+        .hp-page-grade { margin-bottom: 14px; }
+        .hp-page-arabic {
+            font-family: var(--font-ar); font-size: calc(1.25rem * var(--text-scale));
+            line-height: 2; direction: rtl; text-align: right;
+            border-right: 3px solid var(--gold); padding-right: 16px;
+            margin: 18px 0; color: var(--text);
+        }
+        .hp-page-narrator {
+            font-size: .82rem; color: var(--text-muted);
+            margin-bottom: 10px; font-style: italic;
+        }
+        .hp-page-english {
+            font-size: calc(.96rem * var(--text-scale));
+            line-height: 1.75; color: var(--text);
+            border-left: 3px solid var(--border); padding-left: 16px;
+        }
+        .hp-page-actions { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
+        .hp-page-btn {
+            padding: 8px 16px; border-radius: var(--radius);
+            border: 1px solid var(--border); background: var(--surface);
+            color: var(--text); cursor: pointer; font-size: .82rem;
+            text-decoration: none; display: inline-flex; align-items: center; gap: 5px;
+            transition: border-color .15s, background .15s;
+        }
+        .hp-page-btn:hover { border-color: var(--gold); background: var(--gold-hover); }
+        .hp-page-error { color: var(--text-muted); padding: 40px; text-align: center; }
+        .hp-page-loading { color: var(--text-muted); padding: 60px; text-align: center; font-size: .9rem; }
+    </style>
+</head>
+<body>
+<div class="hp-page" id="hp-page">
+    <div class="hp-page-loading">Loading hadith…</div>
+</div>
+
+<script>
+(async function() {
+    const params  = new URLSearchParams(location.search);
+    const bookId  = params.get('book');
+    const idInBook = params.get('id');
+
+    if (!bookId || !idInBook) {
+        document.getElementById('hp-page').innerHTML =
+            '<div class="hp-page-error">No hadith specified. <a href="/">← Back to library</a></div>';
+        return;
+    }
+
+    function escHtml(s) {
+        return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function gradeClass(g) {
+        const gl = (g||'').toLowerCase();
+        if (gl.includes('sahih'))  return 'grade-sahih';
+        if (gl.includes('hasan'))  return 'grade-hasan';
+        if (gl.includes('da'))     return 'grade-daif';
+        return 'grade-other';
+    }
+
+    try {
+        // Load books.json to get book name
+        const books = await fetch('data/books.json').then(r => r.json());
+        const allBooks = [
+            ...books.sunni.the_9_books,
+            ...books.sunni.forties,
+            ...books.sunni.other_books,
+        ];
+        const bookMeta = allBooks.find(b => b.id === bookId);
+
+        // Load book chapter index
+        const chapterIndex = await fetch(`data/sunni/${bookId}/index.json`).then(r => r.json());
+
+        // Load grades if available
+        let grades = {};
+        try { grades = await fetch(`data/sunni/${bookId}/grades.json`).then(r => r.json()); } catch {}
+
+        // Find which chapter file contains this hadith
+        let hadith = null;
+        let chName = '';
+        let chIdx = 0;
+        for (let i = 0; i < chapterIndex.length; i++) {
+            const ch = chapterIndex[i];
+            const hadiths = await fetch(`data/sunni/${bookId}/${ch.file}`).then(r => r.json());
+            const found = hadiths.find(h => String(h.idInBook) === String(idInBook));
+            if (found) { hadith = found; chName = ch.name_en; chIdx = i; break; }
+        }
+
+        if (!hadith) {
+            document.getElementById('hp-page').innerHTML =
+                `<div class="hp-page-error">Hadith not found (${escHtml(bookId)} #${escHtml(idInBook)}). <a href="/">← Back to library</a></div>`;
+            return;
+        }
+
+        const grade = grades[String(idInBook)] || '';
+        const bookNameEn = bookMeta?.name_en || bookId;
+        const bookNameAr = bookMeta?.name_ar || '';
+
+        document.title = `${bookNameEn} #${idInBook} — Hadith Library`;
+
+        const narrator = hadith.english?.narrator || '';
+        const text     = hadith.english?.text || '';
+        const arabic   = hadith.arabic || '';
+
+        const shareUrl = `${location.origin}${location.pathname}?book=${encodeURIComponent(bookId)}&id=${encodeURIComponent(idInBook)}`;
+        const mainUrl  = `./#${bookId}/${chIdx}`;
+
+        document.getElementById('hp-page').innerHTML = `
+            <div class="hp-page-nav">
+                <a href="/">Hadith Library</a>
+                <span class="hp-page-sep">›</span>
+                <a href="${escHtml(mainUrl)}">${escHtml(bookNameEn)}</a>
+                <span class="hp-page-sep">›</span>
+                <span>${escHtml(chName || 'Chapter')}</span>
+            </div>
+            <div class="hp-page-ref">${escHtml(bookNameEn)} #${escHtml(String(idInBook))}</div>
+            ${bookNameAr ? `<div style="font-family:var(--font-ar);color:var(--text-muted);font-size:.85rem;direction:rtl;margin-bottom:8px">${escHtml(bookNameAr)}</div>` : ''}
+            <div class="hp-page-grade">${grade ? `<span class="grade-badge ${gradeClass(grade)}">${escHtml(grade)}</span>` : ''}</div>
+            ${arabic ? `<div class="hp-page-arabic" dir="rtl">${escHtml(arabic)}</div>` : ''}
+            ${narrator ? `<div class="hp-page-narrator">${escHtml(narrator)}</div>` : ''}
+            ${text ? `<div class="hp-page-english">${escHtml(text)}</div>` : ''}
+            <div class="hp-page-actions">
+                <a class="hp-page-btn" href="${escHtml(mainUrl)}">← Read in Library</a>
+                <button class="hp-page-btn" id="btn-copy-share">⧉ Copy Link</button>
+                <button class="hp-page-btn" id="btn-copy-text">⧉ Copy Hadith</button>
+            </div>
+        `;
+
+        document.getElementById('btn-copy-share').addEventListener('click', () => {
+            navigator.clipboard?.writeText(shareUrl);
+            document.getElementById('btn-copy-share').textContent = '✓ Copied';
+            setTimeout(() => document.getElementById('btn-copy-share').textContent = '⧉ Copy Link', 1500);
+        });
+
+        document.getElementById('btn-copy-text').addEventListener('click', () => {
+            const fullText = [
+                `[${bookNameEn}] #${idInBook}`,
+                arabic,
+                narrator,
+                text,
+            ].filter(Boolean).join('\n\n');
+            navigator.clipboard?.writeText(fullText);
+            document.getElementById('btn-copy-text').textContent = '✓ Copied';
+            setTimeout(() => document.getElementById('btn-copy-text').textContent = '⧉ Copy Hadith', 1500);
+        });
+
+    } catch (err) {
+        document.getElementById('hp-page').innerHTML =
+            `<div class="hp-page-error">Failed to load hadith. <a href="/">← Back to library</a></div>`;
+        console.error(err);
+    }
+})();
+</script>
+</body>
+</html>

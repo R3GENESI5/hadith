@@ -1,0 +1,230 @@
+[
+  {
+    "file": "1.json",
+    "name_ar": "الجزء 1",
+    "name_en": "Part 1 (Hadiths 1–1000)",
+    "count": 1000
+  },
+  {
+    "file": "2.json",
+    "name_ar": "الجزء 2",
+    "name_en": "Part 2 (Hadiths 1001–2000)",
+    "count": 1000
+  },
+  {
+    "file": "3.json",
+    "name_ar": "الجزء 3",
+    "name_en": "Part 3 (Hadiths 2001–3000)",
+    "count": 1000
+  },
+  {
+    "file": "4.json",
+    "name_ar": "الجزء 4",
+    "name_en": "Part 4 (Hadiths 3001–4000)",
+    "count": 1000
+  },
+  {
+    "file": "5.json",
+    "name_ar": "الجزء 5",
+    "name_en": "Part 5 (Hadiths 4001–5000)",
+    "count": 1000
+  },
+  {
+    "file": "6.json",
+    "name_ar": "الجزء 6",
+    "name_en": "Part 6 (Hadiths 5001–6000)",
+    "count": 1000
+  },
+  {
+    "file": "7.json",
+    "name_ar": "الجزء 7",
+    "name_en": "Part 7 (Hadiths 6001–7000)",
+    "count": 1000
+  },
+  {
+    "file": "8.json",
+    "name_ar": "الجزء 8",
+    "name_en": "Part 8 (Hadiths 7001–8000)",
+    "count": 1000
+  },
+  {
+    "file": "9.json",
+    "name_ar": "الجزء 9",
+    "name_en": "Part 9 (Hadiths 8001–9000)",
+    "count": 1000
+  },
+  {
+    "file": "10.json",
+    "name_ar": "الجزء 10",
+    "name_en": "Part 10 (Hadiths 9001–10000)",
+    "count": 1000
+  },
+  {
+    "file": "11.json",
+    "name_ar": "الجزء 11",
+    "name_en": "Part 11 (Hadiths 10001–11000)",
+    "count": 1000
+  },
+  {
+    "file": "12.json",
+    "name_ar": "الجزء 12",
+    "name_en": "Part 12 (Hadiths 11001–12000)",
+    "count": 1000
+  },
+  {
+    "file": "13.json",
+    "name_ar": "الجزء 13",
+    "name_en": "Part 13 (Hadiths 12001–13000)",
+    "count": 1000
+  },
+  {
+    "file": "14.json",
+    "name_ar": "الجزء 14",
+    "name_en": "Part 14 (Hadiths 13001–14000)",
+    "count": 1000
+  },
+  {
+    "file": "15.json",
+    "name_ar": "الجزء 15",
+    "name_en": "Part 15 (Hadiths 14001–15000)",
+    "count": 1000
+  },
+  {
+    "file": "16.json",
+    "name_ar": "الجزء 16",
+    "name_en": "Part 16 (Hadiths 15001–16000)",
+    "count": 1000
+  },
+  {
+    "file": "17.json",
+    "name_ar": "الجزء 17",
+    "name_en": "Part 17 (Hadiths 16001–17000)",
+    "count": 1000
+  },
+  {
+    "file": "18.json",
+    "name_ar": "الجزء 18",
+    "name_en": "Part 18 (Hadiths 17001–18000)",
+    "count": 1000
+  },
+  {
+    "file": "19.json",
+    "name_ar": "الجزء 19",
+    "name_en": "Part 19 (Hadiths 18001–19000)",
+    "count": 1000
+  },
+  {
+    "file": "20.json",
+    "name_ar": "الجزء 20",
+    "name_en": "Part 20 (Hadiths 19001–20000)",
+    "count": 1000
+  },
+  {
+    "file": "21.json",
+    "name_ar": "الجزء 21",
+    "name_en": "Part 21 (Hadiths 20001–21000)",
+    "count": 1000
+  },
+  {
+    "file": "22.json",
+    "name_ar": "الجزء 22",
+    "name_en": "Part 22 (Hadiths 21001–22000)",
+    "count": 1000
+  },
+  {
+    "file": "23.json",
+    "name_ar": "الجزء 23",
+    "name_en": "Part 23 (Hadiths 22001–23000)",
+    "count": 1000
+  },
+  {
+    "file": "24.json",
+    "name_ar": "الجزء 24",
+    "name_en": "Part 24 (Hadiths 23001–24000)",
+    "count": 1000
+  },
+  {
+    "file": "25.json",
+    "name_ar": "الجزء 25",
+    "name_en": "Part 25 (Hadiths 24001–25000)",
+    "count": 1000
+  },
+  {
+    "file": "26.json",
+    "name_ar": "الجزء 26",
+    "name_en": "Part 26 (Hadiths 25001–26000)",
+    "count": 1000
+  },
+  {
+    "file": "27.json",
+    "name_ar": "الجزء 27",
+    "name_en": "Part 27 (Hadiths 26001–27000)",
+    "count": 1000
+  },
+  {
+    "file": "28.json",
+    "name_ar": "الجزء 28",
+    "name_en": "Part 28 (Hadiths 27001–28000)",
+    "count": 1000
+  },
+  {
+    "file": "29.json",
+    "name_ar": "الجزء 29",
+    "name_en": "Part 29 (Hadiths 28001–29000)",
+    "count": 1000
+  },
+  {
+    "file": "30.json",
+    "name_ar": "الجزء 30",
+    "name_en": "Part 30 (Hadiths 29001–30000)",
+    "count": 1000
+  },
+  {
+    "file": "31.json",
+    "name_ar": "الجزء 31",
+    "name_en": "Part 31 (Hadiths 30001–31000)",
+    "count": 1000
+  },
+  {
+    "file": "32.json",
+    "name_ar": "الجزء 32",
+    "name_en": "Part 32 (Hadiths 31001–32000)",
+    "count": 1000
+  },
+  {
+    "file": "33.json",
+    "name_ar": "الجزء 33",
+    "name_en": "Part 33 (Hadiths 32001–33000)",
+    "count": 1000
+  },
+  {
+    "file": "34.json",
+    "name_ar": "الجزء 34",
+    "name_en": "Part 34 (Hadiths 33001–34000)",
+    "count": 1000
+  },
+  {
+    "file": "35.json",
+    "name_ar": "الجزء 35",
+    "name_en": "Part 35 (Hadiths 34001–35000)",
+    "count": 1000
+  },
+  {
+    "file": "36.json",
+    "name_ar": "الجزء 36",
+    "name_en": "Part 36 (Hadiths 35001–36000)",
+    "count": 1000
+  },
+  {
+    "file": "37.json",
+    "name_ar": "الجزء 37",
+    "name_en": "Part 37 (Hadiths 36001–37000)",
+    "count": 1000
+  },
+  {
+    "file": "38.json",
+    "name_ar": "الجزء 38",
+    "name_en": "Part 38 (Hadiths 37001–37943)",
+    "count": 943
+  }
+]

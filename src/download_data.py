@@ -59,6 +59,7 @@ SUNNI_BOOKS = {
     "bulugh_almaram":      "other_books/bulugh_almaram",
     "mishkat_almasabih":   "other_books/mishkat_almasabih",
     "shamail_muhammadiyah":"other_books/shamail_muhammadiyah",
+    # Note: musannaf_ibnabi_shaybah is downloaded separately via download_musannaf()
 }
 
 # Map: app book_id → ThaqalaynAPI JSON filename
@@ -361,6 +362,54 @@ def process_shia_book(book_id: str, raw_data: dict | list) -> list:
     return chapter_index
 
 
+def download_musannaf():
+    """
+    Downloads Musannaf Ibn Abi Shaybah from muxaibest/ibnabishaybah (GitHub).
+    Source: 38 flat JSON files, each with hadith_id, arabic_text, english_text, narrators fields.
+    """
+    print("\n── Downloading Musannaf Ibn Abi Shaybah ────────────")
+    out_dir = DATA_SUNNI / "musannaf_ibnabi_shaybah"
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    api_url = "https://api.github.com/repos/muxaibest/ibnabishaybah/contents/data"
+    raw_base = "https://raw.githubusercontent.com/muxaibest/ibnabishaybah/main/data"
+
+    r = requests.get(api_url, timeout=15)
+    if not r.ok:
+        print(f"  ✗ Could not list files: {r.status_code}")
+        return
+    files = sorted([f["name"] for f in r.json() if f["name"].endswith(".json")])
+    print(f"  {len(files)} files found")
+
+    chapter_index = []
+    for i, fname in enumerate(tqdm(files, desc="Parts"), start=1):
+        raw = fetch_json(f"{raw_base}/{fname}")
+        if not raw:
+            continue
+        clean = [{
+            "id":       h["hadith_id"],
+            "idInBook": h["hadith_id"],
+            "arabic":   h.get("arabic_text", ""),
+            "english":  {
+                "narrator": h.get("narrators_en", ""),
+                "text":     h.get("english_text", ""),
+            },
+        } for h in raw]
+
+        out_file = f"{i}.json"
+        write_json(out_dir / out_file, clean)
+        chapter_index.append({
+            "file":    out_file,
+            "name_ar": f"الجزء {i}",
+            "name_en": f"Part {i} (Hadiths {raw[0]['hadith_id']}–{raw[-1]['hadith_id']})",
+            "count":   len(clean),
+        })
+
+    write_json(out_dir / "index.json", chapter_index, indent=2)
+    total = sum(ch["count"] for ch in chapter_index)
+    print(f"  ✓ {total:,} hadiths, {len(chapter_index)} parts")
+
+
 def download_shia():
     print("\n── Downloading Shia books ──────────────────────────")
     for book_id, filename in tqdm(SHIA_BOOKS.items(), desc="Books"):
@@ -479,7 +528,7 @@ def build_search_index():
 
 def main():
     parser = argparse.ArgumentParser(description="Hadith data pipeline")
-    parser.add_argument("--only",  choices=["sunni", "shia", "grades"], help="Run only one stage")
+    parser.add_argument("--only",  choices=["sunni", "shia", "grades", "musannaf"], help="Run only one stage")
     parser.add_argument("--build-search-index", action="store_true", help="Build search indexes from existing data")
     args = parser.parse_args()
 
@@ -493,8 +542,11 @@ def main():
         download_shia()
     elif args.only == "grades":
         download_grades()
+    elif args.only == "musannaf":
+        download_musannaf()
     else:
         download_sunni()
+        download_musannaf()
         download_shia()
         download_grades()
         build_search_index()

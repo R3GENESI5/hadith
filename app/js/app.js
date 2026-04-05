@@ -1339,10 +1339,18 @@ const App = {
         });
 
         this.$('hp-share').addEventListener('click', () => {
-            const url = `${location.origin}${location.pathname}#${this.currentBookId}/${this.currentChapterIdx}`;
+            const h = this.activeHadith;
+            if (!h) return;
+            const url = `${location.origin}${location.pathname.replace(/[^/]*$/, '')}hadith.html?book=${this.currentBookId}&id=${h.idInBook}`;
             navigator.clipboard?.writeText(url);
-            this.$('hp-share').textContent = '✓ Link Copied';
-            setTimeout(() => this.$('hp-share').textContent = '⇗ Share', 1500);
+            this.$('hp-share').textContent = '✓ Copied';
+            setTimeout(() => this.$('hp-share').textContent = '⧉ Copy Link', 1500);
+        });
+
+        this.$('hp-open').addEventListener('click', () => {
+            const h = this.activeHadith;
+            if (!h) return;
+            window.open(`hadith.html?book=${this.currentBookId}&id=${h.idInBook}`, '_blank');
         });
 
         // Keyboard
