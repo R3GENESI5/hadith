@@ -899,7 +899,7 @@ def build_concordance_index():
     # Cap and sort (most-cited books first within each word)
     result = {}
     for word, ids in concordance.items():
-        result[word] = ids[:500]  # cap at 500 per word
+        result[word] = ids[:2000]  # cap at 2000 per word (raised from 500)
 
     write_json(DATA / 'concordance.json', result)
     kb = (DATA / 'concordance.json').stat().st_size // 1024

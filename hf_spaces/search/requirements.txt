@@ -1,0 +1,4 @@
+sentence-transformers>=2.7.0
+faiss-cpu>=1.8.0
+huggingface-hub>=0.24.0
+numpy>=1.24.0

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Al-Itqan — Concordance Audit</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #0f0f1a; color: #e0e0e0; padding: 24px; }
+  h1 { color: #f0c060; font-size: 1.6rem; margin-bottom: 4px; }
+  .subtitle { color: #888; font-size: .9rem; margin-bottom: 28px; }
+  .grid { display: grid; gap: 24px; }
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+  .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .card { background: #1a1a2e; border-radius: 10px; padding: 20px; border: 1px solid #2a2a4a; }
+  .card h2 { font-size: 1rem; color: #7eb3f0; margin-bottom: 14px; border-bottom: 1px solid #2a2a4a; padding-bottom: 8px; }
+  .stat-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .stat { background: #1a1a2e; border: 1px solid #2a2a4a; border-radius: 8px; padding: 14px 20px; flex: 1; min-width: 140px; }
+  .stat .num { font-size: 1.7rem; font-weight: 700; color: #f0c060; }
+  .stat .lbl { font-size: .75rem; color: #888; margin-top: 2px; }
+  canvas { max-height: 360px; }
+  table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+  th { background: #12122a; color: #7eb3f0; padding: 7px 10px; text-align: left; font-weight: 600; }
+  td { padding: 6px 10px; border-bottom: 1px solid #1e1e3a; }
+  tr.ok td { color: #d0f0d0; }
+  tr.zero td { color: #f08080; }
+  tr.zero td strong { color: #f05050; }
+  .ar { font-size: 1.1rem; font-family: 'Traditional Arabic', serif; direction: rtl; }.books { color: #aaa; font-size: .75rem; }
+  @media (max-width: 900px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<h1>Al-Itqan — Concordance & Bridge Audit</h1>
+<div class="subtitle">Verification dashboard for the Quran ↔ Hadith knowledge bridge</div>
+
+<div class="stat-row">
+  <div class="stat"><div class="num">32,410</div><div class="lbl">Words in concordance</div></div>
+  <div class="stat"><div class="num">1,149,723</div><div class="lbl">Total concordance links</div></div>
+  <div class="stat"><div class="num">837,632</div><div class="lbl">Quran↔Hadith root links</div></div>
+  <div class="stat"><div class="num">1,336</div><div class="lbl">Roots with hadith coverage</div></div>
+  <div class="stat"><div class="num">39</div><div class="lbl">Thematic families</div></div>
+  <div class="stat"><div class="num">87,688</div><div class="lbl">Hadith corpus size</div></div>
+</div>
+
+<div class="grid grid-2">
+
+  <!-- Chart 1: Family coverage -->
+  <div class="card">
+    <h2>📚 39 Thematic Families — Hadith Coverage <span style="color:#e74c3c;font-weight:normal;font-size:.8rem">■ new family</span></h2>
+    <canvas id="c1"></canvas>
+  </div>
+
+  <!-- Chart 2: Top 40 roots by hadiths -->
+  <div class="card">
+    <h2>🌿 Top 40 Roots — Hadith Count</h2>
+    <canvas id="c2"></canvas>
+  </div>
+
+  <!-- Chart 3: Per-book coverage -->
+  <div class="card">
+    <h2>📖 Per-Book Concordance Coverage (entries / hadiths)</h2>
+    <canvas id="c3"></canvas>
+  </div>
+
+  <!-- Chart 4: Word frequency distribution -->
+  <div class="card">
+    <h2>📊 Concordance Word Frequency Distribution</h2>
+    <canvas id="c4"></canvas>
+  </div>
+
+</div>
+
+<div class="grid" style="grid-template-columns:1fr 1.4fr; margin-top:24px;">
+
+  <!-- Chart 5: Scatter Quran vs Hadith -->
+  <div class="card">
+    <h2>🔗 Quran Frequency vs Hadith Coverage (top 120 roots)</h2>
+    <canvas id="c5" style="max-height:340px;"></canvas>
+  </div>
+
+  <!-- Table: Spot-check -->
+  <div class="card">
+    <h2>✅ Key Islamic Roots — Spot Check</h2>
+    <table>
+      <thead><tr><th>Root</th><th>Topic</th><th>Ayahs</th><th>Hadiths</th><th>Top books</th></tr></thead>
+      <tbody><tr class="ok"><td class="ar">صلو</td><td>prayer</td><td>90</td><td><strong>6,376</strong></td><td class="books">musannaf_ibnabi_shaybah(2998), abudawud(733)</td></tr><tr class="ok"><td class="ar">زكو</td><td>zakat</td><td>56</td><td><strong>653</strong></td><td class="books">musannaf_ibnabi_shaybah(317), bukhari(51)</td></tr><tr class="ok"><td class="ar">صوم</td><td>fasting</td><td>11</td><td><strong>2,038</strong></td><td class="books">musannaf_ibnabi_shaybah(742), nasai(262)</td></tr><tr class="ok"><td class="ar">حجج</td><td>hajj</td><td>26</td><td><strong>3,397</strong></td><td class="books">musannaf_ibnabi_shaybah(1795), muslim(239)</td></tr><tr class="ok"><td class="ar">أمن</td><td>faith</td><td>723</td><td><strong>4,254</strong></td><td class="books">musannaf_ibnabi_shaybah(1972), muslim(293)</td></tr><tr class="ok"><td class="ar">يوم</td><td>day/Qiyama</td><td>437</td><td><strong>2,686</strong></td><td class="books">musannaf_ibnabi_shaybah(677), bukhari(309)</td></tr><tr class="ok"><td class="ar">فتن</td><td>fitnah</td><td>58</td><td><strong>360</strong></td><td class="books">musannaf_ibnabi_shaybah(108), bukhari(50)</td></tr><tr class="ok"><td class="ar">أمر</td><td>command</td><td>226</td><td><strong>3,354</strong></td><td class="books">musannaf_ibnabi_shaybah(1384), bukhari(264)</td></tr><tr class="ok"><td class="ar">ولي</td><td>guardian</td><td>202</td><td><strong>1,943</strong></td><td class="books">musannaf_ibnabi_shaybah(726), muslim(191)</td></tr><tr class="ok"><td class="ar">أرض</td><td>earth</td><td>440</td><td><strong>1,989</strong></td><td class="books">musannaf_ibnabi_shaybah(805), muslim(181)</td></tr><tr class="ok"><td class="ar">وقي</td><td>taqwa</td><td>237</td><td><strong>459</strong></td><td class="books">musannaf_ibnabi_shaybah(149), tirmidhi(44)</td></tr><tr class="ok"><td class="ar">خلف</td><td>caliphate</td><td>116</td><td><strong>2,270</strong></td><td class="books">musannaf_ibnabi_shaybah(836), muslim(203)</td></tr><tr class="ok"><td class="ar">ملك</td><td>sovereignty</td><td>191</td><td><strong>2,968</strong></td><td class="books">musannaf_ibnabi_shaybah(1367), muslim(219)</td></tr><tr class="ok"><td class="ar">قضي</td><td>judiciary</td><td>59</td><td><strong>1,211</strong></td><td class="books">musannaf_ibnabi_shaybah(494), bukhari(93)</td></tr><tr class="ok"><td class="ar">طلق</td><td>divorce</td><td>21</td><td><strong>2,146</strong></td><td class="books">musannaf_ibnabi_shaybah(1121), bukhari(159)</td></tr><tr class="ok"><td class="ar">ورث</td><td>inheritance</td><td>34</td><td><strong>1,236</strong></td><td class="books">musannaf_ibnabi_shaybah(496), darimi(120)</td></tr><tr class="ok"><td class="ar">نكح</td><td>marriage</td><td>19</td><td><strong>752</strong></td><td class="books">musannaf_ibnabi_shaybah(363), bukhari(59)</td></tr><tr class="ok"><td class="ar">جهد</td><td>striving</td><td>36</td><td><strong>2,334</strong></td><td class="books">musannaf_ibnabi_shaybah(1554), bukhari(129)</td></tr><tr class="ok"><td class="ar">شهد</td><td>martyrdom</td><td>123</td><td><strong>2,533</strong></td><td class="books">musannaf_ibnabi_shaybah(1118), bukhari(195)</td></tr><tr class="ok"><td class="ar">فتح</td><td>conquest</td><td>33</td><td><strong>1,394</strong></td><td class="books">musannaf_ibnabi_shaybah(485), bukhari(155)</td></tr><tr class="ok"><td class="ar">علم</td><td>knowledge</td><td>728</td><td><strong>3,251</strong></td><td class="books">musannaf_ibnabi_shaybah(1290), tirmidhi(263)</td></tr><tr class="ok"><td class="ar">رحم</td><td>mercy</td><td>313</td><td><strong>2,676</strong></td><td class="books">musannaf_ibnabi_shaybah(986), abudawud(378)</td></tr><tr class="ok"><td class="ar">قبر</td><td>grave</td><td>8</td><td><strong>1,281</strong></td><td class="books">musannaf_ibnabi_shaybah(401), nasai(134)</td></tr><tr class="ok"><td class="ar">بعث</td><td>resurrection</td><td>64</td><td><strong>1,606</strong></td><td class="books">musannaf_ibnabi_shaybah(521), bukhari(194)</td></tr><tr class="ok"><td class="ar">نفخ</td><td>trumpet</td><td>18</td><td><strong>232</strong></td><td class="books">musannaf_ibnabi_shaybah(64), bukhari(31)</td></tr></tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+const C = (id, cfg) => new Chart(document.getElementById(id).getContext('2d'), cfg);
+Chart.defaults.color = '#aaa';
+Chart.defaults.borderColor = '#2a2a4a';
+
+// 1. Family bar chart
+C('c1', {
+  type: 'bar',
+  data: {
+    labels: ["Walking, traveling, migration, ente…", "Worship, prayer, fasting, remembran…", "Hands, feet, face, eyes, head, skin…", "Speech, communication, glad tidings…", "Provision, sustenance, food, drink,…", "Fighting, striving, war, victory, d…", "Day, night, time, epoch, term, eter…", "Knowing, understanding, perceiving,…", "Earth, heavens, mountains, seas, ce…", "Life, death, resurrection, gatherin…", "Signs of the Hour, eschatology, res…", "Wealth, trade, profit, loss, buying…", "Islamic governance, caliphate, shur…", "Marriage, divorce, inheritance, chi…", "Creating, originating, fashioning, …", "Justice, equity, oppression, judgem…", "Family, children, parents, kin, spo…", "Water, rain, springs, rivers", "Fear, awe, hope, security", "Striving in the way of Allah, milit…", "Cattle, sheep, horses, birds, fish,…", "Purity, purification, cleansing, sp…", "Guidance, misguidance, paths, ways", "Pride, arrogance, humility, submiss…", "Punishment, retribution, destructio…", "Truth, falsehood, lying, conjecture", "Mercy, forgiveness, pardon, forbear…", "Revelation, scripture, recitation, …", "Patience, gratitude, praise, ingrat…", "Heart, soul, chest, intellect, spir…", "Hellfire, blaze, burning, fuel, cru…", "Light, darkness, illumination", "Seeing, hearing, blindness, deafnes…", "Plants, seeds, trees, fruits, culti…", "Paradise, bliss, eternity, success,…", "Repentance, returning to God, regre…", "Covenant, oath, vow, promise, pledg…", "Prophets, messengers, revelation, m…", "Plotting, scheming, deception, hypo…"],
+    datasets: [{
+      label: 'Hadiths',
+      data: [23934, 22596, 22037, 19808, 18255, 15947, 15540, 15370, 15184, 14795, 14572, 14447, 13624, 13576, 13553, 12795, 12485, 12226, 11925, 11291, 10310, 10057, 10027, 9910, 9768, 8957, 8501, 8489, 7920, 7768, 7499, 7372, 7298, 7267, 6917, 5093, 4095, 3877, 3479],
+      backgroundColor: ["#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#e74c3c", "#3498db", "#e74c3c", "#e74c3c", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#e74c3c", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db"],
+      borderRadius: 3,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: '#2a2a4a' } },
+      y: { ticks: { font: { size: 10 } }, grid: { color: '#2a2a4a' } }
+    }
+  }
+});
+
+// 2. Top roots bar
+C('c2', {
+  type: 'bar',
+  data: {
+    labels: ["قول", "قيل", "سلم", "عمر", "علو", "صلو", "صلي", "عبد", "قوم", "حمد", "سول", "سيل", "وحد", "كون", "كين", "حسن", "غير", "غور", "رجل", "حدث", "زيد", "زود", "أمن", "ثلث", "شعب", "عطو", "قبل", "خرج", "فضل", "نصر", "بين", "سعد", "سجد", "جمع", "هلل", "دخل", "ربع", "حبب", "جبر", "حجج"],
+    datasets: [
+      { label: 'Hadiths', data: [8222, 8222, 7917, 6919, 6877, 6376, 6376, 6312, 5899, 5816, 5716, 5716, 5471, 5197, 5197, 5033, 5019, 5019, 4947, 4546, 4488, 4488, 4254, 4102, 3956, 3891, 3827, 3794, 3765, 3764, 3730, 3708, 3678, 3634, 3630, 3614, 3584, 3558, 3453, 3397], backgroundColor: '#3498db', borderRadius: 2 },
+      { label: 'Ayahs',   data: [1383, 2, 127, 19, 68, 90, 25, 251, 597, 66, 4, 3, 67, 1176, 2, 177, 146, 4, 66, 36, 59, 1, 723, 28, 2, 12, 282, 157, 92, 137, 454, 2, 81, 123, 5, 111, 21, 85, 10, 26],   backgroundColor: '#f39c12', borderRadius: 2 },
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'top' },
+      tooltip: {
+        callbacks: {
+          afterLabel: (ctx) => {
+            const meanings = ["The root ق و ل (qawala) primarily means ", "The root قيل (qyl) in form X, اِسْتَقاَل", "The root \"slm\" primarily conveys safety,", "The root Emr relates to life, habitation", "The root عَلَى (ʿalā) primarily denotes ", "The root صلو (Slw) primarily means to pr", "The root صلي (Sly) primarily means to be", "The root عبد (Ebd) primarily refers to a", "The root قوم (qwm) primarily means to st", "The root حمد (Hmd) means to praise, comm", "The root س و ل (s-w-l) is a dialectal va", "The root سيل (syl) primarily refers to t", "The root وَحْد (wHd) primarily means \"on", "The root \"kwn\" primarily means \"he/it wa", "The root كين (kyn) is related to the roo", "The root HSN generally means \"good,\" \"be", "The root غَيْر (ghayr) means \"other than", "The root غَوْر (gwr) primarily means to ", "The root \"رجل\" (rijl) primarily refers t", "The root Hdth primarily signifies novelt", "Ziyādah (زيادة) means an increase, addit", "The root ZWD primarily means to take or ", "The root أمن (Amn) primarily conveys sec", "The root \"thlth\" relates to the number t", "The root شعب (sha'aba) refers to divisio", "The root ETw primarily means to take or ", "The root قبل (qbl) primarily means to fa", "The root خَرَجَ (khrj) primarily means t", "The root فضل (fDl) primarily signifies e", "The root نصر (nSr) primarily means to ai", "The root \"byn\" has two opposite meanings", "The root سعد (saʿd) signifies good fortu", "Sujud primarily means to be humble/submi", "The root جَمْع (jmE) signifies collectin", "The root H-L-L primarily signifies appea", "The root دَخَلَ primarily means \"to ente", "The root ربع (rbE) primarily relates to ", "The root HBB primarily conveys the meani", "The root جَبَرَ (jabr) primarily means t", "The root H-J-J primarily signifies the a"];
+            return meanings[ctx.dataIndex] || '';
+          }
+        }
+      }
+    },
+    scales: {
+      x: { ticks: { font: { size: 10 } }, grid: { color: '#2a2a4a' } },
+      y: { grid: { color: '#2a2a4a' } }
+    }
+  }
+});
+
+// 3. Per-book coverage
+C('c3', {
+  type: 'bar',
+  data: {
+    labels: ["musannaf_ibnabi_shaybah", "muslim", "bukhari", "nasai", "abudawud", "mishkat_almasabih", "ibnmajah", "tirmidhi", "darimi", "malik", "bulugh_almaram", "ahmed", "aladab_almufrad", "riyad_assalihin", "shamail_muhammadiyah", "nawawi40", "qudsi40", "shahwaliullah40"],
+    datasets: [
+      { label: 'Total Hadiths', data: [37943, 7368, 7277, 5685, 5276, 4427, 4079, 4053, 2757, 1985, 1767, 1374, 1326, 1217, 400, 42, 40, 40],   backgroundColor: '#2ecc71', borderRadius: 2 },
+      { label: 'Conc. Entries', data: [324694, 116460, 152976, 76881, 106585, 57364, 61907, 77876, 38139, 33991, 30776, 28957, 21261, 15346, 4718, 804, 911, 77], backgroundColor: '#9b59b6', borderRadius: 2 },
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { position: 'top' } },
+    scales: {
+      x: { ticks: { font: { size: 10 } }, grid: { color: '#2a2a4a' } },
+      y: { grid: { color: '#2a2a4a' } }
+    }
+  }
+});
+
+// 4. Word frequency histogram
+C('c4', {
+  type: 'bar',
+  data: {
+    labels: ["1–4", "5–19", "20–49", "50–99", "100–249", "250–499", "500–999", "1000–1999", "2000 (cap)"],
+    datasets: [{
+      label: 'Number of words',
+      data: [11294, 13651, 4019, 1609, 1054, 389, 198, 115, 81],
+      backgroundColor: '#e67e22',
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: '#2a2a4a' } },
+      y: { grid: { color: '#2a2a4a' }, title: { display: true, text: 'Number of words' } }
+    }
+  }
+});
+
+// 5. Scatter
+const scatterData = [{"x": 1383, "y": 8222, "r": "قول", "m": "The root ق و ل (qawala) primar"}, {"x": 1176, "y": 5197, "r": "كون", "m": "The root \"kwn\" primarily means"}, {"x": 597, "y": 5899, "r": "قوم", "m": "The root قوم (qwm) primarily m"}, {"x": 723, "y": 4254, "r": "أمن", "m": "The root أمن (Amn) primarily c"}, {"x": 728, "y": 3251, "r": "علم", "m": "The root \"Elm\" (علم) primarily"}, {"x": 454, "y": 3730, "r": "بين", "m": "The root \"byn\" has two opposit"}, {"x": 251, "y": 6312, "r": "عبد", "m": "The root عبد (Ebd) primarily r"}, {"x": 871, "y": 1643, "r": "ربب", "m": "The root ر ب ب (rbb) primarily"}, {"x": 437, "y": 2686, "r": "يوم", "m": "The root \"ywm\" primarily refer"}, {"x": 282, "y": 3827, "r": "قبل", "m": "The root قبل (qbl) primarily m"}, {"x": 429, "y": 2474, "r": "رسل", "m": "A *rasūl* is primarily a messe"}, {"x": 127, "y": 7917, "r": "سلم", "m": "The root \"slm\" primarily conve"}, {"x": 177, "y": 5033, "r": "حسن", "m": "The root HSN generally means \""}, {"x": 440, "y": 1989, "r": "أرض", "m": "The root \"أرض\" (ArD) primarily"}, {"x": 264, "y": 3175, "r": "ذكر", "m": "The root ذَكَرَ (dhakara) prim"}, {"x": 313, "y": 2676, "r": "رحم", "m": "The root rHm centers on mercy,"}, {"x": 311, "y": 2692, "r": "جعل", "m": "The root \"جعل\" (jaʿala) is a v"}, {"x": 279, "y": 2966, "r": "كتب", "m": "The root كَتَبَ primarily mean"}, {"x": 226, "y": 3354, "r": "أمر", "m": "The root أَمَرَ (amara) primar"}, {"x": 352, "y": 2144, "r": "سمو", "m": "The root \"smw\" relates to \"ism"}, {"x": 146, "y": 5019, "r": "غير", "m": "The root غَيْر (ghayr) means \""}, {"x": 257, "y": 2747, "r": "نزل", "m": "The root نزل primarily signifi"}, {"x": 270, "y": 2391, "r": "نفس", "m": "Nafs (نفس) refers to the soul,"}, {"x": 355, "y": 1808, "r": "كلل", "m": "The root K-L-L primarily signi"}, {"x": 465, "y": 1378, "r": "كفر", "m": "The root كفر (kfr) primarily m"}, {"x": 223, "y": 2718, "r": "بعد", "m": "The root بَعُدَ primarily mean"}, {"x": 157, "y": 3794, "r": "خرج", "m": "The root خَرَجَ (khrj) primari"}, {"x": 90, "y": 6376, "r": "صلو", "m": "The root صلو (Slw) primarily m"}, {"x": 191, "y": 2968, "r": "ملك", "m": "The root ملك (mlk) primarily m"}, {"x": 268, "y": 2088, "r": "هدي", "m": "The root هدي (hdy) primarily m"}, {"x": 163, "y": 3348, "r": "سمع", "m": "The root \"smE\" primarily relat"}, {"x": 189, "y": 2871, "r": "عند", "m": "The root `عند` (ʿinda) primari"}, {"x": 313, "y": 1719, "r": "عمل", "m": "The root عَمَل (Eml) refers to"}, {"x": 137, "y": 3764, "r": "نصر", "m": "The root نصر (nSr) primarily m"}, {"x": 178, "y": 2802, "r": "خير", "m": "The root خَيْر (khyr) signifie"}, {"x": 68, "y": 6877, "r": "علو", "m": "The root عَلَى (ʿalā) primaril"}, {"x": 123, "y": 3634, "r": "جمع", "m": "The root جَمْع (jmE) signifies"}, {"x": 148, "y": 2993, "r": "مثل", "m": "The root مَثَلٌ (mathal) signi"}, {"x": 162, "y": 2667, "r": "كثر", "m": "The root كثر (kthr) signifies "}, {"x": 143, "y": 2810, "r": "موت", "m": "The root \"mwt\" primarily means"}, {"x": 111, "y": 3614, "r": "دخل", "m": "The root دَخَلَ primarily mean"}, {"x": 182, "y": 2171, "r": "دعو", "m": "The root دعو (daʿaw) primarily"}, {"x": 202, "y": 1943, "r": "ولي", "m": "The root W-L-Y primarily signi"}, {"x": 170, "y": 2292, "r": "صلح", "m": "The root صلح (SlH) means to ma"}, {"x": 144, "y": 2682, "r": "صدق", "m": "The root S-D-Q primarily means"}, {"x": 66, "y": 5816, "r": "حمد", "m": "The root حمد (Hmd) means to pr"}, {"x": 67, "y": 5471, "r": "وحد", "m": "The root وَحْد (wHd) primarily"}, {"x": 128, "y": 2790, "r": "نعم", "m": "The root نعم (nEm) primarily s"}, {"x": 142, "y": 2499, "r": "دون", "m": "The root \"dwn\" primarily descr"}, {"x": 92, "y": 3765, "r": "فضل", "m": "The root فضل (fDl) primarily s"}, {"x": 122, "y": 2827, "r": "قتل", "m": "The root Q-T-L, beyond its com"}, {"x": 174, "y": 1877, "r": "نور", "m": "The root \"nwr\" primarily refer"}, {"x": 66, "y": 4947, "r": "رجل", "m": "The root \"رجل\" (rijl) primaril"}, {"x": 119, "y": 2644, "r": "بشر", "m": "The root \"b-sh-r\" primarily me"}, {"x": 123, "y": 2533, "r": "شهد", "m": "The root شهد (shhd) refers to "}, {"x": 153, "y": 2003, "r": "كبر", "m": "The root كبر (kbr) signifies g"}, {"x": 85, "y": 3558, "r": "حبب", "m": "The root HBB primarily conveys"}, {"x": 336, "y": 892, "r": "عذب", "m": "The root عذب (Edhb) primarily "}, {"x": 81, "y": 3678, "r": "سجد", "m": "Sujud primarily means to be hu"}, {"x": 263, "y": 1131, "r": "حقق", "m": "The root HQQ primarily signifi"}, {"x": 120, "y": 2474, "r": "رود", "m": "The root ر و د (rwd) conveys g"}, {"x": 202, "y": 1454, "r": "غفر", "m": "The root غفر primarily means t"}, {"x": 89, "y": 3162, "r": "صحب", "m": "A \"ṣāḥib\" is a companion, asso"}, {"x": 81, "y": 3327, "r": "ليل", "m": "The root ليل (layl) primarily "}, {"x": 59, "y": 4488, "r": "زيد", "m": "Ziyādah (زيادة) means an incre"}, {"x": 116, "y": 2270, "r": "خلف", "m": "The root خَلَف (khlf) primaril"}, {"x": 85, "y": 3012, "r": "ليس", "m": "The root \"laysa\" (ليس) is a ve"}, {"x": 218, "y": 1082, "r": "خلق", "m": "The root \"khlq\" primarily mean"}, {"x": 155, "y": 1463, "r": "قلب", "m": "The root \"قلب\" (qlb) primarily"}, {"x": 257, "y": 871, "r": "كذب", "m": "The root كذب primarily means \""}, {"x": 102, "y": 2181, "r": "فعل", "m": "The root فِعْل (fiʿl) refers t"}, {"x": 87, "y": 2499, "r": "دين", "m": "The root \"dyn\" primarily means"}, {"x": 80, "y": 2688, "r": "ولد", "m": "The root \"wld\" primarily refer"}, {"x": 115, "y": 1863, "r": "نظر", "m": "The root \"nzhr\" primarily mean"}, {"x": 156, "y": 1243, "r": "تبع", "m": "The root \"tbE\" primarily means"}, {"x": 189, "y": 1001, "r": "حكم", "m": "The root H-K-M primarily means"}, {"x": 135, "y": 1387, "r": "لقي", "m": "The root L-Q-Y primarily signi"}, {"x": 164, "y": 1128, "r": "سبل", "m": "The root سبل (sbl) primarily m"}, {"x": 103, "y": 1787, "r": "رجع", "m": "The root رَجَعَ primarily mean"}, {"x": 71, "y": 2556, "r": "حرم", "m": "The root حُرْمَةٌ (ḥurmah) sig"}, {"x": 63, "y": 2780, "r": "عين", "m": "The root \"عَيْنٌ\" (Eyn) is a h"}, {"x": 72, "y": 2416, "r": "زوج", "m": "The root زَوْج (zawj) primaril"}, {"x": 36, "y": 4546, "r": "حدث", "m": "The root Hdth primarily signif"}, {"x": 25, "y": 6376, "r": "صلي", "m": "The root صلي (Sly) primarily m"}, {"x": 290, "y": 549, "r": "ظلم", "m": "The root \"ظلم\" (ẓalam) primari"}, {"x": 52, "y": 2952, "r": "خبر", "m": "The root خَبَرَ (khabra) prima"}, {"x": 150, "y": 1019, "r": "بني", "m": "The root B-N-Y primarily signi"}, {"x": 86, "y": 1776, "r": "خلد", "m": "The root خلد (khld) signifies "}, {"x": 128, "y": 1180, "r": "دنو", "m": "The root دَنَا (danā) means to"}, {"x": 61, "y": 2452, "r": "وكل", "m": "The root وَكَلَ (wakala) prima"}, {"x": 54, "y": 2765, "r": "بيت", "m": "A \"bayt\" is primarily a tent, "}, {"x": 118, "y": 1245, "r": "طوع", "m": "The root طوع (TwE) signifies s"}, {"x": 99, "y": 1450, "r": "وجد", "m": "The root \"wjd\" primarily means"}, {"x": 53, "y": 2703, "r": "نسو", "m": "The root نسو (nsw) refers to a"}, {"x": 143, "y": 994, "r": "شرك", "m": "Shirk (شِرْكٌ) means sharing o"}, {"x": 54, "y": 2604, "r": "قري", "m": "The primary meaning of QRY rel"}, {"x": 139, "y": 1007, "r": "بصر", "m": "The root بصر (bSr) relates to "}, {"x": 99, "y": 1378, "r": "شدد", "m": "The root شَدَدَ primarily conv"}, {"x": 71, "y": 1921, "r": "وجه", "m": "The root وَجْه (wjh) primarily"}, {"x": 121, "y": 1126, "r": "قدر", "m": "The root Q-D-R relates to meas"}, {"x": 54, "y": 2494, "r": "نهي", "m": "The root ن-ه-ي primarily signi"}, {"x": 74, "y": 1815, "r": "عقب", "m": "The root 'Eqb' primarily refer"}, {"x": 19, "y": 6919, "r": "عمر", "m": "The root Emr relates to life, "}, {"x": 73, "y": 1798, "r": "بلغ", "m": "The root \"بلغ\" (balagha) prima"}, {"x": 83, "y": 1568, "r": "كيف", "m": "The root كَيَّفَ (kayyafa) and"}, {"x": 74, "y": 1745, "r": "قلل", "m": "The root Q-L-L primarily means"}, {"x": 63, "y": 2031, "r": "عرف", "m": "The root عرف (Erf) primarily m"}, {"x": 127, "y": 1002, "r": "عظم", "m": "The root عظم (Ezhm) primarily "}, {"x": 109, "y": 1144, "r": "رزق", "m": "Rizq (رزق) refers to provision"}, {"x": 71, "y": 1710, "r": "كلم", "m": "The root كَلَمَ (kalam) refers"}, {"x": 80, "y": 1489, "r": "مول", "m": "The root MWL primarily refers "}, {"x": 56, "y": 2063, "r": "ذهب", "m": "The root ذَهَبَ primarily mean"}, {"x": 48, "y": 2394, "r": "قدم", "m": "The root QDM relates to puttin"}, {"x": 28, "y": 4102, "r": "ثلث", "m": "The root \"thlth\" relates to th"}, {"x": 237, "y": 459, "r": "وقي", "m": "The root وقي (wqy) primarily m"}, {"x": 32, "y": 3243, "r": "مرر", "m": "The root مَرَر primarily signi"}, {"x": 91, "y": 1136, "r": "قرب", "m": "The root \"qarab\" primarily mea"}, {"x": 57, "y": 1806, "r": "ظهر", "m": "The root \"zhhr\" primarily refe"}, {"x": 64, "y": 1606, "r": "بعث", "m": "The root بعث (b-ʿ-th) primaril"}, {"x": 92, "y": 1111, "r": "عدو", "m": "The root Edw relates to hostil"}];
+C('c5', {
+  type: 'scatter',
+  data: {
+    datasets: [{
+      label: 'Root',
+      data: scatterData.map(d => ({ x: d.x, y: d.y })),
+      backgroundColor: 'rgba(52,152,219,0.6)',
+      pointRadius: 5,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (ctx) => {
+            const d = scatterData[ctx.dataIndex];
+            return `${d.r} — ${d.m} | Quran:${ctx.parsed.x} Had:${ctx.parsed.y}`;
+          }
+        }
+      }
+    },
+    scales: {
+      x: { title: { display: true, text: 'Quran Frequency' }, grid: { color: '#2a2a4a' } },
+      y: { title: { display: true, text: 'Hadith Count' }, grid: { color: '#2a2a4a' } }
+    }
+  }
+});
+</script>
+</body>
+</html>

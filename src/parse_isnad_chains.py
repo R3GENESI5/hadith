@@ -1,0 +1,178 @@
+"""
+parse_isnad_chains.py
+=====================
+Parses narrator chains from Arabic hadith text using transmission verb detection.
+Outputs isnad_graph.json — precomputed Sankey data per book.
+
+Transmission verbs (isnad indicators):
+  حدثنا / حدثني  — narrated to us/me
+  أخبرنا / أخبرني — informed us/me
+  سمعت / سمع     — I/he heard
+  روى             — reported
+  عن              — on the authority of
+  قال             — said (secondary)
+"""
+
+import json, re, glob
+from pathlib import Path
+from collections import defaultdict
+
+DATA = Path('D:/Hadith/app/data')
+
+def strip_diacritics(t):
+    return re.sub(r'[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06DC\u06DF-\u06E4\u06E7\u06E8\u06EA-\u06ED]', '', t)
+
+# Transmission verb patterns (stripped of diacritics)
+TRANS_VERBS = [
+    'حدثنا', 'حدثني', 'حدثه', 'حدثهم',
+    'اخبرنا', 'اخبرني', 'اخبره', 'اخبرهم',
+    'انبانا', 'انباني',
+    'سمعت', 'سمعنا', 'سمع',
+    'روى', 'رواه',
+    'عن',
+    'قال',
+]
+
+# Build pattern: match verb then capture up to next verb or sentence end
+TRANS_PATTERN = re.compile(
+    r'(?:' + '|'.join(re.escape(v) for v in TRANS_VERBS) + r')\s+([^،,،\n]{5,80}?)(?=\s*(?:' +
+    '|'.join(re.escape(v) for v in TRANS_VERBS) + r'|\Z|،|قال\s*:))',
+    re.UNICODE
+)
+
+# Name cleanup
+def clean_name(s):
+    s = strip_diacritics(s.strip())
+    # Remove common suffixes/prefixes
+    s = re.sub(r'\s*رضي\s*الله\s*عنه.*', '', s)
+    s = re.sub(r'\s*رضي\s*الله\s*عنها.*', '', s)
+    s = re.sub(r'\s*عليه\s*السلام.*', '', s)
+    s = re.sub(r'\s*صلى\s*الله\s*عليه.*', '', s)
+    s = re.sub(r'^\s*ان\s+', '', s)
+    s = re.sub(r'^\s*انه\s+', '', s)
+    s = re.sub(r'\s+', ' ', s).strip()
+    return s
+
+def extract_chain(arabic_text):
+    """Extract narrator chain from Arabic hadith text."""
+    clean = strip_diacritics(arabic_text)
+    # Split on transmission verbs to get segments
+    segments = re.split(
+        r'\b(?:حدثنا|حدثني|حدثه|اخبرنا|اخبرني|سمعت|سمعنا|انبانا|عن)\s+',
+        clean
+    )
+    chain = []
+    for seg in segments[1:]:  # skip text before first verb
+        # Take up to the next verb, comma, or paragraph break
+        name_part = re.split(r'[،,\n]|(?:\s+(?:قال|ان|انه)\s)', seg)[0]
+        name_part = clean_name(name_part)
+        # Filter: must be 3+ chars, no digits, not a common Arabic particle
+        if (len(name_part) >= 3
+                and not re.search(r'\d', name_part)
+                and name_part not in ('الله', 'رسول', 'النبي', 'ذلك', 'هذا', 'كان')):
+            chain.append(name_part)
+        if len(chain) >= 8:  # max chain depth
+            break
+    return chain
+
+def book_isnad_graph(book_id, hadiths, grade_lookup):
+    """Build Sankey node/link data for one book."""
+    edge_counts = defaultdict(int)
+    narrator_hadith_count = defaultdict(int)
+    total_parsed = 0
+
+    for h in hadiths:
+        arabic = h.get('arabic', '')
+        if not arabic or len(arabic) < 50:
+            continue
+        chain = extract_chain(arabic)
+        if len(chain) < 2:
+            continue
+        total_parsed += 1
+        for name in chain:
+            narrator_hadith_count[name] += 1
+        for i in range(len(chain) - 1):
+            edge_counts[(chain[i], chain[i+1])] += 1
+
+    if not edge_counts:
+        return None
+
+    # Build nodes (top 50 by hadith count)
+    top_narrators = sorted(narrator_hadith_count.items(), key=lambda x: -x[1])[:60]
+    node_set = {n for n, _ in top_narrators}
+
+    nodes = []
+    node_idx = {}
+    for name, count in top_narrators:
+        grade_data = grade_lookup.get(name, {})
+        nodes.append({
+            'id':       name,
+            'count':    count,
+            'grade_en': grade_data.get('grade_en', 'unknown'),
+            'grade_ar': grade_data.get('grade_ar', ''),
+            'color':    grade_data.get('color', '#95a5a6'),
+            'death':    grade_data.get('death', ''),
+            'places':   grade_data.get('places', ''),
+        })
+        node_idx[name] = len(node_idx)
+
+    # Build links (only between nodes in our top set)
+    links = []
+    for (src, tgt), count in edge_counts.items():
+        if src in node_set and tgt in node_set and count >= 2:
+            links.append({
+                'source': node_idx[src],
+                'target': node_idx[tgt],
+                'value':  count,
+            })
+
+    return {
+        'book':        book_id,
+        'total_parsed': total_parsed,
+        'nodes':       nodes,
+        'links':       links,
+    }
+
+# ── Main ─────────────────────────────────────────────────────────────────────
+print('Loading narrator grades...')
+grades_data = json.load(open(DATA / 'narrator_grades.json', encoding='utf-8'))
+grade_lookup = grades_data['grade_lookup']
+print(f'  {len(grade_lookup):,} graded narrators')
+
+print('\nParsing isnad chains by book...')
+graphs = {}
+books_to_parse = ['bukhari', 'muslim', 'abudawud', 'nasai', 'tirmidhi',
+                  'ibnmajah', 'ahmed', 'malik', 'darimi',
+                  'musannaf_ibnabi_shaybah', 'mishkat_almasabih']
+
+for book_id in books_to_parse:
+    book_dir = DATA / 'sunni' / book_id
+    if not book_dir.exists():
+        print(f'  {book_id}: not found, skipping')
+        continue
+    idx_path = book_dir / 'index.json'
+    if not idx_path.exists():
+        continue
+    chapters = json.load(open(idx_path, encoding='utf-8'))
+    all_hadiths = []
+    for ch in chapters:
+        ch_file = book_dir / ch['file']
+        if ch_file.exists():
+            all_hadiths.extend(json.load(open(ch_file, encoding='utf-8')))
+
+    graph = book_isnad_graph(book_id, all_hadiths, grade_lookup)
+    if graph:
+        graphs[book_id] = graph
+        print(f'  {book_id:35s}: {graph["total_parsed"]:5d} chains parsed, '
+              f'{len(graph["nodes"]):3d} nodes, {len(graph["links"]):4d} links')
+    else:
+        print(f'  {book_id:35s}: no chains found')
+
+print(f'\nTotal books with isnad graphs: {len(graphs)}')
+
+# ── Save ─────────────────────────────────────────────────────────────────────
+out_path = DATA / 'isnad_graph.json'
+with open(out_path, 'w', encoding='utf-8') as f:
+    json.dump(graphs, f, ensure_ascii=False, separators=(',', ':'))
+sz = out_path.stat().st_size // 1024
+print(f'Saved isnad_graph.json ({sz} KB)')

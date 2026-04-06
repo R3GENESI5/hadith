@@ -12,6 +12,16 @@ app/data/search_index.json
 app/data/shia_search_index.json
 app/data/difficult_words.json
 
+# FAISS semantic index — 216MB, hosted at huggingface.co/datasets/iqrossed/al-itqan-index
+# Rebuild with: python src/build_semantic_index.py
+app/data/semantic/semantic_index.faiss
+app/data/semantic/semantic_meta.json
+
+# Intermediate build artifacts
+src/_chord_data.json
+src/_kashaf_narrators.csv
+src/bridge_analysis.json
+
 # Playwright MCP logs
 .playwright-mcp/
 

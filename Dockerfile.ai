@@ -1,0 +1,18 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# System deps for faiss and torch
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc g++ libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python deps
+COPY hf_spaces/search/requirements.txt /tmp/requirements_search.txt
+COPY hf_spaces/rag/requirements.txt    /tmp/requirements_rag.txt
+
+RUN pip install --no-cache-dir \
+    -r /tmp/requirements_search.txt \
+    -r /tmp/requirements_rag.txt
+
+EXPOSE 7860 7861

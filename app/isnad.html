@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Al-Itqan — Isnad Visualizer</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #0d0d1a; color: #ddd;
+  min-height: 100vh; padding: 20px;
+}
+h1 { color: #f0c060; font-size: 1.4rem; margin-bottom: 2px; }
+.sub { color: #555; font-size: .8rem; margin-bottom: 18px; }
+
+.controls {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  align-items: center; margin-bottom: 18px;
+}
+select, input[type=range] {
+  background: #1a1a2e; border: 1px solid #333; color: #ccc;
+  border-radius: 6px; padding: 7px 12px; font-size: .85rem;
+  cursor: pointer;
+}
+select:focus { outline: none; border-color: #f0c060; }
+.ctrl-label { font-size: .78rem; color: #777; }
+
+.legend {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  margin-bottom: 14px; align-items: center;
+}
+.leg { display: flex; align-items: center; gap: 5px; font-size: .75rem; color: #aaa; }
+.dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+.stats {
+  display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap;
+}
+.stat {
+  background: #12121f; border: 1px solid #222; border-radius: 6px;
+  padding: 8px 16px;
+}
+.stat .n { font-size: 1.3rem; font-weight: 700; color: #f0c060; }
+.stat .l { font-size: .72rem; color: #666; }
+
+#chart {
+  background: #10101e; border-radius: 10px;
+  border: 1px solid #1e1e3a; overflow: hidden;
+  width: 100%;
+}
+svg { display: block; }
+
+#tooltip {
+  position: fixed; pointer-events: none;
+  background: rgba(8,8,20,.97); border: 1px solid #333;
+  border-radius: 8px; padding: 10px 14px;
+  font-size: .8rem; line-height: 1.7; max-width: 270px;
+  z-index: 999; display: none;
+}
+#tooltip strong { color: #f0c060; display: block; }
+#tooltip .grade { font-size: .72rem; padding: 2px 6px; border-radius: 3px; display: inline-block; margin-top: 2px; }
+.num { color: #7eb3f0; }
+.warn { color: #e74c3c; font-size: .72rem; }
+</style>
+</head>
+<body>
+
+<h1>Al-Itqan · Isnad Visualizer</h1>
+<div class="sub">Narrator chain flow diagram — based on KASHAF engine · 18,940 narrator grades from Taqrib al-Tahdhib</div>
+
+<div class="controls">
+  <div>
+    <div class="ctrl-label">Book</div>
+    <select id="book-sel">
+      <option value="musannaf_ibnabi_shaybah">Musannaf Ibn Abi Shaybah</option>
+      <option value="bukhari" selected>Sahih al-Bukhari</option>
+      <option value="muslim">Sahih Muslim</option>
+      <option value="abudawud">Sunan Abu Dawud</option>
+      <option value="nasai">Sunan an-Nasa'i</option>
+      <option value="tirmidhi">Jami' at-Tirmidhi</option>
+      <option value="ibnmajah">Sunan Ibn Majah</option>
+      <option value="ahmed">Musnad Ahmad</option>
+      <option value="malik">Muwatta Malik</option>
+      <option value="darimi">Sunan ad-Darimi</option>
+      <option value="mishkat_almasabih">Mishkat al-Masabih</option>
+    </select>
+  </div>
+  <div>
+    <div class="ctrl-label">Min link weight</div>
+    <select id="min-weight">
+      <option value="2">2+</option>
+      <option value="5" selected>5+</option>
+      <option value="10">10+</option>
+      <option value="20">20+</option>
+      <option value="50">50+</option>
+    </select>
+  </div>
+  <div>
+    <div class="ctrl-label">Max nodes</div>
+    <select id="max-nodes">
+      <option value="20">20</option>
+      <option value="35" selected>35</option>
+      <option value="50">50</option>
+      <option value="60">60 (all)</option>
+    </select>
+  </div>
+  <div>
+    <div class="ctrl-label">Height</div>
+    <select id="chart-height">
+      <option value="500">Compact</option>
+      <option value="700" selected>Normal</option>
+      <option value="900">Tall</option>
+      <option value="1200">Full</option>
+    </select>
+  </div>
+</div>
+
+<div class="legend">
+  <span style="color:#888;font-size:.75rem;">Narrator grade:</span>
+  <div class="leg"><div class="dot" style="background:#9b59b6"></div>Companion (Sahabi)</div>
+  <div class="leg"><div class="dot" style="background:#2ecc71"></div>Reliable (Thiqah)</div>
+  <div class="leg"><div class="dot" style="background:#f39c12"></div>Mostly reliable (Sadooq)</div>
+  <div class="leg"><div class="dot" style="background:#e74c3c"></div>Weak (Da'if)</div>
+  <div class="leg"><div class="dot" style="background:#c0392b"></div>Abandoned (Matrook)</div>
+  <div class="leg"><div class="dot" style="background:#95a5a6"></div>Unknown</div>
+</div>
+
+<div class="stats" id="stats"></div>
+<div id="chart"></div>
+
+<div id="tooltip"></div>
+
+<script>
+const GRADE_COLORS = {
+  companion:       '#9b59b6',
+  reliable:        '#2ecc71',
+  mostly_reliable: '#f39c12',
+  weak:            '#e74c3c',
+  abandoned:       '#c0392b',
+  fabricator:      '#8b0000',
+  unknown:         '#95a5a6',
+};
+
+const tip = document.getElementById('tooltip');
+function showTip(html, e) { tip.innerHTML = html; tip.style.display = 'block'; moveTip(e); }
+function moveTip(e) {
+  tip.style.left = Math.min(e.clientX + 12, window.innerWidth - 280) + 'px';
+  tip.style.top  = Math.max(e.clientY - 10, 8) + 'px';
+}
+function hideTip() { tip.style.display = 'none'; }
+const fmt = d3.format(',');
+
+let allData = null;
+
+fetch('data/isnad_graph.json')
+  .then(r => r.json())
+  .then(data => {
+    allData = data;
+    render();
+  })
+  .catch(() => {
+    document.getElementById('chart').innerHTML =
+      '<p style="color:#e74c3c;padding:20px;">Could not load isnad_graph.json — open via a local server or use the preview panel.</p>';
+  });
+
+function render() {
+  const bookId   = document.getElementById('book-sel').value;
+  const minW     = +document.getElementById('min-weight').value;
+  const maxN     = +document.getElementById('max-nodes').value;
+  const H        = +document.getElementById('chart-height').value;
+  const raw      = allData[bookId];
+
+  if (!raw) {
+    document.getElementById('chart').innerHTML =
+      '<p style="color:#888;padding:20px;">No isnad data for this book.</p>';
+    return;
+  }
+
+  // Filter nodes and links
+  const topNodes = raw.nodes.slice(0, maxN);
+  const nodeSet  = new Set(topNodes.map((_, i) => i));
+
+  const links = raw.links.filter(l =>
+    l.value >= minW && nodeSet.has(l.source) && nodeSet.has(l.target)
+  );
+
+  // Re-index nodes to only those that appear in links
+  const usedIdx = new Set();
+  links.forEach(l => { usedIdx.add(l.source); usedIdx.add(l.target); });
+  const nodes = topNodes.filter((_, i) => usedIdx.has(i));
+  const reIdx = {};
+  nodes.forEach((n, i) => {
+    const origIdx = topNodes.indexOf(n);
+    reIdx[origIdx] = i;
+  });
+  const remapped = links
+    .filter(l => reIdx[l.source] !== undefined && reIdx[l.target] !== undefined)
+    .map(l => ({ source: reIdx[l.source], target: reIdx[l.target], value: l.value }));
+
+  // Stats
+  const statsEl = document.getElementById('stats');
+  const gradeCount = {};
+  nodes.forEach(n => { gradeCount[n.grade_en] = (gradeCount[n.grade_en] || 0) + 1; });
+  statsEl.innerHTML = [
+    ['Chains parsed', fmt(raw.total_parsed)],
+    ['Nodes shown', nodes.length],
+    ['Links shown', remapped.length],
+    ['Companions', gradeCount.companion || 0],
+    ['Reliable', gradeCount.reliable || 0],
+    ['Mostly reliable', gradeCount.mostly_reliable || 0],
+    ['Weak / abandoned', (gradeCount.weak || 0) + (gradeCount.abandoned || 0)],
+  ].map(([l, n]) => `<div class="stat"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('');
+
+  // Draw Sankey
+  const W = document.getElementById('chart').clientWidth || 960;
+  d3.select('#chart').selectAll('*').remove();
+
+  const svg = d3.select('#chart').append('svg')
+    .attr('width', W)
+    .attr('height', H);
+
+  const sankey = d3.sankey()
+    .nodeWidth(18)
+    .nodePadding(10)
+    .extent([[20, 16], [W - 20, H - 16]])
+    .nodeId(d => d.index)
+    .nodeAlign(d3.sankeyLeft);
+
+  let graph;
+  try {
+    graph = sankey({
+      nodes: nodes.map((n, i) => ({ ...n, index: i })),
+      links: remapped.map(l => ({ ...l })),
+    });
+  } catch(e) {
+    document.getElementById('chart').innerHTML =
+      `<p style="color:#e74c3c;padding:20px;">Layout error: ${e.message}</p>`;
+    return;
+  }
+
+  // Links
+  svg.append('g')
+    .selectAll('path')
+    .data(graph.links)
+    .join('path')
+    .attr('d', d3.sankeyLinkHorizontal())
+    .attr('fill', 'none')
+    .attr('stroke', d => GRADE_COLORS[d.source.grade_en] || '#444')
+    .attr('stroke-width', d => Math.max(1, d.width))
+    .attr('stroke-opacity', .28)
+    .style('cursor', 'pointer')
+    .on('mouseover', function(e, d) {
+      d3.select(this).attr('stroke-opacity', .7);
+      showTip(
+        `<strong>${d.source.id}</strong>
+         <span style="color:#aaa"> → </span>
+         <strong>${d.target.id}</strong><br>
+         <span class="num">${fmt(d.value)}</span> transmissions`,
+        e
+      );
+    })
+    .on('mousemove', moveTip)
+    .on('mouseout', function() { d3.select(this).attr('stroke-opacity', .28); hideTip(); });
+
+  // Nodes
+  const nodeG = svg.append('g').selectAll('g')
+    .data(graph.nodes).join('g')
+    .style('cursor', 'pointer');
+
+  nodeG.append('rect')
+    .attr('x', d => d.x0)
+    .attr('y', d => d.y0)
+    .attr('width', d => d.x1 - d.x0)
+    .attr('height', d => Math.max(2, d.y1 - d.y0))
+    .attr('fill', d => GRADE_COLORS[d.grade_en] || '#444')
+    .attr('rx', 3)
+    .on('mouseover', function(e, d) {
+      // Highlight connected links
+      svg.selectAll('path')
+        .attr('stroke-opacity', l =>
+          (l.source === d || l.target === d) ? .85 : .07);
+      const gradeLabel = {
+        companion:'Companion (Sahabi)', reliable:'Reliable (Thiqah)',
+        mostly_reliable:'Mostly reliable (Sadooq)', weak:'Weak (Da\'if)',
+        abandoned:'Abandoned (Matrook)', fabricator:'Fabricator',
+        unknown:'Unknown status'
+      }[d.grade_en] || d.grade_en;
+      const color = GRADE_COLORS[d.grade_en] || '#aaa';
+      showTip(
+        `<strong>${d.id}</strong>
+         <span class="grade" style="background:${color}22;color:${color};border:1px solid ${color}55">${gradeLabel}</span><br>
+         ${d.grade_ar ? `<span style="font-family:\'Traditional Arabic\',serif;font-size:1rem;direction:rtl">${d.grade_ar}</span><br>` : ''}
+         <span class="num">${fmt(d.count)}</span> hadiths in this book<br>
+         ${d.death ? `Death: <span class="num">${d.death}</span><br>` : ''}
+         ${d.places ? `<span style="color:#888;font-size:.72rem">${d.places.slice(0,80)}</span>` : ''}`,
+        e
+      );
+    })
+    .on('mousemove', moveTip)
+    .on('mouseout', function() {
+      svg.selectAll('path').attr('stroke-opacity', .28);
+      hideTip();
+    });
+
+  // Labels
+  nodeG.append('text')
+    .attr('x', d => d.x0 < W / 2 ? d.x1 + 6 : d.x0 - 6)
+    .attr('y', d => (d.y0 + d.y1) / 2)
+    .attr('dy', '.35em')
+    .attr('text-anchor', d => d.x0 < W / 2 ? 'start' : 'end')
+    .attr('fill', d => GRADE_COLORS[d.grade_en] || '#aaa')
+    .attr('font-size', d => Math.min(11, Math.max(8, d.y1 - d.y0)))
+    .attr('pointer-events', 'none')
+    .text(d => d.id.length > 28 ? d.id.slice(0, 26) + '…' : d.id);
+}
+
+// Controls
+['book-sel','min-weight','max-nodes','chart-height'].forEach(id => {
+  document.getElementById(id).addEventListener('change', render);
+});
+
+window.addEventListener('resize', render);
+</script>
+</body>
+</html>
