@@ -1,5 +1,7 @@
 # Itqan (الإتقان) — Quran–Hadith Study Platform
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19453613.svg)](https://doi.org/10.5281/zenodo.19453613)
+
 > *"Itqan"* (إتقان) means mastery, perfection, and precision in craft. This project applies that principle to Islamic source texts: every connection between the Quran and the Hadith corpus is grounded in classical Arabic root morphology, not keyword guessing.
 
 A unified Quran and Hadith study platform — **1,201 shared Arabic roots** connecting **6,236 Quran ayahs** to **87k+ hadiths** through **384,016 root links**. Open the Quran, click any root, see every connected hadith across 17 books. Fully static, offline-capable, no backend required.

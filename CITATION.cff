@@ -6,6 +6,7 @@ authors:
   - alias: R3GENESI5
 repository-code: "https://github.com/R3GENESI5/Itqan"
 url: "https://r3genesi5.github.io/Itqan/"
+doi: "10.5281/zenodo.19453613"
 license: MIT
 version: "1.0.0"
 date-released: "2026-04-07"
