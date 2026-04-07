@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+title: "Itqan: Quran-Hadith Study Platform"
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - alias: R3GENESI5
+repository-code: "https://github.com/R3GENESI5/Itqan"
+url: "https://r3genesi5.github.io/Itqan/"
+license: MIT
+version: "1.0.0"
+date-released: "2026-04-07"
+keywords:
+  - quran
+  - hadith
+  - arabic
+  - root-morphology
+  - concordance
+  - islamic-studies
+  - digital-humanities
+  - isnad
+abstract: >-
+  A unified Quran and Hadith study platform connecting 6,236 Quran ayahs
+  to 87,000+ hadiths across 17 Sunni books through 1,201 shared Arabic
+  roots and 384,016 root links. Operates at the level of classical Arabic
+  root morphology. Fully static, offline-capable, no backend required.
