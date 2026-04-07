@@ -14,6 +14,9 @@ const App = {
     narratorIndex:    null, // narrator name → {total, books, topics, grade_profile, ...}
     rootsLexicon:     null, // root_ar → {definition_en, summary_en, buckwalter}
 
+    // Root filter (from ?root= URL param)
+    rootFilter:   null,     // {root, ids: {bookId: Set(idInBook)}} or null
+
     // Settings
     showArabic:   true,
     showNarrator: true,
@@ -60,7 +63,15 @@ const App = {
             this.books = await fetch('data/books.json').then(r => r.json());
             this.renderSidebar();
             this.setupUI();
-            this.handleHash();
+
+            // Root filter from ?root= param takes priority over hash
+            const urlRoot = new URLSearchParams(location.search).get('root');
+            if (urlRoot) {
+                await this.applyRootFilter(urlRoot);
+            } else {
+                this.handleHash();
+            }
+
             this.$('loading-overlay').classList.add('hidden');
 
             // Background loads
@@ -88,6 +99,8 @@ const App = {
                 this.wordDefsVersion = 1;
             } catch { this.wordDefs = {}; this.wordDefsVersion = 0; }
         }
+        // Hadiths were rendered before this loaded — re-render now so word spans get defs/highlights
+        if (this._lastHadiths) this.renderHadiths(this._lastHadiths);
     },
 
     async loadConnections() {
@@ -217,14 +230,20 @@ const App = {
             const ul = this.$(elId);
             ul.innerHTML = '';
             (this.books.sunni[key] || []).forEach(book => {
+                const filterCount = this.rootFilter?.ids[book.id]?.size ?? null;
+                // Dim books with no matches when filter is active
                 const li = document.createElement('li');
-                li.className = 'book-item';
+                li.className = 'book-item' + (this.rootFilter && !filterCount ? ' rf-dimmed' : '');
                 li.dataset.bookId = book.id;
+                const countBadge = filterCount !== null
+                    ? `<span class="book-filter-count">${filterCount}</span>`
+                    : '';
                 li.innerHTML = `
                     <div class="book-item-inner">
                         <span class="book-name-ar">${book.name_ar}</span>
                         <span class="book-name-en">${book.name_en}</span>
                     </div>
+                    ${countBadge}
                     ${book.graded ? '<span class="book-grade-dot" title="Grading available"></span>' : ''}
                 `;
                 li.addEventListener('click', () => this.selectBook(book.id));
@@ -371,11 +390,26 @@ const App = {
 
     // ── Render hadiths ────────────────────────────────────────────────────────
     renderHadiths(hadiths) {
+        this._lastHadiths = hadiths;   // saved so wordDefs re-render can replay
         const list = this.$('hadith-list');
+        list.style.display = '';
         list.innerHTML = '';
 
+        // Apply root filter if active
+        if (this.rootFilter && hadiths?.length) {
+            const filterSet = this.rootFilter.ids[this.currentBookId];
+            if (filterSet) {
+                hadiths = hadiths.filter(h => filterSet.has(h.idInBook));
+            } else {
+                hadiths = [];
+            }
+        }
+
         if (!hadiths?.length) {
-            list.innerHTML = '<div style="padding:24px;color:var(--text-muted);text-align:center">No hadiths in this chapter.</div>';
+            const msg = this.rootFilter
+                ? 'No connected hadiths in this chapter.'
+                : 'No hadiths in this chapter.';
+            list.innerHTML = `<div style="padding:24px;color:var(--text-muted);text-align:center">${msg}</div>`;
             return;
         }
 
@@ -386,8 +420,9 @@ const App = {
             card.className = 'hadith-card';
             card.dataset.id = h.idInBook;
 
+            const hasIsnad   = !!(h.english?.narrator);
             const arabicHtml = this.showArabic && h.arabic
-                ? `<div class="hc-arabic" dir="rtl">${this.renderArabicWords(h.arabic)}</div>`
+                ? `<div class="hc-arabic" dir="rtl">${this.renderArabicWords(h.arabic, hasIsnad)}</div>`
                 : '';
             const narratorHtml = this.showNarrator && h.english?.narrator
                 ? `<div class="hc-narrator">${this.renderNarratorHtml(h.english.narrator)}</div>`
@@ -435,27 +470,75 @@ const App = {
     },
 
     // ── Arabic word rendering ─────────────────────────────────────────────────
-    renderArabicWords(arabic) {
+    renderArabicWords(arabic, hasIsnad = false) {
         if (!arabic) return '';
         const defs = this.wordDefs;
-        const words = arabic.split(/(\s+)/);
-        return words.map(token => {
+        const activeRoot = this.rootFilter ? this.normalizeArabic(this.rootFilter.root) : null;
+
+        // When a narrator chain exists, find where the matn starts.
+        // Strategy: find the last isnad transmission verb before 75% of the text.
+        // All common isnad formulas are checked (diacritised + bare forms).
+        let matnStart = -1;  // -1 = boundary not found → no suppression
+        if (activeRoot && hasIsnad) {
+            const mid = Math.floor(arabic.length * 0.75);
+            const isnadVerbs = [
+                // قَالَ / قَالَتْ — "said"
+                'قَالَ', 'قَالَتْ', 'قال', 'قالت',
+                // يَقُولُ — "says/said" (present form used in سَمِعْتُهُ يَقُولُ formula)
+                'يَقُولُ', 'يقول',
+                // سَمِعْتُ — "I heard"
+                'سَمِعْتُ', 'سمعت',
+                // أَخْبَرَنِي / أَخْبَرَنَا — "informed me/us"
+                'أَخْبَرَنِي', 'أَخْبَرَنَا', 'أخبرني', 'أخبرنا',
+                // حَدَّثَنِي / حَدَّثَنَا — "narrated to me/us"
+                'حَدَّثَنِي', 'حَدَّثَنَا', 'حدثني', 'حدثنا',
+                // رَأَى — "saw/witnessed"
+                'رَأَى', 'رأى',
+                // رَوَى — "related/narrated"
+                'رَوَى', 'روى',
+            ];
+            let last = -1;
+            for (const v of isnadVerbs) {
+                let p = 0;
+                while (true) {
+                    const idx = arabic.indexOf(v, p);
+                    if (idx < 0 || idx > mid) break;
+                    if (idx > last) last = idx;
+                    p = idx + 1;
+                }
+            }
+            // Use the found boundary only when a verb was found AFTER position 0.
+            // If only the opening verb (حَدَّثَنَا at pos 0) was found with no later verb,
+            // leave matnStart=-1 (no suppression) rather than suppressing the whole text.
+            if (last > 0) matnStart = last;
+        }
+
+        let charPos = 0;
+        const tokens = arabic.split(/(\s+)/);
+        return tokens.map(token => {
+            const tokenStart = charPos;
+            charPos += token.length;
+
             if (!token.trim()) return token;
 
-            // Arabic letters only (U+0621–U+063A, U+0641–U+064A) — strips
-            // punctuation (،؟؛), tatweel (ـ), and digits from word boundaries.
+            // Arabic letters only (U+0621–U+063A, U+0641–U+064A)
             const arabicOnly = token.replace(/[^\u0621-\u063A\u0641-\u064A]/g, '');
             if (!arabicOnly) return this.escHtml(token);
+
+            const inMatn = !activeRoot || !hasIsnad || matnStart < 0 || tokenStart >= matnStart;
 
             if (defs) {
                 const norm = this.normalizeArabic(arabicOnly);
                 const def  = defs[norm];
                 if (def) {
-                    // word_defs.json uses short keys: g=gloss, d=definition, r=root_ar, s=buckwalter/summary, n=freq
+                    // word_defs.json: g=gloss, r=root_ar, s=buckwalter, n=freq
                     const gloss = (def.g || def.s || '').slice(0, 80).replace(/"/g, '&quot;');
                     const safeToken = this.escHtml(token);
                     const safeNorm  = this.escHtml(norm);
-                    return `<span class="arabic-word has-def" data-word="${safeNorm}" data-def="${gloss}">${safeToken}</span>`;
+                    const isRootMatch = inMatn && activeRoot && def.r
+                        && this.normalizeArabic(def.r) === activeRoot;
+                    const cls = 'arabic-word has-def' + (isRootMatch ? ' root-hl' : '');
+                    return `<span class="${cls}" data-word="${safeNorm}" data-def="${gloss}">${safeToken}</span>`;
                 }
             }
             return `<span class="arabic-word">${this.escHtml(token)}</span>`;
@@ -766,7 +849,7 @@ const App = {
 
         // Render Arabic with word spans in the panel too
         const arabicEl = this.$('hp-arabic');
-        arabicEl.innerHTML = this.renderArabicWords(h.arabic || '');
+        arabicEl.innerHTML = this.renderArabicWords(h.arabic || '', !!(h.english?.narrator));
         arabicEl.addEventListener('click', (e) => {
             const span = e.target.closest('.arabic-word.has-def');
             if (span) this.openWordPanel(span.dataset.word, span.dataset.def);
@@ -1398,6 +1481,62 @@ const App = {
         document.documentElement.classList.toggle('dark-mode', this.darkMode);
         this.$('arabic-toggle')?.classList.toggle('active', this.showArabic);
         this.$('narrator-toggle')?.classList.toggle('active', this.showNarrator);
+    },
+
+    // ── Root filter (from Quran bil-Quran) ───────────────────────────────────
+    async applyRootFilter(root) {
+        // Fetch only this root's file — tiny, fast, no 3.8MB download
+        let byBook;
+        try {
+            const enc = encodeURIComponent(root);
+            const raw = await fetch(`data/bridge_ids/${enc}.json`).then(r => r.json());
+            byBook = {};
+            for (const [book, ids] of Object.entries(raw)) {
+                byBook[book] = new Set(ids);
+            }
+        } catch (e) {
+            console.warn('Root filter not found for:', root, e);
+            return;
+        }
+        if (!byBook || !Object.keys(byBook).length) return;
+
+        this.rootFilter = { root, ids: byBook };
+        this.renderSidebar();        // re-render with count badges
+        this.renderRootFilterBanner();
+
+        // Auto-open first book that has matches
+        const allBooks = [
+            ...this.books.sunni.the_9_books,
+            ...this.books.sunni.forties,
+            ...this.books.sunni.other_books,
+        ];
+        const firstBook = allBooks.find(b => byBook[b.id]);
+        if (firstBook) {
+            await this.selectBook(firstBook.id);
+            await this.loadChapter(0);
+        }
+    },
+
+    clearRootFilter() {
+        this.rootFilter = null;
+        this.$('root-filter-banner').style.display = 'none';
+        this.renderSidebar();
+        history.replaceState(null, '', location.pathname + location.hash);
+        // Re-render hadith list without the filter
+        if (this._lastHadiths) this.renderHadiths(this._lastHadiths);
+    },
+
+    renderRootFilterBanner() {
+        const { root, ids } = this.rootFilter;
+        const total = Object.values(ids).reduce((s, set) => s + set.size, 0);
+        const letters = root.split('').join(' ');
+        const banner = this.$('root-filter-banner');
+        banner.innerHTML = `
+            <span class="rfb-root" dir="rtl">${letters}</span>
+            <span class="rfb-count">${total.toLocaleString()} connected hadiths</span>
+            <button class="rfb-clear" onclick="App.clearRootFilter()">✕ clear filter</button>
+        `;
+        banner.style.display = 'flex';
     },
 
     // ── Hash routing ──────────────────────────────────────────────────────────

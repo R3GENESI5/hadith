@@ -31,3 +31,10 @@ Thumbs.db
 
 # Local Netlify folder
 .netlify
+
+# Internal / NAS-only files (never push to public repo)
+setup_itqan_cron.sh
+docs/Al-Itqan-README.docx
+docs/screenshot-node-portal.png
+docs/screenshots/portal-islamic-section.png
+.claude/

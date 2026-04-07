@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>المصحف — Mushaf</title>
+<link rel="preload" href="https://verses.quran.foundation/fonts/quran/hafs/nastaleeq/indopak/indopak-nastaleeq-waqf-lazim-v4.2.1.woff2"
+      as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+<script>if(localStorage.getItem('qbq-dark-mode')==='true')document.documentElement.classList.add('dark-mode')</script>
+<style>
+/* ── Reset ─────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;-webkit-tap-highlight-color:transparent}
+
+/* ── Font ──────────────────────────────────── */
+@font-face{
+  font-family:'IndoPak';
+  src:url('https://verses.quran.foundation/fonts/quran/hafs/nastaleeq/indopak/indopak-nastaleeq-waqf-lazim-v4.2.1.woff2') format('woff2'),
+      url('https://verses.quran.foundation/fonts/quran/hafs/nastaleeq/indopak/indopak-nastaleeq-waqf-lazim-v4.2.1.woff') format('woff');
+  font-display:swap;
+}
+
+/* ── Theme tokens ──────────────────────────── */
+:root{
+  --bg:#faf6ef;
+  --bg-alt:#f3ece0;
+  --surface:#fff8f0;
+  --text:#2c1810;
+  --text-muted:#7a6553;
+  --gold:#b8860b;
+  --gold-light:rgba(184,134,11,.12);
+  --gold-hover:rgba(184,134,11,.08);
+  --border:#e0d5c5;
+  --panel-bg:#f7f1e8;
+  --verse-num:#a08050;
+  --highlight:rgba(184,134,11,.18);
+  --font-ar:'IndoPak','Amiri',serif;
+  --font-en:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  /* Computed by JS */
+  --line-h:40px;
+  --font-sz:26px;
+  --max-lines:15;
+}
+.dark-mode{
+  --bg:#1a1612;
+  --bg-alt:#231e18;
+  --surface:#2a2420;
+  --text:#e8dfd5;
+  --text-muted:#a09080;
+  --gold:#d4a020;
+  --gold-light:rgba(212,160,32,.15);
+  --gold-hover:rgba(212,160,32,.08);
+  --border:#3a3028;
+  --panel-bg:#252018;
+  --verse-num:#c0a060;
+  --highlight:rgba(212,160,32,.2);
+}
+
+/* ── Viewport ──────────────────────────────── */
+#mushaf-viewport{
+  position:fixed;inset:0;overflow:hidden;
+  background:var(--bg);
+  touch-action:pan-x;
+  -webkit-user-select:none;user-select:none;
+}
+
+/* ── Mushaf page ───────────────────────────── */
+.mushaf-page{
+  position:absolute;top:0;left:0;
+  width:100%;height:100dvh;height:100vh;
+  will-change:transform;
+}
+.page-inner{
+  height:calc(100dvh - 24px);height:calc(100vh - 24px);
+  display:flex;flex-direction:column;
+  justify-content:space-between;
+  padding:6px 16px 0;
+  direction:rtl;
+  max-width:600px;
+  margin:0 auto;
+}
+.page-footer{
+  height:24px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-en);font-size:11px;
+  color:var(--text-muted);opacity:.4;
+  direction:ltr;
+}
+
+/* ── Lines ─────────────────────────────────── */
+.mline{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  font-family:var(--font-ar);
+  font-size:var(--font-sz);
+  line-height:1.15;
+  color:var(--text);
+  direction:rtl;
+  min-height:0;flex-shrink:1;
+  white-space:nowrap;
+  gap:2px;
+}
+.mline-empty{visibility:hidden}
+.mline-centered{justify-content:center;gap:.4em}
+
+/* ── Surah header line ─────────────────────── */
+.mline-header{
+  justify-content:center;
+  font-size:calc(var(--font-sz) * .75);
+  color:var(--gold);
+  border:1.5px solid var(--gold-light);
+  border-radius:8px;
+  padding:2px 20px;
+  flex-shrink:0;
+}
+.mline-bismillah{
+  font-size:calc(var(--font-sz) * .85);
+  border:none;
+  padding:0;
+}
+
+/* ── Words ─────────────────────────────────── */
+.mw{
+  cursor:default;
+  padding:1px 0;
+  border-radius:3px;
+  transition:background .12s;
+}
+.mw-root{cursor:pointer}
+.mw-root:active{background:var(--gold-light)}
+.mw-sel{
+  background:var(--highlight);
+  color:var(--gold);
+}
+
+/* ── Verse end markers ─────────────────────── */
+.ve{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:calc(var(--font-sz) * .65);
+  height:calc(var(--font-sz) * .65);
+  font-family:'Amiri',serif;
+  font-size:calc(var(--font-sz) * .32);
+  color:var(--verse-num);
+  border:1.5px solid var(--verse-num);
+  border-radius:50%;
+  opacity:.6;flex-shrink:0;
+  line-height:1;
+  margin:0 1px;
+}
+
+/* ── Tooltip ───────────────────────────────── */
+#tooltip{
+  position:fixed;z-index:100;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:10px 14px;
+  box-shadow:0 4px 20px rgba(0,0,0,.12);
+  max-width:280px;min-width:180px;
+  pointer-events:auto;
+  transition:opacity .15s;
+  direction:ltr;text-align:center;
+}
+#tooltip.hidden{opacity:0;pointer-events:none}
+.tip-root{
+  font-family:var(--font-ar);font-size:1.5rem;
+  color:var(--gold);letter-spacing:6px;
+  margin-bottom:4px;direction:rtl;
+}
+.tip-meaning{
+  font-family:var(--font-en);font-size:.78rem;
+  color:var(--text);line-height:1.45;
+  margin-bottom:6px;text-align:center;
+}
+.tip-freq{
+  font-family:var(--font-en);font-size:.68rem;
+  color:var(--text-muted);margin-bottom:6px;
+}
+.tip-actions{display:flex;gap:8px;justify-content:center}
+.tip-btn{
+  font-family:var(--font-en);font-size:.72rem;
+  color:var(--gold);background:var(--gold-light);
+  border:none;border-radius:6px;
+  padding:5px 10px;cursor:pointer;
+  text-decoration:none;
+}
+.tip-btn:active{opacity:.7}
+
+/* ── Root overlay (scrollable) ─────────────── */
+#root-overlay{
+  position:fixed;inset:0;z-index:200;
+  background:var(--bg);
+  overflow-y:auto;-webkit-overflow-scrolling:touch;
+  transform:translateY(100%);
+  transition:transform .3s ease;
+}
+#root-overlay.visible{transform:translateY(0)}
+.ro-header{
+  position:sticky;top:0;z-index:1;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px;
+  background:var(--bg);
+  border-bottom:1px solid var(--border);
+}
+.ro-close{
+  font-size:1.4rem;background:none;border:none;
+  color:var(--text-muted);cursor:pointer;padding:4px 8px;
+}
+.ro-title{
+  font-family:var(--font-ar);font-size:1.6rem;
+  color:var(--gold);letter-spacing:6px;direction:rtl;
+}
+.ro-body{padding:16px}
+.ro-section{margin-bottom:20px}
+.ro-section h4{
+  font-family:var(--font-en);font-size:.8rem;
+  color:var(--text-muted);margin-bottom:8px;
+  text-transform:uppercase;letter-spacing:1px;
+}
+.ro-meaning{
+  font-family:var(--font-en);font-size:.9rem;
+  color:var(--text);line-height:1.6;
+}
+.ro-mufradat{
+  font-family:var(--font-en);font-size:.85rem;
+  color:var(--text);line-height:1.6;
+  background:var(--bg-alt);border-radius:8px;
+  padding:12px;
+}
+.ro-verse{
+  display:block;padding:10px 12px;margin-bottom:4px;
+  background:var(--surface);border-radius:6px;
+  text-decoration:none;color:var(--text);
+  border:1px solid transparent;
+  transition:border-color .15s;
+}
+.ro-verse:active{border-color:var(--gold)}
+.ro-verse-key{
+  font-family:var(--font-en);font-size:.7rem;
+  color:var(--gold);margin-bottom:2px;
+}
+.ro-verse-text{
+  font-family:'Amiri',serif;font-size:.95rem;
+  line-height:1.7;direction:rtl;text-align:right;
+  display:-webkit-box;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;overflow:hidden;
+}
+.ro-surah-group{margin-bottom:12px}
+.ro-surah-label{
+  font-family:var(--font-en);font-size:.72rem;
+  color:var(--text-muted);padding:4px 0;
+  border-bottom:1px dashed var(--border);margin-bottom:4px;
+}
+.ro-show-more{
+  display:block;width:100%;padding:10px;margin-top:8px;
+  background:var(--gold-light);border:none;border-radius:8px;
+  color:var(--gold);font-family:var(--font-en);font-size:.8rem;
+  cursor:pointer;
+}
+
+/* ── Settings bar ──────────────────────────── */
+#settings-bar{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:8px 12px;
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  transform:translateY(-100%);
+  transition:transform .25s ease;
+  direction:ltr;
+}
+#settings-bar.visible{transform:translateY(0)}
+#settings-bar select,#settings-bar input{
+  font-family:var(--font-en);font-size:.8rem;
+  padding:5px 8px;border:1px solid var(--border);
+  border-radius:6px;background:var(--bg);color:var(--text);
+  max-width:140px;
+}
+#settings-bar input[type=number]{width:60px}
+#settings-bar button{
+  font-size:.8rem;padding:5px 10px;border:1px solid var(--border);
+  border-radius:6px;background:var(--bg);color:var(--text);cursor:pointer;
+}
+.settings-spacer{flex:1}
+#settings-bar a{
+  font-family:var(--font-en);font-size:.75rem;
+  color:var(--gold);text-decoration:none;
+}
+
+/* ── Settings tap zone ─────────────────────── */
+#tap-zone{
+  position:fixed;top:0;left:0;right:0;height:30px;
+  z-index:40;
+}
+
+/* ── Loading ───────────────────────────────── */
+#loading{
+  position:fixed;inset:0;z-index:999;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--bg);
+  font-family:var(--font-ar);font-size:1.2rem;
+  color:var(--text-muted);
+}
+#loading.hidden{display:none}
+</style>
+</head>
+<body>
+
+<div id="mushaf-viewport">
+  <div id="page-prev" class="mushaf-page" aria-hidden="true">
+    <div class="page-inner"></div>
+    <div class="page-footer"><span class="pnum"></span></div>
+  </div>
+  <div id="page-current" class="mushaf-page">
+    <div class="page-inner"></div>
+    <div class="page-footer"><span class="pnum"></span></div>
+  </div>
+  <div id="page-next" class="mushaf-page" aria-hidden="true">
+    <div class="page-inner"></div>
+    <div class="page-footer"><span class="pnum"></span></div>
+  </div>
+</div>
+
+<div id="tap-zone"></div>
+
+<div id="tooltip" class="hidden">
+  <div class="tip-root"></div>
+  <div class="tip-meaning"></div>
+  <div class="tip-freq"></div>
+  <div class="tip-actions">
+    <button class="tip-btn" id="tip-details">View details</button>
+    <a class="tip-btn" id="tip-reader" href="index.html" target="_blank">Open in Reader</a>
+  </div>
+</div>
+
+<div id="root-overlay">
+  <div class="ro-header">
+    <span class="ro-title" id="ro-root"></span>
+    <button class="ro-close" id="ro-close">&times;</button>
+  </div>
+  <div class="ro-body" id="ro-body"></div>
+</div>
+
+<div id="settings-bar">
+  <select id="set-surah" title="Jump to surah"></select>
+  <select id="set-juz" title="Jump to juz"></select>
+  <input type="number" id="set-page" min="1" max="604" placeholder="Page">
+  <button id="set-go">Go</button>
+  <span class="settings-spacer"></span>
+  <button id="set-dark" title="Toggle dark mode">☽</button>
+  <a href="index.html" id="set-reader">Reader ←</a>
+</div>
+
+<div id="loading">بسم الله</div>
+
+<script>
+const M = {
+  // State
+  page: 1,
+  total: 604,
+  meta: null,
+  juzCache: {},
+  rootsIndex: null,
+  mufradat: null,
+  versesText: null,
+  surahList: null,
+  selectedRoot: null,
+  settingsTimer: null,
+
+  // DOM
+  $panels: [],   // [prev, current, next]
+  $tip: null,
+  $overlay: null,
+  $settings: null,
+
+  // Touch
+  tx0: 0, ty0: 0, t0: 0,
+  swiping: false,
+  animating: false,
+
+  // ── Init ────────────────────────────────
+  async init() {
+    this.$tip = document.getElementById('tooltip');
+    this.$overlay = document.getElementById('root-overlay');
+    this.$settings = document.getElementById('settings-bar');
+
+    this.$panels = [
+      document.getElementById('page-prev'),
+      document.getElementById('page-current'),
+      document.getElementById('page-next'),
+    ];
+
+    // Position panels
+    const W = window.innerWidth;
+    this.$panels[0].style.transform = `translateX(${W}px)`;  // RTL: prev is right
+    this.$panels[1].style.transform = 'translateX(0)';
+    this.$panels[2].style.transform = `translateX(${-W}px)`; // RTL: next is left
+
+    this.computeFont();
+    window.addEventListener('resize', () => this.computeFont());
+
+    // Load meta + surah list (needed before first render for headers)
+    const [meta, surahList] = await Promise.all([
+      this.fetchJSON('data/mushaf/meta.json'),
+      this.fetchJSON('data/surah_list.json'),
+    ]);
+    this.meta = meta;
+    this.total = this.meta.total_pages;
+    this.surahList = surahList;
+
+    // Restore page
+    this.page = this.getStartPage();
+
+    // Load juz + render
+    await this.ensureJuz(this.pageToJuz(this.page));
+    this.renderPage(this.page, this.$panels[1]);
+
+    // Preload
+    this.preload();
+
+    // Setup
+    this.setupTouch();
+    this.setupKeys();
+    this.setupSettings();
+    this.setupTapZone();
+    this.populateSurahSelect();
+
+    // Hide loading
+    document.getElementById('loading').classList.add('hidden');
+
+    // Lazy load supplementary data (tooltips + overlay)
+    this.fetchJSON('data/roots_index.json').then(d => { this.rootsIndex = d; });
+    this.fetchJSON('data/mufradat.json').then(d => { this.mufradat = d; }).catch(() => {});
+    this.fetchJSON('data/verses_text.json').then(d => { this.versesText = d; }).catch(() => {});
+  },
+
+  // ── Font sizing ─────────────────────────
+  computeFont() {
+    const vh = window.innerHeight;
+    const footerH = 24;
+    const padY = 12; // top + bottom padding
+    const available = vh - footerH - padY;
+    const maxLines = 15;
+    const lineH = available / maxLines;
+    // Balance readability vs line overflow — 0.56 keeps most lines from needing scaleX
+    const fontSize = Math.floor(lineH * 0.56);
+    document.documentElement.style.setProperty('--line-h', lineH + 'px');
+    document.documentElement.style.setProperty('--font-sz', fontSize + 'px');
+  },
+
+  // ── Data loading ────────────────────────
+  async fetchJSON(url) {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error(`Fetch ${url}: ${r.status}`);
+    return r.json();
+  },
+
+  pageToJuz(p) {
+    if (!this.meta) return 1;
+    for (const [j, [s, e]] of Object.entries(this.meta.juz_pages)) {
+      if (p >= s && p <= e) return parseInt(j);
+    }
+    return 1;
+  },
+
+  async ensureJuz(j) {
+    if (this.juzCache[j]) return;
+    const n = String(j).padStart(2, '0');
+    this.juzCache[j] = await this.fetchJSON(`data/mushaf/juz_${n}.json`);
+  },
+
+  getPageData(p) {
+    const j = this.pageToJuz(p);
+    const jd = this.juzCache[j];
+    if (!jd) return null;
+    return jd.pages[String(p)] || null;
+  },
+
+  // ── Page rendering ──────────────────────
+  renderPage(pageNum, panel) {
+    const data = this.getPageData(pageNum);
+    const inner = panel.querySelector('.page-inner');
+    inner.innerHTML = '';
+
+    if (!data) {
+      for (let i = 0; i < 15; i++) {
+        const d = document.createElement('div');
+        d.className = 'mline mline-empty';
+        inner.appendChild(d);
+      }
+      panel.querySelector('.pnum').textContent = pageNum;
+      return;
+    }
+
+    const headerLines = new Set((data.headers || []).map(h => h.line));
+    const headerMap = {};
+    for (const h of (data.headers || [])) headerMap[h.line] = h;
+
+    // Find the range of lines in this page's data
+    const lineNums = Object.keys(data.lines).map(Number);
+    const allNums = [...lineNums, ...Array.from(headerLines)];
+    const maxLine = allNums.length > 0 ? Math.max(...allNums) : 15;
+    const totalLines = Math.max(maxLine, 15);
+
+    for (let ln = 1; ln <= totalLines; ln++) {
+      const div = document.createElement('div');
+      div.className = 'mline';
+
+      // Surah header line
+      if (headerLines.has(ln)) {
+        div.classList.add('mline-header');
+        const h = headerMap[ln];
+        if (h) {
+          // Check if this is the first header line for this surah or a subsequent one (bismillah)
+          const prevIsHeaderForSameSurah = headerMap[ln - 1] && headerMap[ln - 1].surah === h.surah;
+          if (prevIsHeaderForSameSurah && h.surah !== 9) {
+            // Second header line = bismillah (At-Tawbah has no bismillah)
+            div.classList.add('mline-bismillah');
+            div.textContent = 'بِسۡمِ اللهِ الرَّحۡمٰنِ الرَّحِيۡمِ';
+          } else {
+            const name = this.getSurahName(h.surah);
+            div.textContent = name ? `سُوۡرَةُ ${name}` : '';
+          }
+        }
+        inner.appendChild(div);
+        continue;
+      }
+
+      const words = data.lines[String(ln)];
+      if (!words || words.length === 0) {
+        div.classList.add('mline-empty');
+        inner.appendChild(div);
+        continue;
+      }
+
+      // Count actual words (not end markers) to decide centering
+      const wordCount = words.filter(w => !w.e).length;
+      if (wordCount > 0 && wordCount <= 4) div.classList.add('mline-centered');
+
+      for (const w of words) {
+        if (w.e !== undefined) {
+          // Verse end marker — Arabic-Indic numerals
+          const ve = document.createElement('span');
+          ve.className = 've';
+          ve.textContent = String(w.e).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+          div.appendChild(ve);
+        } else {
+          const span = document.createElement('span');
+          span.className = 'mw';
+          span.textContent = w.t;
+          if (w.r) {
+            span.classList.add('mw-root');
+            span.dataset.root = w.r;
+            span.dataset.verse = w.v;
+            span.addEventListener('click', (ev) => {
+              ev.stopPropagation();
+              this.onWordTap(w, span);
+            });
+          }
+          div.appendChild(span);
+        }
+      }
+
+      inner.appendChild(div);
+    }
+
+    panel.querySelector('.pnum').textContent = pageNum;
+
+    // Fit overflow lines by reducing font-size
+    this.fitLines(inner);
+  },
+
+  fitLines(inner) {
+    const containerW = inner.clientWidth;
+    const baseFontSize = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--font-sz'));
+    for (const line of inner.querySelectorAll('.mline:not(.mline-header):not(.mline-empty)')) {
+      line.style.fontSize = '';
+      if (line.scrollWidth > containerW + 1) {
+        const ratio = containerW / line.scrollWidth;
+        line.style.fontSize = Math.floor(baseFontSize * ratio) + 'px';
+      }
+    }
+  },
+
+  getSurahName(num) {
+    if (this.surahList) {
+      const s = this.surahList.find(x => x.number === num);
+      if (s) return s.name_ar;
+    }
+    // Fallback for init before surahList loads
+    return '';
+  },
+
+  // ── Preloading ──────────────────────────
+  async preload() {
+    // Preload prev
+    if (this.page > 1) {
+      await this.ensureJuz(this.pageToJuz(this.page - 1));
+      this.renderPage(this.page - 1, this.$panels[0]);
+    }
+    // Preload next
+    if (this.page < this.total) {
+      await this.ensureJuz(this.pageToJuz(this.page + 1));
+      this.renderPage(this.page + 1, this.$panels[2]);
+    }
+  },
+
+  // ── Touch / Swipe ───────────────────────
+  setupTouch() {
+    const vp = document.getElementById('mushaf-viewport');
+
+    vp.addEventListener('touchstart', (e) => {
+      if (this.animating) return;
+      if (this.$overlay.classList.contains('visible')) return;
+      this.tx0 = e.touches[0].clientX;
+      this.ty0 = e.touches[0].clientY;
+      this.t0 = Date.now();
+      this.swiping = false;
+
+      // Remove transitions during drag
+      for (const p of this.$panels) p.style.transition = 'none';
+    }, { passive: true });
+
+    vp.addEventListener('touchmove', (e) => {
+      if (this.animating) return;
+      if (this.$overlay.classList.contains('visible')) return;
+
+      const dx = e.touches[0].clientX - this.tx0;
+      const dy = e.touches[0].clientY - this.ty0;
+
+      if (!this.swiping && Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
+        this.swiping = true;
+        this.hideTooltip();
+        this.hideSettings();
+      }
+
+      if (!this.swiping) return;
+
+      const W = window.innerWidth;
+      // RTL: prev is to the right (+W), next is to the left (-W)
+      this.$panels[1].style.transform = `translateX(${dx}px)`;
+      if (dx > 0) {
+        // Dragging right → revealing prev (which is on the right in RTL)
+        this.$panels[0].style.transform = `translateX(${W + dx}px)`;
+      } else {
+        // Dragging left → revealing next (which is on the left in RTL)
+        this.$panels[2].style.transform = `translateX(${-W + dx}px)`;
+      }
+    }, { passive: true });
+
+    vp.addEventListener('touchend', (e) => {
+      if (!this.swiping || this.animating) return;
+
+      const dx = e.changedTouches[0].clientX - this.tx0;
+      const elapsed = Date.now() - this.t0;
+      const velocity = Math.abs(dx) / Math.max(elapsed, 1);
+      const threshold = window.innerWidth * 0.25;
+
+      if ((Math.abs(dx) > threshold || velocity > 0.4)) {
+        if (dx > 0 && this.page > 1) {
+          // Swiped right in RTL → go to previous page
+          this.goPage(this.page - 1, 'prev');
+        } else if (dx < 0 && this.page < this.total) {
+          // Swiped left in RTL → go to next page
+          this.goPage(this.page + 1, 'next');
+        } else {
+          this.snapBack();
+        }
+      } else {
+        this.snapBack();
+      }
+    }, { passive: true });
+
+    // Dismiss tooltip on tap elsewhere
+    vp.addEventListener('click', () => {
+      this.hideTooltip();
+    });
+  },
+
+  snapBack() {
+    const W = window.innerWidth;
+    const dur = '0.2s';
+    for (const p of this.$panels) p.style.transition = `transform ${dur} ease`;
+    this.$panels[0].style.transform = `translateX(${W}px)`;
+    this.$panels[1].style.transform = 'translateX(0)';
+    this.$panels[2].style.transform = `translateX(${-W}px)`;
+  },
+
+  async goPage(newPage, direction) {
+    if (newPage < 1 || newPage > this.total || this.animating) return;
+    this.animating = true;
+
+    await this.ensureJuz(this.pageToJuz(newPage));
+
+    const W = window.innerWidth;
+    const dur = '0.25s';
+    for (const p of this.$panels) p.style.transition = `transform ${dur} ease-out`;
+
+    if (direction === 'next') {
+      // Slide current out right, next in from left
+      this.$panels[1].style.transform = `translateX(${W}px)`;
+      this.$panels[2].style.transform = 'translateX(0)';
+    } else {
+      // Slide current out left, prev in from right
+      this.$panels[1].style.transform = `translateX(${-W}px)`;
+      this.$panels[0].style.transform = 'translateX(0)';
+    }
+
+    setTimeout(() => {
+      // Rotate panels
+      if (direction === 'next') {
+        const old = this.$panels.shift();
+        this.$panels.push(old);
+      } else {
+        const old = this.$panels.pop();
+        this.$panels.unshift(old);
+      }
+
+      // Reset positions (no transition)
+      for (const p of this.$panels) p.style.transition = 'none';
+      this.$panels[0].style.transform = `translateX(${W}px)`;
+      this.$panels[1].style.transform = 'translateX(0)';
+      this.$panels[2].style.transform = `translateX(${-W}px)`;
+
+      this.page = newPage;
+      localStorage.setItem('qbq-mushaf-page', String(newPage));
+      history.replaceState(null, '', '#p' + newPage);
+
+      this.animating = false;
+      this.preload();
+    }, 260);
+  },
+
+  // ── Keyboard ────────────────────────────
+  setupKeys() {
+    document.addEventListener('keydown', (e) => {
+      if (this.$overlay.classList.contains('visible')) {
+        if (e.key === 'Escape') this.closeOverlay();
+        return;
+      }
+      if (this.$settings.classList.contains('visible')) {
+        if (e.key === 'Escape') this.hideSettings();
+        return;
+      }
+      // RTL: ArrowLeft = next page, ArrowRight = prev page
+      if (e.key === 'ArrowLeft') this.goPage(this.page + 1, 'next');
+      else if (e.key === 'ArrowRight') this.goPage(this.page - 1, 'prev');
+      else if (e.key === 'Escape') this.hideTooltip();
+    });
+  },
+
+  // ── Tooltip ─────────────────────────────
+  onWordTap(wordData, el) {
+    // Deselect previous
+    document.querySelectorAll('.mw-sel').forEach(x => x.classList.remove('mw-sel'));
+    el.classList.add('mw-sel');
+
+    this.selectedRoot = wordData.r;
+    const tip = this.$tip;
+
+    // Root letters
+    tip.querySelector('.tip-root').textContent = wordData.r.split('').join(' ');
+
+    // Meaning
+    const info = this.rootsIndex ? this.rootsIndex[wordData.r] : null;
+    if (info) {
+      // First 1-2 sentences
+      const full = info.m || '';
+      const short = full.split(/\.\s/).slice(0, 2).join('. ');
+      tip.querySelector('.tip-meaning').textContent = short + (short.endsWith('.') ? '' : '.');
+      tip.querySelector('.tip-freq').textContent = `${info.f} verses across the Quran`;
+    } else {
+      tip.querySelector('.tip-meaning').textContent = 'Loading...';
+      tip.querySelector('.tip-freq').textContent = '';
+    }
+
+    // Links
+    document.getElementById('tip-reader').href = `index.html#${wordData.v}`;
+
+    // Position
+    const rect = el.getBoundingClientRect();
+    tip.classList.remove('hidden');
+
+    requestAnimationFrame(() => {
+      const tr = tip.getBoundingClientRect();
+      let top = rect.top - tr.height - 6;
+      let left = rect.left + rect.width / 2 - tr.width / 2;
+
+      // Clamp
+      left = Math.max(6, Math.min(left, window.innerWidth - tr.width - 6));
+      if (top < 6) top = rect.bottom + 6;
+
+      tip.style.left = left + 'px';
+      tip.style.top = top + 'px';
+    });
+
+    // Details button
+    document.getElementById('tip-details').onclick = () => {
+      this.hideTooltip();
+      this.openOverlay(wordData.r);
+    };
+  },
+
+  hideTooltip() {
+    this.$tip.classList.add('hidden');
+    document.querySelectorAll('.mw-sel').forEach(x => x.classList.remove('mw-sel'));
+  },
+
+  // ── Root overlay (scrollable) ───────────
+  openOverlay(root) {
+    const info = this.rootsIndex ? this.rootsIndex[root] : null;
+    const body = document.getElementById('ro-body');
+    body.innerHTML = '';
+
+    document.getElementById('ro-root').textContent = root.split('').join(' ');
+
+    // Meaning section
+    if (info && info.m) {
+      const sec = this.makeSection('Root Meaning (Lane\'s Lexicon)');
+      const p = document.createElement('div');
+      p.className = 'ro-meaning';
+      p.textContent = info.m;
+      sec.appendChild(p);
+      body.appendChild(sec);
+    }
+
+    // Mufradat section
+    if (this.mufradat && this.mufradat[root]) {
+      const muf = this.mufradat[root];
+      const sec = this.makeSection('Mufradāt (al-Rāghib)');
+      const p = document.createElement('div');
+      p.className = 'ro-mufradat';
+      p.textContent = muf.t || '';
+      sec.appendChild(p);
+      body.appendChild(sec);
+    }
+
+    // Connected verses
+    if (info && info.v && info.v.length > 0 && this.versesText) {
+      const sec = this.makeSection(`Connected Verses (${info.v.length})`);
+      const grouped = {};
+      for (const vk of info.v) {
+        const sn = parseInt(vk.split(':')[0]);
+        if (!grouped[sn]) grouped[sn] = [];
+        grouped[sn].push(vk);
+      }
+
+      const LIMIT = 30;
+      let shown = 0;
+      const container = document.createElement('div');
+
+      for (const sn of Object.keys(grouped).map(Number).sort((a, b) => a - b)) {
+        if (shown >= LIMIT) break;
+        const grp = document.createElement('div');
+        grp.className = 'ro-surah-group';
+
+        const label = document.createElement('div');
+        label.className = 'ro-surah-label';
+        const sName = this.surahList ? this.surahList.find(x => x.number === sn) : null;
+        label.textContent = sName
+          ? `${sn}. ${sName.name_ar} — ${sName.name_en}`
+          : `Surah ${sn}`;
+        grp.appendChild(label);
+
+        for (const vk of grouped[sn]) {
+          if (shown >= LIMIT) break;
+          const a = document.createElement('a');
+          a.className = 'ro-verse';
+          a.href = `index.html#${vk}`;
+          a.target = '_blank';
+
+          const key = document.createElement('div');
+          key.className = 'ro-verse-key';
+          key.textContent = vk;
+          a.appendChild(key);
+
+          const txt = document.createElement('div');
+          txt.className = 'ro-verse-text';
+          txt.textContent = this.versesText[vk] || '';
+          a.appendChild(txt);
+
+          grp.appendChild(a);
+          shown++;
+        }
+        container.appendChild(grp);
+      }
+      sec.appendChild(container);
+
+      if (info.v.length > LIMIT) {
+        const btn = document.createElement('button');
+        btn.className = 'ro-show-more';
+        btn.textContent = `Show all ${info.v.length} verses`;
+        btn.onclick = () => {
+          container.innerHTML = '';
+          let c = 0;
+          for (const sn of Object.keys(grouped).map(Number).sort((a, b) => a - b)) {
+            const grp = document.createElement('div');
+            grp.className = 'ro-surah-group';
+            const label = document.createElement('div');
+            label.className = 'ro-surah-label';
+            const sName = this.surahList ? this.surahList.find(x => x.number === sn) : null;
+            label.textContent = sName ? `${sn}. ${sName.name_ar} — ${sName.name_en}` : `Surah ${sn}`;
+            grp.appendChild(label);
+            for (const vk of grouped[sn]) {
+              const a = document.createElement('a');
+              a.className = 'ro-verse';
+              a.href = `index.html#${vk}`;
+              a.target = '_blank';
+              const k2 = document.createElement('div');
+              k2.className = 'ro-verse-key';
+              k2.textContent = vk;
+              a.appendChild(k2);
+              const t2 = document.createElement('div');
+              t2.className = 'ro-verse-text';
+              t2.textContent = this.versesText[vk] || '';
+              a.appendChild(t2);
+              grp.appendChild(a);
+            }
+            container.appendChild(grp);
+          }
+          btn.remove();
+        };
+        sec.appendChild(btn);
+      }
+
+      body.appendChild(sec);
+    }
+
+    this.$overlay.classList.add('visible');
+  },
+
+  makeSection(title) {
+    const sec = document.createElement('div');
+    sec.className = 'ro-section';
+    const h = document.createElement('h4');
+    h.textContent = title;
+    sec.appendChild(h);
+    return sec;
+  },
+
+  closeOverlay() {
+    this.$overlay.classList.remove('visible');
+    this.$overlay.scrollTop = 0;
+  },
+
+  // ── Settings ────────────────────────────
+  setupSettings() {
+    // Close overlay
+    document.getElementById('ro-close').addEventListener('click', () => this.closeOverlay());
+
+    // Populate juz selector
+    const juzSel = document.getElementById('set-juz');
+    for (let j = 1; j <= 30; j++) {
+      const opt = document.createElement('option');
+      const range = this.meta.juz_pages[String(j)];
+      opt.value = range ? range[0] : 1;
+      opt.textContent = `Juz ${j}`;
+      juzSel.appendChild(opt);
+    }
+
+    // Surah jump
+    document.getElementById('set-surah').addEventListener('change', (e) => {
+      const p = parseInt(e.target.value);
+      if (p) this.jumpToPage(p);
+    });
+
+    // Juz jump
+    juzSel.addEventListener('change', (e) => {
+      const p = parseInt(e.target.value);
+      if (p) this.jumpToPage(p);
+    });
+
+    // Page go
+    document.getElementById('set-go').addEventListener('click', () => {
+      const p = parseInt(document.getElementById('set-page').value);
+      if (p >= 1 && p <= this.total) this.jumpToPage(p);
+    });
+    document.getElementById('set-page').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') document.getElementById('set-go').click();
+    });
+
+    // Dark mode
+    document.getElementById('set-dark').addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark-mode');
+      localStorage.setItem('qbq-dark-mode', String(isDark));
+      document.getElementById('set-dark').textContent = isDark ? '☀' : '☽';
+    });
+    // Init icon
+    if (document.documentElement.classList.contains('dark-mode')) {
+      document.getElementById('set-dark').textContent = '☀';
+    }
+  },
+
+  populateSurahSelect() {
+    const sel = document.getElementById('set-surah');
+    sel.innerHTML = '<option value="">Surah...</option>';
+    if (!this.surahList) return;
+    for (const s of this.surahList) {
+      const opt = document.createElement('option');
+      const p = this.meta.surah_start_pages[String(s.number)];
+      opt.value = p || 1;
+      opt.textContent = `${s.number}. ${s.name_ar}`;
+      sel.appendChild(opt);
+    }
+  },
+
+  setupTapZone() {
+    document.getElementById('tap-zone').addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.toggleSettings();
+    });
+  },
+
+  toggleSettings() {
+    const bar = this.$settings;
+    const visible = bar.classList.toggle('visible');
+    if (visible) {
+      // Auto-hide after 5s
+      clearTimeout(this.settingsTimer);
+      this.settingsTimer = setTimeout(() => this.hideSettings(), 5000);
+    }
+  },
+
+  hideSettings() {
+    this.$settings.classList.remove('visible');
+    clearTimeout(this.settingsTimer);
+  },
+
+  async jumpToPage(p) {
+    this.hideSettings();
+    this.hideTooltip();
+    await this.ensureJuz(this.pageToJuz(p));
+    this.page = p;
+    this.renderPage(p, this.$panels[1]);
+    localStorage.setItem('qbq-mushaf-page', String(p));
+    history.replaceState(null, '', '#p' + p);
+    this.preload();
+  },
+
+  // ── Start page ──────────────────────────
+  getStartPage() {
+    const hash = location.hash.slice(1);
+    if (hash.startsWith('p')) {
+      const p = parseInt(hash.slice(1));
+      if (p >= 1 && p <= this.total) return p;
+    }
+    const saved = localStorage.getItem('qbq-mushaf-page');
+    if (saved) {
+      const p = parseInt(saved);
+      if (p >= 1 && p <= this.total) return p;
+    }
+    return 1;
+  },
+};
+
+// Boot
+document.addEventListener('DOMContentLoaded', () => M.init());
+</script>
+</body>
+</html>

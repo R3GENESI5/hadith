@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>القرآن بالقرآن — Quran bil-Quran</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=14">
+    <script>if(localStorage.getItem('qbq-dark-mode')==='true')document.documentElement.classList.add('dark-mode')</script>
+</head>
+<body>
+    <header id="header">
+        <div class="header-right">
+            <h1 class="logo">القرآن بالقرآن</h1>
+        </div>
+        <div class="header-center">
+            <button id="prev-surah" class="nav-btn" title="السورة السابقة">→</button>
+            <select id="surah-select"></select>
+            <button id="next-surah" class="nav-btn" title="السورة التالية">←</button>
+        </div>
+        <div class="header-left">
+            <div id="root-search-wrap" class="root-search-wrap">
+                <button id="root-search-btn" class="root-search-btn" title="ابحث عن جذر — Search root">⊕</button>
+                <button id="search-mode-btn" class="search-mode-btn" style="display:none" title="Toggle: Roots / Furuq">جذر</button>
+                <input id="root-search-input" class="root-search-input" type="search" placeholder="جذر، معنى، buckwalter..." autocomplete="off" dir="rtl" style="display:none">
+                <ul id="root-search-results" class="root-search-results" style="display:none"></ul>
+            </div>
+            <button id="theme-toggle" class="theme-toggle-btn" title="Toggle dark mode">☽</button>
+            <button id="translation-toggle" class="trans-toggle-btn" title="Toggle English translation">En</button>
+            <button id="translit-toggle" class="trans-toggle-btn" title="Toggle transliteration">T</button>
+            <button id="text-scale-btn" class="trans-toggle-btn" title="Increase text size">أ+</button>
+            <a href="themes.html" class="themes-link" title="Thematic Connections">الأسر الدلالية ◎</a>
+            <span id="surah-info" class="surah-meta"></span>
+        </div>
+    </header>
+
+    <main id="main">
+        <section id="reader">
+            <div id="surah-header" class="surah-title-block">
+                <h2 id="surah-name-ar"></h2>
+                <p id="surah-name-en"></p>
+            </div>
+            <div id="surah-themes" class="surah-theme-bar" style="display:none"></div>
+            <div id="surah-insight" class="surah-insight" style="display:none"></div>
+            <div id="verses"></div>
+        </section>
+
+        <aside id="root-panel" class="panel-hidden">
+            <div class="drawer-handle"></div>
+            <div class="panel-header">
+                <h3 id="panel-title">الجذر</h3>
+                <button id="close-panel" class="close-btn">&times;</button>
+            </div>
+            <div class="panel-body">
+                <div id="root-display" class="root-arabic"></div>
+                <div id="root-buckwalter" class="root-translit"></div>
+                <div id="root-gloss" class="root-gloss"></div>
+                <div id="root-meaning" class="root-meaning"></div>
+                <div id="root-frequency" class="root-freq"></div>
+                <div id="root-revelation" class="root-revelation"></div>
+
+                <div id="mufradat-section" class="panel-section collapsed" style="display:none">
+                    <h4 class="section-toggle">
+                        <span class="chevron">▸</span>
+                        <span class="section-title">المفردات — Mufradat al-Quran</span>
+                        <span class="section-desc">Classical root definitions by al-Raghib al-Isfahani</span>
+                    </h4>
+                    <div class="section-body">
+                        <div id="mufradat-root" class="mufradat-root"></div>
+                        <div id="mufradat-text" class="mufradat-text"></div>
+                        <div id="mufradat-verses" class="mufradat-verses"></div>
+                    </div>
+                </div>
+
+                <div id="furuq-section" class="panel-section collapsed" style="display:none">
+                    <h4 class="section-toggle">
+                        <span class="chevron">▸</span>
+                        <span class="section-title">الفروق اللغوية — Linguistic Distinctions</span>
+                        <span class="section-desc">How near-synonyms differ in meaning and usage</span>
+                    </h4>
+                    <div class="section-body">
+                        <div id="furuq-list"></div>
+                    </div>
+                </div>
+
+                <div id="root-family-section" class="panel-section collapsed" style="display:none">
+                    <h4 class="section-toggle">
+                        <span class="chevron">▸</span>
+                        <span class="section-title">الأسرة الدلالية — Semantic Family</span>
+                        <span class="section-desc">Roots that share a thematic field</span>
+                    </h4>
+                    <div class="section-body">
+                        <div id="root-family-info"></div>
+                    </div>
+                </div>
+
+                <div id="cooccur-section" class="panel-section collapsed" style="display:none">
+                    <h4 class="section-toggle">
+                        <span class="chevron">▸</span>
+                        <span class="section-title">الجذور المصاحبة — Co-occurring Roots</span>
+                        <span class="section-desc">Roots that frequently appear alongside this one</span>
+                    </h4>
+                    <div class="section-body">
+                        <div id="cooccur-list" class="cooccur-list"></div>
+                    </div>
+                </div>
+
+                <div class="panel-section" id="connected-section">
+                    <h4 class="section-toggle" id="connected-header">
+                        <span class="chevron">▾</span>
+                        <span class="section-title">الآيات المتصلة — Connected Verses</span>
+                        <span class="section-desc">Every verse containing this root</span>
+                    </h4>
+                    <div class="section-body">
+                        <div id="connected-verses"></div>
+                        <button id="show-more-btn" style="display:none" class="show-more">عرض المزيد</button>
+                    </div>
+                </div>
+
+                <div id="hadith-section" class="panel-section collapsed" style="display:none">
+                    <h4 class="section-toggle">
+                        <span class="chevron">▸</span>
+                        <span class="section-title">الأحاديث المتصلة — Connected Hadiths</span>
+                        <span class="section-desc">Hadiths from the Sunnah sharing this root</span>
+                    </h4>
+                    <div class="section-body">
+                        <div id="hadith-bridge-content"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <div id="panel-backdrop" class="panel-backdrop"></div>
+    </main>
+
+    <div id="loading-overlay">
+        <div class="loader">
+            <div class="loader-text">جارٍ التحميل...</div>
+        </div>
+    </div>
+
+    <script src="js/app.js?v=14"></script>
+</body>
+</html>

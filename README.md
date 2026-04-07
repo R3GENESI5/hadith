@@ -1,8 +1,10 @@
-# Al-Itqan (الإتقان) — Quran–Hadith Knowledge Bridge
+# Itqan (الإتقان) — Quran–Hadith Study Platform
 
 > *"Itqan"* (إتقان) means mastery, perfection, and precision in craft. This project applies that principle to Islamic source texts: every connection between the Quran and the Hadith corpus is grounded in classical Arabic root morphology, not keyword guessing.
 
-A fully static, offline-capable Islamic study platform connecting **87,688 Sunni hadiths** across **18 books** to the **Quran** through **1,651 Arabic roots** and **39 thematic families** — with no backend, no database, and no API required.
+A unified Quran and Hadith study platform — **1,201 shared Arabic roots** connecting **6,236 Quran ayahs** to **87k+ hadiths** through **384,016 root links**. Open the Quran, click any root, see every connected hadith across 17 books. Fully static, offline-capable, no backend required.
+
+**[Itqan AI](https://huggingface.co/spaces/iqrossed/al-itqan-rag)** — an optional companion app providing concordance search and RAG-powered Q&A over the same corpus.
 
 ---
 
@@ -12,15 +14,48 @@ Most Quran/Hadith apps do English keyword search on translations. Al-Itqan opera
 
 The result is a set of open JSON files that any developer can load and build on, plus a live web app that uses them.
 
-![App welcome screen](welcome.png)
-![Hadith list view](hadith-list.png)
-![Chapter view — Sahih al-Bukhari](bukhari-chapter1.png)
+| Quran bil-Quran — root panel | Hadith Reader — root filter mode |
+|---|---|
+| ![Quran root panel](docs/screenshots/quran-root-panel.png) | ![Hadith root filter](docs/screenshots/hadith-root-filter.png) |
 
-**Live app:** deployed on Netlify (static, no server)
+| Hadith Reader — word definition panel | Library map — all 17 books |
+|---|---|
+| ![Word panel](docs/screenshots/hadith-word-panel.png) | ![Library map](docs/screenshots/hadith-library-map.png) |
+
 **Corpus:** 87,688 Sunni hadiths + standalone Shia database
 **Quran roots:** 1,651 unique roots, 6,236 ayahs
-**Cross-references:** 837,632 Quran↔Hadith root connections
+**Cross-references:** 384,016 Quran↔Hadith root links through 1,201 shared roots
 **Thematic families:** 39 (35 classical + 4 new: End of Times, Jihad, Statecraft, Family Law)
+
+### Getting Started
+
+```bash
+git clone https://github.com/R3GENESI5/hadith.git
+cd hadith
+# Open quran/index.html in any browser — that's it.
+```
+
+No build step, no server, no dependencies. Everything is static HTML + JSON.
+
+---
+
+## How It Works
+
+Open `quran/index.html` — that's the entry point. Every Quran verse has root dots under each word. Click any root and a side panel opens with:
+
+- **Root meaning** — al-Raghib al-Isfahani's *Mufradat Alfaz al-Quran* (d. 1108 CE)
+- **Linguistic distinctions** — *Furuq* (الفروق): precise semantic differences between near-synonyms
+- **Semantic families** — which of the 39 thematic families this root belongs to
+- **Connected Quran verses** — every ayah sharing this root
+- **Connected hadiths** — per-book counts with a link to browse them
+
+Click a hadith book badge and Itqan opens the hadith view filtered to that root — showing only hadiths whose Arabic text contains a word from the same root, across 17 Sunni books plus a standalone Shia collection. The hadith view also works standalone: browse by book and chapter, full-text search, grade badges (Sahih/Hasan/Da'if), and word-level morphological definitions.
+
+**Future:** opening the hadith view first will also show connected Quran verses for the current root, linking back to the Quran view. The bridge data already supports this — the UI is not yet built.
+
+### Itqan AI — Optional Companion
+
+**[Itqan AI on HuggingFace](https://huggingface.co/spaces/iqrossed/al-itqan-rag)** — concordance search (Arabic morphological lookup or English semantic search) and RAG-powered Q&A over the full 87k hadith corpus. Not required for the core study workflow.
 
 ---
 
@@ -346,7 +381,7 @@ Five charts:
 ![Isnad chain visualizer — Sahih al-Bukhari](docs/screenshots/isnad-bukhari.png)
 *Sahih al-Bukhari: 7,189 chains parsed, 34 nodes shown, colored by narrator grade (green = Reliable/ثقة, grey = Unknown)*
 
-**Known gap:** Narrator grade coloring requires fuzzy Arabic name matching between the isnad parser output and the KASHAF grade database — currently all nodes show as Unknown. Grading is tracked as a future enhancement.
+Narrator grades are live: a 5-strategy Arabic name matching cascade (`src/match_narrator_grades.py`) links isnad names to the KASHAF grade database (18,940 entries from Taqrib al-Tahdhib). Match rate: **178/280 nodes (63.6%)** across all 11 books. Major narrators now colored: al-Zuhri, Shu'ba, Imam Malik, al-A'mash, al-Layth, Sufyan al-Thawri. An additional 32 nodes were upgraded via `grade_ar` text markers (ثقة, إمام, حافظ) where KASHAF's parsed `grade_en` was missing.
 
 ---
 
@@ -372,11 +407,12 @@ The FAISS semantic index (87,056 hadiths, `intfloat/multilingual-e5-small`, 216M
 
 **What Al-Itqan changes:**
 - Google Charts → **D3-sankey** (MIT, self-hosted, offline-capable)
-- Bukhari-only CSV → `narrator_index.json` across **all 18 books**
-- Static CSV → dynamic: user selects book, transmission depth, minimum chain length
-- Every narrator arc links to their full hadith list in the reader
+- Bukhari-only CSV → `isnad_graph.json` across **all 11 books** (37,454 parsed chains)
+- Static CSV → dynamic: user selects book, min link weight, max nodes, height
+- Narrator nodes color-coded by grade: companion (purple), reliable (green), mostly reliable (amber), weak (red), abandoned (dark red), unknown (grey)
+- Arabic fuzzy name matching (`src/match_narrator_grades.py`) links short isnad names (الزهري, شعبة, مالك) to KASHAF full biographical entries via 5-strategy cascade + manual aliases
 
-**Status:** Planned for Phase 2. Not yet built into this repo.
+**Status:** ✅ Complete — `app/isnad.html`, `app/data/isnad_graph.json`, `src/parse_isnad_chains.py`, `src/match_narrator_grades.py`
 
 ---
 
@@ -390,24 +426,28 @@ The FAISS semantic index (87,056 hadiths, `intfloat/multilingual-e5-small`, 216M
 - The result schema: `{type, text, reference, score}`
 
 **What Al-Itqan upgrades:**
-- 15k hadiths → **87,688 hadiths** (all books)
-- `all-MiniLM-L6-v2` (English-first) → **`CAMeL-Lab/bert-base-arabic-camelbert-ca`** (Classical Arabic domain, Apache-2.0) with mean-pool to produce sentence vectors
-- Flask local server → **HuggingFace Spaces** (Gradio, free GPU hosting)
-- No context → **every result tagged with root family** from `quran_hadith_bridge.json`, so "find hadiths about mercy" surfaces results with the `رحم` root highlighted
+- 15k hadiths → **87,688 hadiths** (all 18 books)
+- `all-MiniLM-L6-v2` (English-first, no Arabic understanding) → **`intfloat/multilingual-e5-small`** (instruction-tuned multilingual, Apache-2.0)
+- Flask local server → **HuggingFace Spaces** (Gradio, CPU-only, free)
+- No context → **every result tagged with root family** from `quran_hadith_bridge.json`
 
-**Pre-computation pipeline** (to be built as `src/build_semantic_index.py`):
-1. Embed each hadith's Arabic matn with camelbert-ca
-2. Build FAISS IndexFlatIP (cosine similarity on L2-normalised vectors)
-3. Save: `semantic_index.faiss` + `semantic_meta.json`
+**Quantitative benchmark** (`src/compare_embeddings.py`, 10,000-hadith proportional sample, 12 Arabic queries):
+
+| Metric | multilingual-e5-small | all-MiniLM-L6-v2 |
+|---|---|---|
+| Avg top-1 cosine similarity | **0.871** | 0.748 |
+| Query wins | **12 / 12** | 0 / 12 |
+| Result overlap @ 5 | — | 0.0 (no shared results) |
+
+MiniLM returned the same 2–3 hadiths for completely unrelated queries (jihad, knowledge, death) — confirming it has no Arabic semantic understanding. Full results: `src/embedding_comparison.json`.
+
+**Pre-computation pipeline** (`src/build_semantic_index.py`):
+1. Embed each hadith's Arabic matn with `passage: ` prefix (e5-small instruction format)
+2. L2-normalize → FAISS IndexFlatIP (cosine similarity)
+3. Save: `app/data/semantic/semantic_index.faiss` + `semantic_meta.json` (216 MB, hosted at `iqrossed/al-itqan-index`)
 4. Deploy on HuggingFace Space
 
-**API contract:**
-```
-GET /search?q=مكارم+الأخلاق&limit=10&filter_family=knowledge&filter_grade=sahih
-→ [{type, text, reference, score, family, grade}, ...]
-```
-
-**Status:** Planned for Phase 3. Not yet built. The root bridge data is ready to enrich it when it is.
+**Status:** ✅ Complete — `app/data/semantic/`, `hf_spaces/search/`, deployed at `iqrossed/al-itqan-search`
 
 ---
 
@@ -420,12 +460,21 @@ GET /search?q=مكارم+الأخلاق&limit=10&filter_family=knowledge&filter_
 - The retrieval loop: query → top-K hadiths → LLM generates answer with citations
 
 **What Al-Itqan upgrades:**
-- Small prototype corpus → **87,688 hadiths**
-- GPT-4 (costly, proprietary) → **Qwen2.5-7B + hadith LoRA** (open, HuggingFace hosted)
-- ChromaDB (local) → **FAISS** (same index as BasilSuhail, one unified semantic layer)
-- No root context → **root family + grade injected into prompt**: *"The retrieved hadiths belong to the `statecraft` family, with roots ملك, حكم, خلف. Grade: 3 sahih, 2 hasan."*
 
-**Status:** Planned for Phase 4. Not yet built.
+| Feature | Original HadithRAG | Al-Itqan |
+|---|---|---|
+| Vector store | ChromaDB | FAISS (reuses exact same index as search — no duplication) |
+| Generator | OpenAI GPT-3.5 (paid, closed) | Qwen2.5-0.5B-Instruct (Apache-2.0, free, runs on CPU) |
+| Language | English only | Arabic + English — system prompt adapts to query language |
+| Source grounding | None | Answers cite book name + hadith number explicitly |
+| Hallucination protection | None | Model instructed: "answer ONLY from the provided hadiths" |
+| Thematic context | None | Root family tags injected into every retrieved hadith block |
+| Conversation | Single-turn | Multi-turn: `gr.State` tracks full session history |
+| Deduplication | None | Seen-set prevents same hadith appearing twice in top-K |
+
+The model, vector store, language support, grounding, and conversation architecture are all new. The RAG concept (retrieve → generate with citations) is taken from HadithRAG.
+
+**Status:** ✅ Complete — `hf_spaces/rag/`, deployed at `iqrossed/al-itqan-rag`
 
 ---
 
@@ -433,46 +482,43 @@ GET /search?q=مكارم+الأخلاق&limit=10&filter_family=knowledge&filter_
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│              STATIC LAYER  (Netlify / GitHub Pages)          │
-│          Vanilla JS + CSS — offline-capable PWA              │
+│                    ITQAN  (static, offline-capable)           │
 │                                                              │
-│  ┌─────────────┐  ┌──────────────┐  ┌──────────────────┐   │
-│  │  READER     │  │  THEMATIC    │  │  ROOT EXPLORER   │   │
-│  │  Quran +    │  │  STUDY       │  │  root → ayahs +  │   │
-│  │  Hadith     │  │  39 families │  │  hadiths + defs  │   │
-│  │  side-panel │  │  corpus view │  │  Lane's+Mufradat │   │
-│  └─────────────┘  └──────────────┘  └──────────────────┘   │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │  QURAN VIEW  (quran/index.html — entry point)        │   │
+│  │  Click any root → side panel:                         │   │
+│  │   • Mufradat definition  • Furuq distinctions         │   │
+│  │   • Semantic families    • Connected verses            │   │
+│  │   • Connected hadiths + per-book counts               │   │
+│  │                     │                                  │   │
+│  │              click hadith badge                        │   │
+│  │                     ▼                                  │   │
+│  │  HADITH VIEW  (app/index.html)                        │   │
+│  │  87k hadiths · 17 books · grade badges                │   │
+│  │  Root filter mode (?root=X) or standalone browse      │   │
+│  │  Word panel: root, morphology, Lane's Lexicon         │   │
+│  └──────────────────────────────────────────────────────┘   │
 │                                                              │
 │  ┌──────────────────────────────────────────────────────┐   │
 │  │  ISNAD VISUALIZER  (KASHAF engine, D3 Sankey)        │   │
-│  │  All 18 books · narrator color = reliability grade   │   │
+│  │  CHORD GRAPHS · CONCORDANCE AUDIT · THEMATIC STUDY   │   │
 │  └──────────────────────────────────────────────────────┘   │
 │                                                              │
-│  Data (served from CDN, lazy-loaded):                        │
-│    quran_hadith_bridge.json  21 MB                           │
-│    family_corpus.json        12.6 MB                         │
-│    concordance.json          22 MB  (on-demand only)         │
-│    narrator_index.json       0.6 MB                          │
-│    Per-book hadith JSON      ~50 MB total                    │
-└──────────────────────────┬──────────────────────────────────┘
-                           │  optional API calls
-                           │  (graceful degradation if offline)
-┌──────────────────────────▼──────────────────────────────────┐
-│            AI LAYER  (HuggingFace Spaces — free)             │
+│  Data (lazy-loaded):                                         │
+│    quran_hadith_bridge.json  21 MB · concordance.json 22 MB │
+│    family_corpus.json 12.6 MB · Per-book hadith ~50 MB      │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│            ITQAN AI  (HuggingFace — optional companion)      │
 │                                                              │
-│  ┌─────────────────────────┐  ┌────────────────────────┐   │
-│  │  SEMANTIC SEARCH        │  │  CONVERSATIONAL Q&A    │   │
-│  │  BasilSuhail engine     │  │  HadithRAG engine      │   │
-│  │  camelbert-ca + FAISS   │  │  Qwen2.5-7B + LoRA     │   │
-│  │  87k hadith index       │  │  isnad-preserving RAG  │   │
-│  └─────────────────────────┘  └────────────────────────┘   │
-│                                                              │
-│  Both engines enriched by root bridge:                       │
-│  every result tagged with family + root + grade              │
+│  Concordance search (Arabic morphological / English FAISS)  │
+│  RAG Q&A: Qwen2.5-1.5B + FAISS retrieval, multi-turn       │
+│  Every result tagged with family + root                      │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-**Design principle:** The static layer works fully offline without AI. The AI layer enhances but is never required. A user with no internet still gets root navigation, thematic study, the concordance, and the full reader.
+**Design principle:** Itqan works fully offline without AI. Itqan AI enhances but is never required. A user with no internet still gets the complete Quran-Hadith study workflow.
 
 ---
 
@@ -513,8 +559,16 @@ GET /search?q=مكارم+الأخلاق&limit=10&filter_family=knowledge&filter_
 ## Repository Structure
 
 ```
-Al-Itqan/
-├── app/                          Static web app (served by Netlify)
+Itqan/
+├── quran/                        Quran view — entry point (open index.html)
+│   ├── index.html                Root-based Quran reader
+│   ├── themes.html               Thematic family explorer
+│   ├── mushaf.html               Mushaf view
+│   ├── js/app.js                 Quran logic + hadith bridge panel
+│   ├── data/                     Surahs, roots, mufradat, furuq, translations, tafsirs
+│   └── hadith-data/              Bridge summary for connected hadiths
+│
+├── app/                          Hadith view (linked from Quran, or standalone)
 │   ├── index.html                Library map — all books with hadith counts
 │   ├── hadith.html               Hadith reader with word panel
 │   ├── shia.html                 Standalone Shia hadith database
@@ -600,7 +654,7 @@ python src/audit.py
 - **الله root (أله):** `الله` appears in ~100% of all hadiths and is correctly treated as a stop word. The root أله has 1,879 Quran ayahs but cannot be meaningfully indexed against specific hadiths.
 - **~315 zero-hadith roots:** Mostly hamza-initial roots (أتي, شيأ, رأي, أخذ) where CAMeL Tools' normalization doesn't match the concordance vocabulary. Patching the most important ones (أمر, ولي, يوم, أرض, وقي, أمن) was done; the rest are lower priority.
 - **Family noise:** A single shared root is sufficient for a hadith to appear in a family. A hadith mentioning `خرج` (to leave) appears in `end_of_times` even if it's about ordinary travel. A relevance threshold (requiring 2+ family roots) would improve precision.
-- **Isnad narrator grades:** `app/isnad.html` visualizes transmission chains (37,454 Musannaf chains, 11 books) but narrator coloring by grade is not yet active. KASHAF's grade data (`narrator_grades.json`, 17,093 narrators) uses Arabic names from Taqrib al-Tahdhib, while the isnad parser extracts names from raw Arabic text — the forms don't match directly. Fuzzy Arabic name matching is needed to link the two.
+- **Isnad narrator grades (partial):** 178/280 nodes (63.6%) are now matched and colored. The remaining ~37% are obscure narrators, patronymics without a full name, or names too ambiguous to match without additional biographical data.
 - **Isnad circular links:** D3-sankey rejects cycles in the data, so some books currently show a layout error. Pre-processing to break/remove cycles before rendering is a pending fix.
 - **No per-hadith grade in source data:** The source book JSONs contain only `arabic`, `english`, `id`, `idInBook`. Hadith-level authentication grades (Sahih/Hasan/Da'if) are not in the source data and must be sourced separately.
 
@@ -611,9 +665,10 @@ python src/audit.py
 | 1 | Isnad visualizer (D3 Sankey, 11 books) | ✅ Complete |
 | 2 | Semantic search (FAISS + multilingual-e5-small, 87k hadiths) | ✅ Complete |
 | 3 | Conversational Q&A (RAG + Qwen2.5-0.5B) | ✅ Complete |
-| 4 | App scaffold: reader, root panel, family view | 🔄 Next |
-| 5 | Isnad narrator grade matching (Arabic fuzzy matching) | ⬜ Planned |
-| 6 | Curated HadithReference tafsir table | ⬜ Planned |
+| 4 | Isnad narrator grade matching (63.6%, 5-strategy Arabic cascade) | ✅ Complete |
+| 5 | App scaffold: reader, root panel, family view | 🔄 Next |
+| 6 | Musnad Ahmad expansion (~27k hadiths via sunnah.com API) | 🔄 Next |
+| 7 | Curated HadithReference tafsir table | ⬜ Planned |
 
 ---
 
