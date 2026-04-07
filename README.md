@@ -376,12 +376,40 @@ Five charts:
 
 ## The Isnad Visualizer
 
-`app/isnad.html` — D3-sankey isnad chain visualizer. Nodes = narrators, links = transmission connections, flow left-to-right from earliest collectors to the Prophet ﷺ.
+`app/isnad.html` — a D3-sankey flow diagram showing how hadiths were transmitted from the Prophet ﷺ through generations of narrators to the book compilers.
 
 ![Isnad chain visualizer — Sahih al-Bukhari](docs/screenshots/isnad-bukhari.png)
 *Sahih al-Bukhari: 7,189 chains parsed, 34 nodes shown, colored by narrator grade (green = Reliable/ثقة, grey = Unknown)*
 
-Narrator grades are live: a 5-strategy Arabic name matching cascade (`src/match_narrator_grades.py`) links isnad names to the KASHAF grade database (18,940 entries from Taqrib al-Tahdhib). Match rate: **178/280 nodes (63.6%)** across all 11 books. Major narrators now colored: al-Zuhri, Shu'ba, Imam Malik, al-A'mash, al-Layth, Sufyan al-Thawri. An additional 32 nodes were upgraded via `grade_ar` text markers (ثقة, إمام, حافظ) where KASHAF's parsed `grade_en` was missing.
+### How to read the diagram
+
+- **Nodes** (vertical bars) = narrators. Each bar's height is proportional to how many transmission chains pass through that narrator. The Prophet ﷺ and major companions (Abu Hurayra, Ibn Abbas, Aisha) appear on the right; later transmitters and book compilers appear on the left.
+- **Links** (flowing bands between nodes) = transmission connections. A band from narrator A to narrator B means "A transmitted hadiths that B received." The width of the band = number of shared chains. Hover any link to see the exact count (e.g. "Sufyan → al-Zuhri — 58 transmissions").
+- **Color = narrator reliability grade**, drawn from the KASHAF database (18,940 entries from Taqrib al-Tahdhib):
+  - **Purple** = Companion (Sahabi) — those who met the Prophet ﷺ
+  - **Green** = Reliable (Thiqah/ثقة) — trusted narrators
+  - **Amber/Yellow** = Mostly reliable (Sadooq/صدوق) — acceptable with minor reservations
+  - **Red** = Weak (Da'if/ضعيف) — narrators whose hadith are questioned
+  - **Dark red** = Abandoned (Matrook/متروك) — severely weak
+  - **Grey** = Unknown — not yet matched to the grade database
+- **Flow direction** is right-to-left (matching Arabic reading direction): the Prophet ﷺ on the far right, through companion → successor → later scholar chains, ending with the book compiler on the far left.
+
+### Controls
+
+| Control | What it does |
+|---|---|
+| **Book** | Switch between 11 hadith books — each has a different narrator network |
+| **Min link weight** | Filter out weak connections (2+, 5+, 10+, 20+, 50+). Higher = only major transmission routes shown |
+| **Max nodes** | Limit how many narrators appear (20, 35, 50, 60). Lower = cleaner diagram showing only the most prominent narrators |
+| **Height** | Diagram height (Compact, Normal, Tall, Full) — use Tall/Full for dense books like Musannaf |
+
+### Stats bar
+
+The stats bar above the diagram shows: total chains parsed from the book, nodes and links currently displayed, and a grade breakdown — how many of the visible narrators are Companions, Reliable, Mostly reliable, or Weak/Abandoned.
+
+### Narrator grade matching
+
+Grades are matched via a 5-strategy Arabic name cascade (`src/match_narrator_grades.py`): exact match, prefix match, stripped-diacritics match, short-name alias, and `grade_ar` text markers (ثقة, إمام, حافظ). Match rate: **178/280 nodes (63.6%)** across all 11 books. Major narrators colored: al-Zuhri, Shu'ba, Imam Malik, al-A'mash, al-Layth, Sufyan al-Thawri.
 
 ---
 
