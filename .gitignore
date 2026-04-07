@@ -7,10 +7,15 @@ venv/
 env/
 *.egg-info/
 
-# Large generated files (rebuild with: python src/enrich_data.py)
+# Large generated files (rebuild with pipeline scripts in src/)
 app/data/search_index.json
 app/data/shia_search_index.json
 app/data/difficult_words.json
+app/data/quran_hadith_bridge.json
+app/data/family_corpus.json
+app/data/word_defs.json
+app/data/word_freq.json
+app/data/narrator_grades.json
 
 # FAISS semantic index — 216MB, hosted at huggingface.co/datasets/iqrossed/al-itqan-index
 # Rebuild with: python src/build_semantic_index.py

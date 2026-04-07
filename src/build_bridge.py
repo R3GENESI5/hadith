@@ -2,27 +2,29 @@
 build_bridge.py — Quran ↔ Hadith Knowledge Bridge
 
 Reads:
-  D:/GRAPHS/quran-bil-quran/app/data/roots_index.json   — Quran root → {ayahs, meaning, family}
-  D:/GRAPHS/quran-bil-quran/app/data/families.json       — 35 thematic families → roots
-  D:/GRAPHS/quran-bil-quran/app/data/mufradat.json       — classical lexicon (Raghib al-Isfahani)
-  D:/Hadith/app/data/word_defs_v2.json                   — Hadith word → root
-  D:/Hadith/app/data/concordance.json                    — Hadith word → [book:id, ...]
-  D:/Hadith/app/data/roots_lexicon.json                  — roots → Lane's Lexicon
+  quran/data/roots_index.json        — Quran root → {ayahs, meaning, family}
+  quran/data/families.json           — 35 thematic families → roots
+  quran/data/mufradat.json           — classical lexicon (Raghib al-Isfahani)
+  app/data/word_defs_v2.json         — Hadith word → root
+  app/data/concordance.json          — Hadith word → [book:id, ...]
+  app/data/roots_lexicon.json        — roots → Lane's Lexicon
 
 Outputs:
-  D:/Hadith/app/data/quran_hadith_bridge.json  — root → {ayahs, hadith_ids, families, stats}
-  D:/Hadith/app/data/family_corpus.json        — family → {roots, ayahs, hadiths, book_breakdown}
-  D:/Hadith/src/bridge_analysis.json           — cross-correlation analysis & statistics
+  app/data/quran_hadith_bridge.json  — root → {ayahs, hadith_ids, families, stats}
+  app/data/family_corpus.json        — family → {roots, ayahs, hadiths, book_breakdown}
+  src/bridge_analysis.json           — cross-correlation analysis & statistics
 """
 
 import json
 import os
+from pathlib import Path
 from collections import defaultdict
 
-GRAPHS = "D:/GRAPHS/quran-bil-quran/app/data"
-HADITH = "D:/Hadith/app/data"
-OUT = "D:/Hadith/app/data"
-ANALYSIS_OUT = "D:/Hadith/src"
+ROOT = Path(__file__).resolve().parent.parent
+GRAPHS = str(ROOT / "quran" / "data")
+HADITH = str(ROOT / "app" / "data")
+OUT = str(ROOT / "app" / "data")
+ANALYSIS_OUT = str(ROOT / "src")
 
 def load(path):
     print(f"  Loading {os.path.basename(path)}...")

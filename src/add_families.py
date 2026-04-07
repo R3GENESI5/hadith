@@ -1,7 +1,11 @@
 """Add 4 new thematic families to families.json then rebuild bridge."""
 import json, subprocess, sys
+from pathlib import Path
 
-with open('D:/GRAPHS/quran-bil-quran/app/data/families.json', encoding='utf-8') as f:
+ROOT = Path(__file__).resolve().parent.parent
+QURAN_DATA = ROOT / 'quran' / 'data'
+
+with open(QURAN_DATA / 'families.json', encoding='utf-8') as f:
     fam = json.load(f)
 
 # 1. END OF TIMES
@@ -129,7 +133,7 @@ fam['family_law'] = {
     ]
 }
 
-with open('D:/GRAPHS/quran-bil-quran/app/data/families.json', 'w', encoding='utf-8') as f:
+with open(QURAN_DATA / 'families.json', 'w', encoding='utf-8') as f:
     json.dump(fam, f, ensure_ascii=False, indent=1)
 
 print(f'families.json updated: {len(fam)} total families')

@@ -29,7 +29,7 @@ from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
-ROOT      = Path("D:/Hadith")
+ROOT      = Path(__file__).resolve().parent.parent
 SEM_DIR   = ROOT / "app" / "data" / "semantic"
 FAISS_PATH = SEM_DIR / "semantic_index.faiss"
 META_PATH  = SEM_DIR / "semantic_meta.json"
