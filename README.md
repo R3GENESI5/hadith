@@ -383,33 +383,41 @@ Five charts:
 
 ### How to read the diagram
 
-- **Nodes** (vertical bars) = narrators. Each bar's height is proportional to how many transmission chains pass through that narrator. The Prophet ﷺ and major companions (Abu Hurayra, Ibn Abbas, Aisha) appear on the right; later transmitters and book compilers appear on the left.
-- **Links** (flowing bands between nodes) = transmission connections. A band from narrator A to narrator B means "A transmitted hadiths that B received." The width of the band = number of shared chains. Hover any link to see the exact count (e.g. "Sufyan → al-Zuhri — 58 transmissions").
-- **Color = narrator reliability grade**, drawn from the KASHAF database (18,940 entries from Taqrib al-Tahdhib):
-  - **Purple** = Companion (Sahabi) — those who met the Prophet ﷺ
-  - **Green** = Reliable (Thiqah/ثقة) — trusted narrators
-  - **Amber/Yellow** = Mostly reliable (Sadooq/صدوق) — acceptable with minor reservations
-  - **Red** = Weak (Da'if/ضعيف) — narrators whose hadith are questioned
-  - **Dark red** = Abandoned (Matrook/متروك) — severely weak
-  - **Grey** = Unknown — not yet matched to the grade database
-- **Flow direction** is right-to-left (matching Arabic reading direction): the Prophet ﷺ on the far right, through companion → successor → later scholar chains, ending with the book compiler on the far left.
+In hadith science (*mustalah al-hadith*), every hadith has an **isnad** (إسناد) — a chain of narrators (*ruwat*, singular *rawi* راوي) who transmitted the hadith from the Prophet ﷺ down to the compiler of the book. The isnad is what hadith scholars use to judge whether a hadith is authentic: a chain of trustworthy narrators with unbroken links = *sahih*; a chain with a weak or missing narrator = grounds for downgrading.
+
+This diagram visualizes those chains as a Sankey flow:
+
+- **Each vertical bar is a rawi (راوي)** — a narrator in the chain. The bar's height reflects how many chains (*asanid*) pass through that rawi. A tall bar like al-Zuhri (الزهري) means he appears in hundreds of chains for that book — he is a major hub of transmission. The Prophet ﷺ (*rasul Allah*) and the Sahaba (أبو هريرة، ابن عباس، عائشة) appear on the right; later *tabi'in* (successors), *atba' al-tabi'in* (followers of successors), and the book's *musannif* (compiler) appear progressively to the left.
+- **Each flowing band is a riwaya (رواية)** — a transmission link between two narrators. A band from rawi A to rawi B means "A heard from B and transmitted to others." The width = how many chains share that link. Hover to see the count (e.g. "Sufyan → al-Zuhri — 58 transmissions"). A thick band between two narrators indicates a well-established *tariq* (طريق) — a major transmission route.
+- **Color = the rawi's grade from *ilm al-rijal*** (علم الرجال — the science of narrator criticism), sourced from the KASHAF database (18,940 entries from Ibn Hajar's *Taqrib al-Tahdhib*):
+
+  | Color | Grade | Arabic | Meaning |
+  |---|---|---|---|
+  | **Purple** | Sahabi (صحابي) | صحابي | Companion — met the Prophet ﷺ directly |
+  | **Green** | Thiqah (ثقة) | ثقة | Trustworthy — hadith accepted without reservation |
+  | **Amber** | Sadooq (صدوق) | صدوق | Truthful — acceptable, minor reservations |
+  | **Red** | Da'if (ضعيف) | ضعيف | Weak — hadith through this rawi are questioned |
+  | **Dark red** | Matrook (متروك) | متروك | Abandoned — severely weak, hadith rejected |
+  | **Grey** | Unknown | مجهول | Not yet matched to the grade database |
+
+- **Flow direction** is right-to-left (matching Arabic reading order): the Prophet ﷺ on the far right → Sahaba → Tabi'in → later scholars → the book's compiler on the far left. This mirrors how scholars write an isnad: they start with the compiler and trace back to the Prophet ﷺ, but the diagram shows the *origin* of knowledge (the Prophet) flowing outward through generations.
 
 ### Controls
 
 | Control | What it does |
 |---|---|
-| **Book** | Switch between 11 hadith books — each has a different narrator network |
-| **Min link weight** | Filter out weak connections (2+, 5+, 10+, 20+, 50+). Higher = only major transmission routes shown |
-| **Max nodes** | Limit how many narrators appear (20, 35, 50, 60). Lower = cleaner diagram showing only the most prominent narrators |
-| **Height** | Diagram height (Compact, Normal, Tall, Full) — use Tall/Full for dense books like Musannaf |
+| **Book** | Switch between 11 hadith books — each book has a different narrator network reflecting its compiler's sources and geographic tradition |
+| **Min link weight** | Filter out infrequent transmission routes (2+, 5+, 10+, 20+, 50+). Higher values show only the most established *turuq* (routes) |
+| **Max nodes** | Limit how many ruwat appear (20, 35, 50, 60). Lower = only the most prolific narrators, giving a clearer view of the book's primary transmission structure |
+| **Height** | Diagram height (Compact, Normal, Tall, Full) — use Tall/Full for dense books like Musannaf Ibn Abi Shaybah |
 
 ### Stats bar
 
-The stats bar above the diagram shows: total chains parsed from the book, nodes and links currently displayed, and a grade breakdown — how many of the visible narrators are Companions, Reliable, Mostly reliable, or Weak/Abandoned.
+The stats bar shows: total *asanid* (chains) parsed from the book, ruwat and links currently displayed, and a grade breakdown — how many visible narrators are Sahaba, Thiqah, Sadooq, or Da'if/Matrook.
 
 ### Narrator grade matching
 
-Grades are matched via a 5-strategy Arabic name cascade (`src/match_narrator_grades.py`): exact match, prefix match, stripped-diacritics match, short-name alias, and `grade_ar` text markers (ثقة, إمام, حافظ). Match rate: **178/280 nodes (63.6%)** across all 11 books. Major narrators colored: al-Zuhri, Shu'ba, Imam Malik, al-A'mash, al-Layth, Sufyan al-Thawri.
+Grades are matched via a 5-strategy Arabic name cascade (`src/match_narrator_grades.py`): exact match, prefix match, stripped-diacritics match, short-name alias (e.g. الزهري → محمد بن مسلم بن عبيد الله بن شهاب الزهري), and `grade_ar` text markers (ثقة, إمام, حافظ). Match rate: **178/280 ruwat (63.6%)** across all 11 books. Major narrators colored: al-Zuhri, Shu'ba, Imam Malik, al-A'mash, al-Layth, Sufyan al-Thawri.
 
 ---
 
