@@ -22,6 +22,13 @@ app/data/narrator_grades.json
 app/data/semantic/semantic_index.faiss
 app/data/semantic/semantic_meta.json
 
+# Local deployment / planning files (not for public repo)
+Dockerfile
+docker-compose.yml
+nginx.conf
+.dockerignore
+PLAN.md
+
 # Intermediate build artifacts
 src/_chord_data.json
 src/_kashaf_narrators.csv
