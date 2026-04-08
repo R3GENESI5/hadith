@@ -2,27 +2,29 @@
 build_bridge.py — Quran ↔ Hadith Knowledge Bridge
 
 Reads:
-  D:/GRAPHS/quran-bil-quran/app/data/roots_index.json   — Quran root → {ayahs, meaning, family}
-  D:/GRAPHS/quran-bil-quran/app/data/families.json       — 35 thematic families → roots
-  D:/GRAPHS/quran-bil-quran/app/data/mufradat.json       — classical lexicon (Raghib al-Isfahani)
-  D:/Hadith/app/data/word_defs_v2.json                   — Hadith word → root
-  D:/Hadith/app/data/concordance.json                    — Hadith word → [book:id, ...]
-  D:/Hadith/app/data/roots_lexicon.json                  — roots → Lane's Lexicon
+  quran/data/roots_index.json        — Quran root → {ayahs, meaning, family}
+  quran/data/families.json           — 39 thematic families → roots
+  quran/data/mufradat.json           — classical lexicon (Raghib al-Isfahani)
+  app/data/word_defs_v2.json         — Hadith word → root
+  app/data/concordance.json          — Hadith word → [book:id, ...]
+  app/data/roots_lexicon.json        — roots → Lane's Lexicon
 
 Outputs:
-  D:/Hadith/app/data/quran_hadith_bridge.json  — root → {ayahs, hadith_ids, families, stats}
-  D:/Hadith/app/data/family_corpus.json        — family → {roots, ayahs, hadiths, book_breakdown}
-  D:/Hadith/src/bridge_analysis.json           — cross-correlation analysis & statistics
+  app/data/quran_hadith_bridge.json  — root → {ayahs, hadith_ids, families, stats}
+  app/data/family_corpus.json        — family → {roots, ayahs, hadiths, book_breakdown}
+  src/bridge_analysis.json           — cross-correlation analysis & statistics
 """
 
 import json
 import os
+from pathlib import Path
 from collections import defaultdict
 
-GRAPHS = "D:/GRAPHS/quran-bil-quran/app/data"
-HADITH = "D:/Hadith/app/data"
-OUT = "D:/Hadith/app/data"
-ANALYSIS_OUT = "D:/Hadith/src"
+ROOT = Path(__file__).resolve().parent.parent
+GRAPHS = str(ROOT / "quran" / "data")
+HADITH = str(ROOT / "app" / "data")
+OUT = str(ROOT / "app" / "data")
+ANALYSIS_OUT = str(ROOT / "src")
 
 def load(path):
     print(f"  Loading {os.path.basename(path)}...")
@@ -36,7 +38,7 @@ def save(path, data, indent=None):
     print(f"  Saved {os.path.basename(path)} ({size_kb:.0f} KB)")
 
 def book_of(hadith_id):
-    """Extract book name from 'bukhari:1234' style ID."""
+    """Extract book name from 'bukhari:ch:id' or legacy 'bukhari:id' style ID."""
     return hadith_id.split(":")[0] if ":" in hadith_id else "unknown"
 
 # ─── Load all sources ────────────────────────────────────────────────────────
@@ -154,7 +156,7 @@ print(f"  Total Quran↔Hadith links: {total_hadith_connections:,}")
 
 # ─── Build family_corpus.json ─────────────────────────────────────────────────
 
-print("\nBuilding 35-family thematic corpus...")
+print("\nBuilding 39-family thematic corpus...")
 family_corpus = {}
 
 for fam_key, fam_data in families.items():
@@ -298,5 +300,5 @@ save(f"{ANALYSIS_OUT}/bridge_analysis.json", analysis, indent=2)
 print("\n✓ Done. Summary:")
 print(f"  • {shared_roots} shared roots link {len(q_roots)} Quran roots ↔ Hadith")
 print(f"  • {total_hadith_connections:,} total Quran↔Hadith root connections")
-print(f"  • 35 thematic families with full Quran+Hadith coverage")
+print(f"  • 39 thematic families with full Quran+Hadith coverage")
 print(f"  • Top family by hadiths: {max(family_corpus.items(), key=lambda x: x[1]['hadith_count'])[0]}")

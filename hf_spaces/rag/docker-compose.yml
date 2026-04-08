@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  al-itqan-rag:
+    build: .
+    container_name: al-itqan-rag
+    restart: unless-stopped
+    ports:
+      - "7860:7860"          # access at http://your-nas-ip:7860
+    volumes:
+      # FAISS index (216MB) — mounted read-only, avoids re-downloading
+      - ../../app/data/semantic:/index:ro
+      # Concordance + bridge data for concordance mode
+      - ../../app/data:/data:ro
+      # Model weights cache — persists between container restarts
+      # (~3.5GB total: multilingual-e5-small + Qwen2.5-1.5B, downloaded on first run)
+      - huggingface_cache:/root/.cache/huggingface
+    environment:
+      USE_LOCAL_INDEX:  "1"
+      INDEX_PATH:       /index/semantic_index.faiss
+      META_PATH:        /index/semantic_meta.json
+      CONCORDANCE_PATH: /data/concordance.json
+      GRADIO_SERVER_NAME: "0.0.0.0"
+      GRADIO_SERVER_PORT: "7860"
+    mem_limit: 12g    # 1.5B fp32 ~3GB + concordance 22MB + index 216MB + overhead
+    shm_size: 512mb
+
+volumes:
+  huggingface_cache:

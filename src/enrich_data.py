@@ -889,7 +889,7 @@ def build_concordance_index():
         arabic = h.get('arabic', '')
         if not arabic:
             continue
-        h_id = f"{book_id}:{h.get('idInBook','')}"
+        h_id = f"{book_id}:{ch_idx}:{h.get('idInBook','')}"
         tokens = set(tokenize_matn(arabic))  # use full text for concordance, not just matn
         for tok in tokens:
             if tok in known_words:

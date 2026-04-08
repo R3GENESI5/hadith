@@ -2,8 +2,9 @@
 import json
 from pathlib import Path
 
-DATA = Path('D:/Hadith/app/data')
-OUT  = Path('D:/Hadith/app/chord.html')
+ROOT = Path(__file__).resolve().parent.parent
+DATA = ROOT / 'app' / 'data'
+OUT  = ROOT / 'app' / 'chord.html'
 
 d = json.load(open(DATA / 'chord_matrices.json', encoding='utf-8'))
 data_js = json.dumps(d, ensure_ascii=False, separators=(',', ':'))

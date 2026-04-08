@@ -17,7 +17,8 @@ import json, re, glob
 from pathlib import Path
 from collections import defaultdict
 
-DATA = Path('D:/Hadith/app/data')
+ROOT = Path(__file__).resolve().parent.parent
+DATA = ROOT / 'app' / 'data'
 
 def strip_diacritics(t):
     return re.sub(r'[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06DC\u06DF-\u06E4\u06E7\u06E8\u06EA-\u06ED]', '', t)
@@ -40,16 +41,37 @@ TRANS_PATTERN = re.compile(
     re.UNICODE
 )
 
+# Father-son lookup for resolving عن أبيه / عن أبي
+FATHER_MAP_PATH = Path(__file__).parent / 'isnad_father_map.json'
+FATHER_MAP = {}
+if FATHER_MAP_PATH.exists():
+    with open(FATHER_MAP_PATH, encoding='utf-8') as f:
+        raw = json.load(f)
+        FATHER_MAP = {strip_diacritics(k): strip_diacritics(v)
+                      for k, v in raw.items() if not k.startswith('_')}
+
+# Grandfather lookup for resolving عن جده
+GRANDFATHER_MAP_PATH = Path(__file__).parent / 'isnad_grandfather_map.json'
+GRANDFATHER_MAP = {}
+if GRANDFATHER_MAP_PATH.exists():
+    with open(GRANDFATHER_MAP_PATH, encoding='utf-8') as f:
+        raw = json.load(f)
+        GRANDFATHER_MAP = {strip_diacritics(k): strip_diacritics(v)
+                           for k, v in raw.items() if not k.startswith('_')}
+
 # Name cleanup
 def clean_name(s):
     s = strip_diacritics(s.strip())
-    # Remove common suffixes/prefixes
-    s = re.sub(r'\s*رضي\s*الله\s*عنه.*', '', s)
-    s = re.sub(r'\s*رضي\s*الله\s*عنها.*', '', s)
-    s = re.sub(r'\s*عليه\s*السلام.*', '', s)
-    s = re.sub(r'\s*صلى\s*الله\s*عليه.*', '', s)
+    # Remove kashida (tatweel) used for text stretching
+    s = s.replace('\u0640', '')
+    # Remove honorifics (رضي or رضى الله عنه/عنها/عنهما)
+    s = re.sub(r'\s*رض[يى]\s*الله\s*عنه[ما]*\s*', '', s)
+    s = re.sub(r'[ـ\s]*عليه\s*السلام[ـ\s]*', '', s)
+    s = re.sub(r'[ـ\s]*صلى\s*الله\s*عليه[ـ\s]*.*', '', s)
     s = re.sub(r'^\s*ان\s+', '', s)
     s = re.sub(r'^\s*انه\s+', '', s)
+    # Remove trailing قال: or قال and quotes
+    s = re.sub(r'\s*قال\s*:?\s*"?\s*$', '', s)
     s = re.sub(r'\s+', ' ', s).strip()
     return s
 
@@ -70,6 +92,22 @@ def extract_chain(arabic_text):
         if (len(name_part) >= 3
                 and not re.search(r'\d', name_part)
                 and name_part not in ('الله', 'رسول', 'النبي', 'ذلك', 'هذا', 'كان')):
+            # Resolve relative references using previous narrator in chain
+            # أبيه / أبي = "his father", جده = "his grandfather"
+            if name_part in ('أبيه', 'ابيه', 'أبي') and chain:
+                prev = chain[-1]
+                father = FATHER_MAP.get(prev)
+                if father:
+                    name_part = father
+                else:
+                    continue  # skip unresolvable reference
+            elif name_part.startswith('جده') and chain:
+                prev = chain[-1]
+                grandfather = GRANDFATHER_MAP.get(prev)
+                if grandfather:
+                    name_part = grandfather
+                else:
+                    continue  # skip unresolvable جده
             chain.append(name_part)
         if len(chain) >= 8:  # max chain depth
             break
