@@ -67,8 +67,58 @@ svg { display: block; }
 </head>
 <body>
 
+<div style="display:flex;gap:10px;margin-bottom:16px">
+  <a href="../index.html" style="font-size:.82rem;color:#8a8070;text-decoration:none;padding:4px 12px;border:1px solid #333;border-radius:4px" title="Itqan Home">🏠</a>
+  <a href="../quran/index.html" style="font-size:.82rem;color:#8a8070;text-decoration:none;padding:4px 12px;border:1px solid #333;border-radius:4px">Quran</a>
+  <a href="index.html" style="font-size:.82rem;color:#8a8070;text-decoration:none;padding:4px 12px;border:1px solid #333;border-radius:4px">Hadith</a>
+  <a href="families.html" style="font-size:.82rem;color:#8a8070;text-decoration:none;padding:4px 12px;border:1px solid #333;border-radius:4px">Families</a>
+  <a href="chord.html" style="font-size:.82rem;color:#8a8070;text-decoration:none;padding:4px 12px;border:1px solid #333;border-radius:4px">Chords</a>
+</div>
 <h1>Al-Itqan · Isnad Visualizer</h1>
 <div class="sub">Narrator chain flow diagram — based on KASHAF engine · 18,940 narrator grades from Taqrib al-Tahdhib</div>
+
+<div style="background:rgba(240,192,96,.08);border:1px solid rgba(240,192,96,.25);border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:.82rem;color:#aaa;line-height:1.6;max-width:780px">
+  <strong style="color:#f0c060">Coverage &amp; limitations</strong><br>
+  Isnad chains are currently parsed for <strong style="color:#ddd">11 of 18 books</strong>: the 9 canonical collections (Bukhari, Muslim,
+  Abu Dawud, Tirmidhi, Nasa'i, Ibn Majah, Ahmad, Malik, Darimi) plus Musannaf Ibn Abi Shaybah and Mishkat al-Masabih.
+  <br><br>
+  <strong style="color:#ddd">Not yet covered:</strong> Riyad as-Salihin, Al-Adab al-Mufrad, Bulugh al-Maram, Shamail Muhammadiyah,
+  and the three Forties collections (Nawawi, Qudsi, Shah Waliullah). These books either lack structured isnad
+  text or use abbreviated chains that require different parsing.
+  <br><br>
+  Chain extraction is regex-based (not ML), so some narrators may be split or merged incorrectly.
+  The top 60 narrators per book are shown; minor narrators are grouped under "Others."
+</div>
+
+<details style="background:rgba(240,192,96,.06);border:1px solid rgba(240,192,96,.15);border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:.82rem;color:#aaa;line-height:1.7;max-width:780px;cursor:pointer">
+  <summary style="color:#f0c060;font-weight:600;cursor:pointer;margin-bottom:8px">Reading this diagram &mdash; glossary of terms</summary>
+  <table style="width:100%;border-collapse:collapse;margin-top:4px">
+    <tr style="border-bottom:1px solid #222">
+      <td style="padding:6px 10px;color:#ddd;white-space:nowrap;font-weight:600">Narrator (node)</td>
+      <td style="padding:6px 10px">A <em>rawi</em> &mdash; a person in the chain of transmission. Each box in the diagram is one narrator. The diagram shows the most frequently appearing narrators in the selected book.</td>
+    </tr>
+    <tr style="border-bottom:1px solid #222">
+      <td style="padding:6px 10px;color:#ddd;white-space:nowrap;font-weight:600">Transmission (link)</td>
+      <td style="padding:6px 10px">A line connecting two narrators means one transmitted hadiths to the other. The <em>thickness</em> of the line shows how many hadiths flowed through that teacher&ndash;student pair. In hadith science, this is the <em>riwayah</em> &mdash; the act of narrating from one&rsquo;s shaykh.</td>
+    </tr>
+    <tr style="border-bottom:1px solid #222">
+      <td style="padding:6px 10px;color:#ddd;white-space:nowrap;font-weight:600">Min transmissions</td>
+      <td style="padding:6px 10px">Only show narrator pairs who shared at least this many hadiths. Set higher (10+, 20+) to focus on the strongest, most prolific transmission routes. Set lower (2+) to see weaker or rarer connections.</td>
+    </tr>
+    <tr style="border-bottom:1px solid #222">
+      <td style="padding:6px 10px;color:#ddd;white-space:nowrap;font-weight:600">Max narrators</td>
+      <td style="padding:6px 10px">How many of the top narrators to display. At 20, you see only the most prolific transmitters. At 60, you see the full network including less common narrators.</td>
+    </tr>
+    <tr style="border-bottom:1px solid #222">
+      <td style="padding:6px 10px;color:#ddd;white-space:nowrap;font-weight:600">Narrator grade</td>
+      <td style="padding:6px 10px">Colour-coded from Ibn Hajar&rsquo;s <em>Taqrib al-Tahdhib</em>: <span style="color:#9b59b6">Companion (Sahabi)</span>, <span style="color:#2ecc71">Reliable (Thiqah)</span>, <span style="color:#f39c12">Mostly reliable (Sadooq)</span>, <span style="color:#e74c3c">Weak (Da&rsquo;if)</span>, <span style="color:#c0392b">Abandoned (Matrook)</span>.</td>
+    </tr>
+    <tr>
+      <td style="padding:6px 10px;color:#ddd;white-space:nowrap;font-weight:600">Flow direction</td>
+      <td style="padding:6px 10px">Left to right: from the earliest narrators (often Companions) toward later transmitters and compilers. The flow mirrors the historical passage of hadith through generations (<em>tabaqat</em>).</td>
+    </tr>
+  </table>
+</details>
 
 <div class="controls">
   <div>
@@ -87,8 +137,8 @@ svg { display: block; }
       <option value="mishkat_almasabih">Mishkat al-Masabih</option>
     </select>
   </div>
-  <div>
-    <div class="ctrl-label">Min link weight</div>
+  <div title="Only show narrator pairs who shared at least this many hadiths. Higher = stronger routes only.">
+    <div class="ctrl-label">Min transmissions</div>
     <select id="min-weight">
       <option value="2">2+</option>
       <option value="5" selected>5+</option>
@@ -97,8 +147,8 @@ svg { display: block; }
       <option value="50">50+</option>
     </select>
   </div>
-  <div>
-    <div class="ctrl-label">Max nodes</div>
+  <div title="How many of the top narrators (ruwat) to display. Lower = only the most prolific.">
+    <div class="ctrl-label">Max narrators</div>
     <select id="max-nodes">
       <option value="20">20</option>
       <option value="35" selected>35</option>
@@ -226,8 +276,8 @@ function render() {
   nodes.forEach(n => { gradeCount[n.grade_en] = (gradeCount[n.grade_en] || 0) + 1; });
   statsEl.innerHTML = [
     ['Chains parsed', fmt(raw.total_parsed)],
-    ['Nodes shown', nodes.length],
-    ['Links shown', remapped.length],
+    ['Narrators shown', nodes.length],
+    ['Transmissions shown', remapped.length],
     ['Companions', gradeCount.companion || 0],
     ['Reliable', gradeCount.reliable || 0],
     ['Mostly reliable', gradeCount.mostly_reliable || 0],

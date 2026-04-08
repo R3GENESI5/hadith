@@ -14,6 +14,10 @@ const App = {
     narratorIndex:    null, // narrator name → {total, books, topics, grade_profile, ...}
     rootsLexicon:     null, // root_ar → {definition_en, summary_en, buckwalter}
 
+    // Root filter (from ?root= URL param)
+    rootFilter:   null,     // {root, ids: {bookId: Set(idInBook)}} or null
+    quranRootsIndex: null,  // root → {b, m, f, v: [ayah refs], fam}
+
     // Settings
     showArabic:   true,
     showNarrator: true,
@@ -60,8 +64,21 @@ const App = {
             this.books = await fetch('data/books.json').then(r => r.json());
             this.renderSidebar();
             this.setupUI();
-            this.handleHash();
+
+            // Root filter from ?root= param takes priority over hash
+            const urlRoot = new URLSearchParams(location.search).get('root');
+            if (urlRoot) {
+                await this.applyRootFilter(urlRoot);
+            } else {
+                this.handleHash();
+            }
+
             this.$('loading-overlay').classList.add('hidden');
+
+            // Hash change listener for back/forward navigation
+            window.addEventListener('hashchange', () => {
+                if (!this.rootFilter) this.handleHash();
+            });
 
             // Background loads
             this.loadWordDefs();
@@ -88,6 +105,8 @@ const App = {
                 this.wordDefsVersion = 1;
             } catch { this.wordDefs = {}; this.wordDefsVersion = 0; }
         }
+        // Hadiths were rendered before this loaded — re-render now so word spans get defs/highlights
+        if (this._lastHadiths) this.renderHadiths(this._lastHadiths);
     },
 
     async loadConnections() {
@@ -217,14 +236,20 @@ const App = {
             const ul = this.$(elId);
             ul.innerHTML = '';
             (this.books.sunni[key] || []).forEach(book => {
+                const filterCount = this.rootFilter?.ids[book.id]?._total ?? null;
+                // Dim books with no matches when filter is active
                 const li = document.createElement('li');
-                li.className = 'book-item';
+                li.className = 'book-item' + (this.rootFilter && !filterCount ? ' rf-dimmed' : '');
                 li.dataset.bookId = book.id;
+                const countBadge = filterCount !== null
+                    ? `<span class="book-filter-count">${filterCount}</span>`
+                    : '';
                 li.innerHTML = `
                     <div class="book-item-inner">
                         <span class="book-name-ar">${book.name_ar}</span>
                         <span class="book-name-en">${book.name_en}</span>
                     </div>
+                    ${countBadge}
                     ${book.graded ? '<span class="book-grade-dot" title="Grading available"></span>' : ''}
                 `;
                 li.addEventListener('click', () => this.selectBook(book.id));
@@ -371,11 +396,29 @@ const App = {
 
     // ── Render hadiths ────────────────────────────────────────────────────────
     renderHadiths(hadiths) {
+        this._lastHadiths = hadiths;   // saved so wordDefs re-render can replay
         const list = this.$('hadith-list');
+        list.style.display = '';
         list.innerHTML = '';
 
+        // Apply root filter if active — match by chapter + idInBook
+        if (this.rootFilter && hadiths?.length) {
+            const bookFilter = this.rootFilter.ids[this.currentBookId];
+            const chapterSet = bookFilter?.[this.currentChapterIdx];
+            if (chapterSet) {
+                hadiths = hadiths.filter(h => chapterSet.has(h.idInBook));
+            } else if (bookFilter) {
+                hadiths = [];  // book has matches but not this chapter
+            } else {
+                hadiths = [];  // book has no matches at all
+            }
+        }
+
         if (!hadiths?.length) {
-            list.innerHTML = '<div style="padding:24px;color:var(--text-muted);text-align:center">No hadiths in this chapter.</div>';
+            const msg = this.rootFilter
+                ? 'No connected hadiths in this chapter.'
+                : 'No hadiths in this chapter.';
+            list.innerHTML = `<div style="padding:24px;color:var(--text-muted);text-align:center">${msg}</div>`;
             return;
         }
 
@@ -386,8 +429,9 @@ const App = {
             card.className = 'hadith-card';
             card.dataset.id = h.idInBook;
 
+            const hasIsnad   = !!(h.english?.narrator);
             const arabicHtml = this.showArabic && h.arabic
-                ? `<div class="hc-arabic" dir="rtl">${this.renderArabicWords(h.arabic)}</div>`
+                ? `<div class="hc-arabic" dir="rtl">${this.renderArabicWords(h.arabic, hasIsnad)}</div>`
                 : '';
             const narratorHtml = this.showNarrator && h.english?.narrator
                 ? `<div class="hc-narrator">${this.renderNarratorHtml(h.english.narrator)}</div>`
@@ -435,15 +479,16 @@ const App = {
     },
 
     // ── Arabic word rendering ─────────────────────────────────────────────────
-    renderArabicWords(arabic) {
+    renderArabicWords(arabic, hasIsnad = false) {
         if (!arabic) return '';
         const defs = this.wordDefs;
-        const words = arabic.split(/(\s+)/);
-        return words.map(token => {
+        const activeRoot = this.rootFilter ? this.normalizeArabic(this.rootFilter.root) : null;
+
+        const tokens = arabic.split(/(\s+)/);
+        return tokens.map(token => {
             if (!token.trim()) return token;
 
-            // Arabic letters only (U+0621–U+063A, U+0641–U+064A) — strips
-            // punctuation (،؟؛), tatweel (ـ), and digits from word boundaries.
+            // Arabic letters only (U+0621–U+063A, U+0641–U+064A)
             const arabicOnly = token.replace(/[^\u0621-\u063A\u0641-\u064A]/g, '');
             if (!arabicOnly) return this.escHtml(token);
 
@@ -451,11 +496,14 @@ const App = {
                 const norm = this.normalizeArabic(arabicOnly);
                 const def  = defs[norm];
                 if (def) {
-                    // word_defs.json uses short keys: g=gloss, d=definition, r=root_ar, s=buckwalter/summary, n=freq
+                    // word_defs.json: g=gloss, r=root_ar, s=buckwalter, n=freq
                     const gloss = (def.g || def.s || '').slice(0, 80).replace(/"/g, '&quot;');
                     const safeToken = this.escHtml(token);
                     const safeNorm  = this.escHtml(norm);
-                    return `<span class="arabic-word has-def" data-word="${safeNorm}" data-def="${gloss}">${safeToken}</span>`;
+                    const isRootMatch = activeRoot && def.r
+                        && this.normalizeArabic(def.r) === activeRoot;
+                    const cls = 'arabic-word has-def' + (isRootMatch ? ' root-hl' : '');
+                    return `<span class="${cls}" data-word="${safeNorm}" data-def="${gloss}">${safeToken}</span>`;
                 }
             }
             return `<span class="arabic-word">${this.escHtml(token)}</span>`;
@@ -760,13 +808,16 @@ const App = {
 
         this.$('hp-ref').textContent = [meta?.name_en, ch?.name_en, `#${h.idInBook}`].filter(Boolean).join(' — ');
 
+        // Update URL for deep linking
+        history.replaceState(null, '', `#${this.currentBookId}/${this.currentChapterIdx}/${h.idInBook}`);
+
         this.$('hp-grade').innerHTML = grade
             ? `<span class="grade-badge ${this.gradeClass(grade)}">${grade}</span>`
             : '';
 
         // Render Arabic with word spans in the panel too
         const arabicEl = this.$('hp-arabic');
-        arabicEl.innerHTML = this.renderArabicWords(h.arabic || '');
+        arabicEl.innerHTML = this.renderArabicWords(h.arabic || '', !!(h.english?.narrator));
         arabicEl.addEventListener('click', (e) => {
             const span = e.target.closest('.arabic-word.has-def');
             if (span) this.openWordPanel(span.dataset.word, span.dataset.def);
@@ -1341,10 +1392,10 @@ const App = {
         this.$('hp-share').addEventListener('click', () => {
             const h = this.activeHadith;
             if (!h) return;
-            const url = `${location.origin}${location.pathname.replace(/[^/]*$/, '')}hadith.html?book=${this.currentBookId}&id=${h.idInBook}`;
+            const url = `${location.origin}${location.pathname}#${this.currentBookId}/${this.currentChapterIdx}/${h.idInBook}`;
             navigator.clipboard?.writeText(url);
             this.$('hp-share').textContent = '✓ Copied';
-            setTimeout(() => this.$('hp-share').textContent = '⧉ Copy Link', 1500);
+            setTimeout(() => this.$('hp-share').textContent = '🔗 Share', 1500);
         });
 
         this.$('hp-open').addEventListener('click', () => {
@@ -1400,16 +1451,132 @@ const App = {
         this.$('narrator-toggle')?.classList.toggle('active', this.showNarrator);
     },
 
+    // ── Root filter (from Quran bil-Quran) ───────────────────────────────────
+    async applyRootFilter(root) {
+        // Fetch only this root's file — tiny, fast, no 3.8MB download
+        // Format: {book: {chapter_idx: [idInBook, ...]}}
+        let byBook;
+        try {
+            const enc = encodeURIComponent(root);
+            const raw = await fetch(`data/bridge_ids/${enc}.json`).then(r => r.json());
+            byBook = {};
+            for (const [book, chapters] of Object.entries(raw)) {
+                byBook[book] = { _total: 0 };
+                for (const [ch, ids] of Object.entries(chapters)) {
+                    byBook[book][ch] = new Set(ids);
+                    byBook[book]._total += ids.length;
+                }
+            }
+        } catch (e) {
+            console.warn('Root filter not found for:', root, e);
+            return;
+        }
+        if (!byBook || !Object.keys(byBook).length) return;
+
+        this.rootFilter = { root, ids: byBook };
+        this.renderSidebar();        // re-render with count badges
+        this.renderRootFilterBanner();
+
+        // Auto-open first book that has matches, starting at a chapter with hits
+        const allBooks = [
+            ...this.books.sunni.the_9_books,
+            ...this.books.sunni.forties,
+            ...this.books.sunni.other_books,
+        ];
+        const firstBook = allBooks.find(b => byBook[b.id]);
+        if (firstBook) {
+            await this.selectBook(firstBook.id);
+            // Find first chapter with matches
+            const bookFilter = byBook[firstBook.id];
+            const firstCh = Object.keys(bookFilter).find(k => k !== '_total' && bookFilter[k].size > 0);
+            await this.loadChapter(firstCh !== undefined ? parseInt(firstCh) : 0);
+        }
+    },
+
+    clearRootFilter() {
+        this.rootFilter = null;
+        this.$('root-filter-banner').style.display = 'none';
+        this.renderSidebar();
+        history.replaceState(null, '', location.pathname + location.hash);
+        // Re-render hadith list without the filter
+        if (this._lastHadiths) this.renderHadiths(this._lastHadiths);
+    },
+
+    renderRootFilterBanner() {
+        const { root, ids } = this.rootFilter;
+        const total = Object.values(ids).reduce((s, book) => s + (book._total || 0), 0);
+        const letters = root.split('').join(' ');
+        const banner = this.$('root-filter-banner');
+        banner.innerHTML = `
+            <span class="rfb-root" dir="rtl">${letters}</span>
+            <span class="rfb-count">${total.toLocaleString()} connected hadiths</span>
+            <button class="rfb-quran" onclick="App.toggleQuranBridge()">📖 Quran verses</button>
+            <button class="rfb-clear" onclick="App.clearRootFilter()">✕ clear filter</button>
+        `;
+        banner.style.display = 'flex';
+        this.loadQuranBridge(root);
+    },
+
+    async loadQuranBridge(root) {
+        if (!this.quranRootsIndex) {
+            try {
+                this.quranRootsIndex = await fetch('../quran/data/roots_index.json').then(r => r.json());
+            } catch { this.quranRootsIndex = {}; }
+        }
+        const entry = this.quranRootsIndex[root];
+        const panel = this.$('quran-bridge-panel');
+        if (!entry || !entry.v || !entry.v.length) {
+            panel.style.display = 'none';
+            return;
+        }
+        const verses = entry.v;
+        const meaning = entry.m || '';
+        const family = entry.fam || '';
+        panel.innerHTML = `
+            <div class="qbp-header">
+                <span class="qbp-title">آيات القرآن — ${verses.length} Quran verses with this root</span>
+                ${family ? `<span class="qbp-family">${family}</span>` : ''}
+            </div>
+            ${meaning ? `<div class="qbp-meaning">${this.escHtml(meaning)}</div>` : ''}
+            <div class="qbp-verses">${verses.map(v => {
+                const [s, a] = v.split(':');
+                return `<a href="../quran/index.html#${s}" class="qbp-verse" title="Surah ${s}, Ayah ${a}">${v}</a>`;
+            }).join('')}</div>
+        `;
+        panel.style.display = 'none'; // starts collapsed, toggled by button
+    },
+
+    toggleQuranBridge() {
+        const panel = this.$('quran-bridge-panel');
+        const isHidden = panel.style.display === 'none';
+        panel.style.display = isHidden ? 'block' : 'none';
+    },
+
     // ── Hash routing ──────────────────────────────────────────────────────────
     handleHash() {
         const hash = location.hash.slice(1);
         if (!hash) return;
-        const [bookId, chIdx] = hash.split('/');
+        const parts = hash.split('/');
+        const [bookId, chIdx, hadithId] = parts;
         if (bookId) {
             this.selectBook(bookId).then(() => {
-                if (chIdx !== undefined) this.loadChapter(parseInt(chIdx));
+                if (chIdx !== undefined) {
+                    this.loadChapter(parseInt(chIdx)).then(() => {
+                        if (hadithId) this.scrollToHadith(hadithId);
+                    });
+                }
             });
         }
+    },
+
+    scrollToHadith(idInBook) {
+        requestAnimationFrame(() => {
+            const card = document.querySelector(`.hadith-card[data-id="${idInBook}"]`);
+            if (!card) return;
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            card.classList.add('hadith-highlight');
+            setTimeout(() => card.classList.remove('hadith-highlight'), 3000);
+        });
     },
 
     // ── Utility ───────────────────────────────────────────────────────────────

@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=6">
+    <link rel="stylesheet" href="css/style.css?v=7">
     <script>if(localStorage.getItem('hadith-dark')==='true')document.documentElement.classList.add('dark-mode')</script>
 </head>
 <body>
@@ -28,7 +28,11 @@
     </div>
 
     <div class="header-controls">
+        <a href="../index.html" class="icon-btn" title="Itqan Home" style="text-decoration:none">🏠</a>
+        <a href="../quran/index.html" class="icon-btn" title="Quran" style="text-decoration:none">القرآن</a>
         <a href="shia.html" class="shia-link">الشيعة ◎</a>
+        <a href="isnad.html" class="icon-btn" title="Isnad Visualizer" style="text-decoration:none">إسناد</a>
+        <a href="families.html" class="icon-btn" title="Thematic Families" style="text-decoration:none">أسر</a>
         <button id="map-toggle"      class="icon-btn" title="Library Map">⊞</button>
         <button id="theme-toggle"    class="icon-btn" title="Dark mode">☽</button>
         <button id="arabic-toggle"   class="icon-btn active" title="Arabic text">ع</button>
@@ -86,7 +90,9 @@
                 </div>
             </div>
 
-            <div id="hadith-list"></div>
+            <div id="root-filter-banner" style="display:none"></div>
+            <div id="quran-bridge-panel" class="quran-bridge-panel" style="display:none"></div>
+            <div id="hadith-list" style="display:none"></div>
 
             <!-- Library Map view -->
             <div id="library-map" class="library-map" style="display:none">
@@ -109,18 +115,37 @@
             </div>
 
             <div id="welcome" class="welcome">
-                <div class="welcome-inner">
+                <div class="welcome-inner" style="max-width:520px">
                     <div class="welcome-ar">الحديث النبوي الشريف</div>
                     <div class="welcome-title">Hadith Library</div>
-                    <div class="welcome-desc">50,000+ hadiths · Arabic text with mouseover definitions · English translation · grading · cross-book connections</div>
-                    <div class="welcome-stats">
-                        <div class="stat"><span class="stat-n">17</span><span class="stat-l">Books</span></div>
-                        <div class="stat"><span class="stat-n">49k</span><span class="stat-l">Hadiths</span></div>
-                        <div class="stat"><span class="stat-n">1,651</span><span class="stat-l">Roots</span></div>
-                        <div class="stat"><span class="stat-n">6,740</span><span class="stat-l">Connections</span></div>
+                    <div class="welcome-desc">
+                        Unlike Sunnah.com or Quran.com, every Arabic word here is interactive &mdash;
+                        click any word to see its three-letter root, Lane's Lexicon definition,
+                        and every other hadith sharing that root across all 18 books.
+                        This is root morphology, not keyword search.
                     </div>
-                    <div class="welcome-hint">← Select a book to begin, or press <kbd>/</kbd> to search</div>
-                    <a href="shia.html" class="welcome-shia-btn">Shia Hadith Library →</a>
+                    <div class="welcome-desc" style="font-size:.78rem;color:#777;margin-bottom:14px">
+                        The 6 canonical Sunni collections (Bukhari, Muslim, Abu Dawud, Tirmidhi, Nasa'i, Ibn Majah)
+                        + Musnad Ahmad, Muwatta Malik, Sunan ad-Darimi
+                        + Musannaf Ibn Abi Shaybah (37k hadiths, not available on Sunnah.com)
+                        + 6 supplementary books and 3 Forties collections.
+                        A separate Shia hadith library (18 books) is also available for reference.
+                    </div>
+                    <div class="welcome-stats">
+                        <div class="stat"><span class="stat-n">18</span><span class="stat-l">Sunni Books</span></div>
+                        <div class="stat"><span class="stat-n">87k</span><span class="stat-l">Hadiths</span></div>
+                        <div class="stat"><span class="stat-n">32k</span><span class="stat-l">Words Defined</span></div>
+                        <div class="stat"><span class="stat-n">1,336</span><span class="stat-l">Quran Roots</span></div>
+                    </div>
+                    <div class="welcome-hint">← Select a book from the sidebar, or press <kbd>/</kbd> to search</div>
+                    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px">
+                        <a href="../quran/index.html" style="font-size:.78rem;color:#8a8070;border:1px solid #333;border-radius:18px;padding:5px 14px;text-decoration:none;transition:all .15s" onmouseover="this.style.borderColor='#d4a855';this.style.color='#d4a855'" onmouseout="this.style.borderColor='#333';this.style.color='#8a8070'">Quran Reader</a>
+                        <a href="families.html" style="font-size:.78rem;color:#8a8070;border:1px solid #333;border-radius:18px;padding:5px 14px;text-decoration:none;transition:all .15s" onmouseover="this.style.borderColor='#d4a855';this.style.color='#d4a855'" onmouseout="this.style.borderColor='#333';this.style.color='#8a8070'">39 Families</a>
+                        <a href="chord.html" style="font-size:.78rem;color:#8a8070;border:1px solid #333;border-radius:18px;padding:5px 14px;text-decoration:none;transition:all .15s" onmouseover="this.style.borderColor='#d4a855';this.style.color='#d4a855'" onmouseout="this.style.borderColor='#333';this.style.color='#8a8070'">Chord Graphs</a>
+                        <a href="isnad.html" style="font-size:.78rem;color:#4aaa70;border:1px solid rgba(74,170,112,.4);border-radius:18px;padding:5px 14px;text-decoration:none;transition:all .15s" onmouseover="this.style.borderColor='#4aaa70'" onmouseout="this.style.borderColor='rgba(74,170,112,.4)'">Isnad Visualizer</a>
+                        <a href="shia.html" style="font-size:.78rem;color:#8a8070;border:1px solid #333;border-radius:18px;padding:5px 14px;text-decoration:none;transition:all .15s" onmouseover="this.style.borderColor='#d4a855';this.style.color='#d4a855'" onmouseout="this.style.borderColor='#333';this.style.color='#8a8070'">Shia Library</a>
+                        <a href="../guide.html" style="font-size:.78rem;color:#8a8070;border:1px solid #333;border-radius:18px;padding:5px 14px;text-decoration:none;transition:all .15s" onmouseover="this.style.borderColor='#d4a855';this.style.color='#d4a855'" onmouseout="this.style.borderColor='#333';this.style.color='#8a8070'">How It Works</a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -270,6 +295,6 @@
     </div>
 </div>
 
-<script src="js/app.js?v=11"></script>
+<script src="js/app.js?v=23"></script>
 </body>
 </html>
