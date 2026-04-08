@@ -5,7 +5,7 @@
 
 > *"Itqan"* (إتقان) means mastery, perfection, and precision in craft. This project applies that principle to Islamic source texts: every connection between the Quran and the Hadith corpus is grounded in classical Arabic root morphology, not keyword guessing.
 
-A unified Quran and Hadith study platform — **1,336 shared Arabic roots** connecting **6,236 Quran ayahs** to **87k+ hadiths** through **837,632 root links**. Open the Quran, click any root, see every connected hadith across 18 books. Fully static, offline-capable, no backend required.
+A unified Quran and Hadith study platform — **1,336 shared Arabic roots** connecting **6,236 Quran ayahs** to **112k+ hadiths** through **862,661 root links**. Open the Quran, click any root, see every connected hadith across 18 books. Fully static, offline-capable, no backend required.
 
 **[Itqan AI](https://huggingface.co/spaces/iqrossed/al-itqan-rag)** — an optional companion app providing concordance search and RAG-powered Q&A over the same corpus.
 
@@ -25,9 +25,9 @@ The result is a set of open JSON files that any developer can load and build on,
 |---|---|
 | ![Word panel](docs/screenshots/hadith-word-panel.png) | ![Library map](docs/screenshots/hadith-library-map.png) |
 
-**Corpus:** 87,688 Sunni hadiths + standalone Shia database
+**Corpus:** 112,221 Sunni hadiths + standalone Shia database
 **Quran roots:** 1,651 unique roots, 6,236 ayahs
-**Cross-references:** 837,632 Quran↔Hadith root links through 1,336 shared roots
+**Cross-references:** 862,661 Quran↔Hadith root links through 1,336 shared roots
 **Thematic families:** 39 (35 classical + 4 new: End of Times, Jihad, Statecraft, Family Law)
 
 ### Getting Started
@@ -51,7 +51,7 @@ Itqan builds on three open-source projects (KASHAF, BasilSuhail, HadithRAG) — 
 | Source | What it was | What Itqan made it |
 |--------|------------|-------------------|
 | **KASHAF** | Bukhari-only CSV, Google Charts | **11 books**, D3-sankey, 37,454 parsed chains, narrator grading from Taqrib al-Tahdhib, interactive controls |
-| **BasilSuhail** | 15k hadiths, English-only model | **87,688 hadiths**, `multilingual-e5-small` (Arabic-native), root family tagging, HuggingFace deployment |
+| **BasilSuhail** | 15k hadiths, English-only model | **112,221 hadiths**, `multilingual-e5-small` (Arabic-native), root family tagging, HuggingFace deployment |
 | **HadithRAG** | GPT-3.5 (paid), no grounding | **Qwen2.5** (open-source, free), multi-turn conversation, source citations, deduplication |
 
 ### Entirely original — built from scratch
@@ -60,9 +60,9 @@ These components have no precedent in any of the source projects or, to our know
 
 | Component | What it does | Scale |
 |-----------|-------------|-------|
-| **Quran↔Hadith root bridge** | Connects every Quran root to every hadith containing a word from that root | 1,336 roots, 837,632 links |
+| **Quran↔Hadith root bridge** | Connects every Quran root to every hadith containing a word from that root | 1,336 roots, 862,661 links |
 | **39 thematic families** | Roots grouped by semantic field (mercy, justice, prayer, trade...) from classical lexicography | 39 families spanning both corpora |
-| **Word-level morphological definitions** | Click any Arabic word in any hadith → root, Lane's Lexicon definition, morphological form | 32,413 words across 87k hadiths |
+| **Word-level morphological definitions** | Click any Arabic word in any hadith → root, Lane's Lexicon definition, morphological form | 32,413 words across 112k hadiths |
 | **Mufradat al-Quran integration** | Al-Raghib al-Isfahani's classical root definitions in the Quran reader | 1,651 roots |
 | **Concordance (Mu'jam al-Mufahris)** | Full inverted index: every word → every hadith containing it | 32,410 words, 1.15M entries |
 | **Chord visualizations** | Family×Family overlap, book distinctiveness, narrator×book network | 3 interactive D3 diagrams |
@@ -89,14 +89,14 @@ Click a hadith book badge and Itqan opens the hadith view filtered to that root 
 
 ### Itqan AI — Optional Companion
 
-**[Itqan AI on HuggingFace](https://huggingface.co/spaces/iqrossed/al-itqan-rag)** — concordance search (Arabic morphological lookup or English semantic search) and RAG-powered Q&A over the full 87k hadith corpus. Not required for the core study workflow.
+**[Itqan AI on HuggingFace](https://huggingface.co/spaces/iqrossed/al-itqan-rag)** — concordance search (Arabic morphological lookup or English semantic search) and RAG-powered Q&A over the full 112k hadith corpus. Not required for the core study workflow.
 
 ---
 
 ## The Data Pipeline
 
 ```
-RAW HADITH TEXT (Arabic, 18 books, 87,688 hadiths)
+RAW HADITH TEXT (Arabic, 18 books, 112,221 hadiths)
         │
         ▼
   CAMeL Tools — Cairo Arabic NLP Toolkit
@@ -133,7 +133,7 @@ RAW HADITH TEXT (Arabic, 18 books, 87,688 hadiths)
         │
         ▼
   quran_hadith_bridge.json            1,651 roots fully connected
-  837,632 total Quran↔Hadith root links
+  862,661 total Quran↔Hadith root links
         │
         ▼
   family_corpus.json                  39 thematic families
@@ -476,7 +476,7 @@ This repo contains the **data layer** that powers Al-Itqan. Three open-source to
 | BasilSuhail — Semantic Search | [iqrossed/al-itqan-search](https://huggingface.co/spaces/iqrossed/al-itqan-search) | ✅ Deployed |
 | HadithRAG — Conversational Q&A | [iqrossed/al-itqan-rag](https://huggingface.co/spaces/iqrossed/al-itqan-rag) | ✅ Deployed |
 
-The FAISS semantic index (87,056 hadiths, `intfloat/multilingual-e5-small`, 216MB) is hosted at [`iqrossed/al-itqan-index`](https://huggingface.co/datasets/iqrossed/al-itqan-index) and shared by both Spaces.
+The FAISS semantic index (112,221 hadiths, `intfloat/multilingual-e5-small`, 216MB) is hosted at [`iqrossed/al-itqan-index`](https://huggingface.co/datasets/iqrossed/al-itqan-index) and shared by both Spaces.
 
 ### KASHAF — Isnad Visualizer
 **Source:** `github.com/OmarShafie/hadith`
@@ -507,7 +507,7 @@ The FAISS semantic index (87,056 hadiths, `intfloat/multilingual-e5-small`, 216M
 - The result schema: `{type, text, reference, score}`
 
 **What Al-Itqan upgrades:**
-- 15k hadiths → **87,688 hadiths** (all 18 books)
+- 15k hadiths → **112,221 hadiths** (all 18 books)
 - `all-MiniLM-L6-v2` (English-first, no Arabic understanding) → **`intfloat/multilingual-e5-small`** (instruction-tuned multilingual, Apache-2.0)
 - Flask local server → **HuggingFace Spaces** (Gradio, CPU-only, free)
 - No context → **every result tagged with root family** from `quran_hadith_bridge.json`
@@ -575,7 +575,7 @@ The model, vector store, language support, grounding, and conversation architect
 │  │              click hadith badge                        │   │
 │  │                     ▼                                  │   │
 │  │  HADITH VIEW  (app/index.html)                        │   │
-│  │  87k hadiths · 18 books · grade badges                │   │
+│  │  112k hadiths · 18 books · grade badges                │   │
 │  │  Root filter mode (?root=X) or standalone browse      │   │
 │  │  Word panel: root, morphology, Lane's Lexicon         │   │
 │  └──────────────────────────────────────────────────────┘   │
@@ -605,7 +605,7 @@ The model, vector store, language support, grounding, and conversation architect
 
 ## Data Sources
 
-### Hadith Books (Sunni — 87,688 hadiths)
+### Hadith Books (Sunni — 112,221 hadiths)
 
 | Book | Hadiths | Status |
 |---|---|---|
@@ -758,7 +758,7 @@ python src/audit.py
 |---|---|---|
 | 0 | Data pipeline + concordance + bridge | ✅ Complete |
 | 1 | Isnad visualizer (D3 Sankey, 11 books) | ✅ Complete |
-| 2 | Semantic search (FAISS + multilingual-e5-small, 87k hadiths) | ✅ Complete |
+| 2 | Semantic search (FAISS + multilingual-e5-small, 112k hadiths) | ✅ Complete |
 | 3 | Conversational Q&A (RAG + Qwen2.5-0.5B) | ✅ Complete |
 | 4 | Isnad narrator grade matching (5-strategy Arabic cascade) | ✅ Complete |
 | 5 | App scaffold: reader, root panel, family view | ✅ Complete |
