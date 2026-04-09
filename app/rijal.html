@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al-Itqan — Rijal (Narrator Profiles)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0a0f; color: #e0d8c8; min-height: 100vh; }
+
+        /* Nav */
+        .top-nav { display: flex; gap: 10px; padding: 14px 20px; background: rgba(18,14,10,.92); border-bottom: 1px solid #2a2420; font-size: .82rem; flex-wrap: wrap; align-items: center; }
+        .top-nav a { color: #8a8070; padding: 2px 10px; border: 1px solid #333; border-radius: 4px; text-decoration: none; }
+        .top-nav a:hover { color: #d4a855; border-color: #d4a855; }
+
+        /* Header */
+        .header { text-align: center; padding: 20px 20px 10px; }
+        .header h1 { font-family: 'Amiri', serif; font-size: 1.5rem; color: #d4a855; }
+        .header .sub { font-size: .8rem; color: #8a8070; margin-top: 4px; }
+
+        /* Search */
+        .search-bar { max-width: 700px; margin: 16px auto 8px; padding: 0 20px; }
+        .search-bar input { width: 100%; padding: 10px 14px; background: #1a1612; border: 1px solid #333; border-radius: 8px; color: #e0d8c8; font-size: 1rem; }
+        .search-bar input:focus { border-color: #d4a855; outline: none; }
+
+        /* Filters */
+        .filters { max-width: 700px; margin: 0 auto 12px; padding: 0 20px; display: flex; gap: 8px; flex-wrap: wrap; }
+        .filters select { background: #1a1612; border: 1px solid #333; color: #ccc; padding: 6px 10px; border-radius: 6px; font-size: .82rem; }
+
+        /* Stats */
+        .stats-bar { text-align: center; font-size: .78rem; color: #666; margin-bottom: 12px; }
+
+        /* Grid */
+        .grid { max-width: 900px; margin: 0 auto; padding: 0 20px 40px; }
+        .card { background: #1a1612; border: 1px solid #2a2420; border-radius: 8px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer; transition: border-color .15s; }
+        .card:hover { border-color: #d4a855; }
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+        .card-name { font-family: 'Amiri', serif; font-size: 1.2rem; color: #e0d8c8; direction: rtl; }
+        .card-kunya { font-size: .82rem; color: #8a8070; direction: rtl; }
+        .card-grade { font-size: .72rem; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+        .card-meta { font-size: .78rem; color: #777; margin-top: 6px; }
+        .card-meta span { margin-right: 12px; }
+
+        /* Expanded detail */
+        .card-detail { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid #222; }
+        .card.expanded .card-detail { display: block; }
+        .detail-section { margin-bottom: 10px; }
+        .detail-label { font-size: .72rem; color: #d4a855; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
+        .detail-text { font-size: .85rem; color: #b0a898; line-height: 1.6; }
+        .detail-text-ar { font-family: 'Amiri', serif; font-size: 1rem; color: #e0d8c8; direction: rtl; line-height: 1.8; }
+        .jarh-scholar { color: #d4a855; font-weight: 600; font-size: .82rem; }
+        .jarh-opinion { font-size: .82rem; color: #a09888; direction: rtl; line-height: 1.7; margin-bottom: 6px; font-family: 'Amiri', serif; }
+        .name-variants { display: flex; flex-wrap: wrap; gap: 4px; direction: rtl; }
+        .name-var { font-size: .72rem; color: #8a8070; background: #1e1a16; border: 1px solid #2a2420; border-radius: 10px; padding: 1px 8px; font-family: 'Amiri', serif; }
+
+        /* No results */
+        .no-results { text-align: center; color: #555; padding: 40px; }
+    </style>
+</head>
+<body>
+
+<div class="top-nav">
+    <a href="../index.html" title="Home">&#x1F3E0;</a>
+    <a href="../quran/index.html">Quran</a>
+    <a href="index.html">Hadith</a>
+    <a href="families.html">Families</a>
+    <a href="isnad.html">Isnad</a>
+    <a href="chord.html">Chords</a>
+</div>
+
+<div class="header">
+    <h1>علم الرجال — Narrator Profiles</h1>
+    <div class="sub">18,298 narrators from Taqrib al-Tahdhib · Grades by Ibn Hajar &amp; al-Dhahabi · Jarh wa Ta'dil</div>
+</div>
+
+<div class="search-bar">
+    <input id="search" type="search" placeholder="Search by name, kunya, or city… (Arabic or English)" autocomplete="off" spellcheck="false">
+</div>
+<div class="filters">
+    <select id="grade-filter">
+        <option value="">All grades</option>
+        <option value="companion">Companion (صحابي)</option>
+        <option value="reliable">Reliable (ثقة)</option>
+        <option value="mostly_reliable">Mostly reliable (صدوق)</option>
+        <option value="weak">Weak (ضعيف)</option>
+        <option value="abandoned">Abandoned (متروك)</option>
+        <option value="unknown">Unknown</option>
+    </select>
+    <select id="tabaqat-filter">
+        <option value="">All generations</option>
+    </select>
+</div>
+<div class="stats-bar" id="stats"></div>
+<div class="grid" id="grid"></div>
+<div class="no-results" id="no-results" style="display:none">No matching narrators.</div>
+
+<script>
+const GRADE_COLORS = {
+    companion: '#9b59b6', reliable: '#2ecc71', mostly_reliable: '#f39c12',
+    weak: '#e74c3c', abandoned: '#c0392b', fabricator: '#8b0000', unknown: '#95a5a6'
+};
+const GRADE_LABELS = {
+    companion: 'Companion', reliable: 'Reliable', mostly_reliable: 'Mostly reliable',
+    weak: 'Weak', abandoned: 'Abandoned', fabricator: 'Fabricator', unknown: 'Unknown'
+};
+
+let allProfiles = [];
+let displayed = 0;
+const PAGE_SIZE = 50;
+
+async function init() {
+    const resp = await fetch('data/narrator_unified.json');
+    const data = await resp.json();
+
+    // Convert profiles dict to array
+    allProfiles = Object.values(data.profiles).sort((a, b) => {
+        // Companions first, then by grade, then by name
+        const order = { companion: 0, reliable: 1, mostly_reliable: 2, weak: 3, abandoned: 4, fabricator: 5, unknown: 6 };
+        return (order[a.grade_en] || 6) - (order[b.grade_en] || 6) || a.full_name.localeCompare(b.full_name, 'ar');
+    });
+
+    // Populate tabaqat filter
+    const tabaqat = new Set();
+    allProfiles.forEach(p => { if (p.tabaqat) tabaqat.add(p.tabaqat); });
+    const tabSel = document.getElementById('tabaqat-filter');
+    [...tabaqat].sort().forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t; opt.textContent = t;
+        tabSel.appendChild(opt);
+    });
+
+    document.getElementById('search').addEventListener('input', () => { displayed = 0; render(); });
+    document.getElementById('grade-filter').addEventListener('change', () => { displayed = 0; render(); });
+    document.getElementById('tabaqat-filter').addEventListener('change', () => { displayed = 0; render(); });
+
+    // Infinite scroll
+    window.addEventListener('scroll', () => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) loadMore();
+    });
+
+    render();
+}
+
+function getFiltered() {
+    const q = document.getElementById('search').value.trim().toLowerCase();
+    const grade = document.getElementById('grade-filter').value;
+    const tab = document.getElementById('tabaqat-filter').value;
+
+    return allProfiles.filter(p => {
+        if (grade && p.grade_en !== grade) return false;
+        if (tab && p.tabaqat !== tab) return false;
+        if (q) {
+            const haystack = (p.full_name + ' ' + p.kunya + ' ' + (p.namings || []).join(' ') + ' ' + p.city + ' ' + p.laqab + ' ' + p.nasab).toLowerCase();
+            return haystack.includes(q);
+        }
+        return true;
+    });
+}
+
+function render() {
+    const filtered = getFiltered();
+    const grid = document.getElementById('grid');
+    grid.innerHTML = '';
+    displayed = 0;
+
+    document.getElementById('stats').textContent =
+        `${filtered.length.toLocaleString()} narrators`;
+
+    document.getElementById('no-results').style.display = filtered.length ? 'none' : 'block';
+    loadMore(filtered);
+}
+
+function loadMore(filteredOverride) {
+    const filtered = filteredOverride || getFiltered();
+    const grid = document.getElementById('grid');
+    const batch = filtered.slice(displayed, displayed + PAGE_SIZE);
+
+    batch.forEach(p => {
+        const color = GRADE_COLORS[p.grade_en] || '#95a5a6';
+        const label = GRADE_LABELS[p.grade_en] || 'Unknown';
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <div class="card-header">
+                <div>
+                    <div class="card-name">${esc(p.full_name)}</div>
+                    ${p.kunya ? `<div class="card-kunya">${esc(p.kunya)}</div>` : ''}
+                </div>
+                <span class="card-grade" style="background:${color}22;color:${color};border:1px solid ${color}55">${label}</span>
+            </div>
+            <div class="card-meta">
+                ${p.grade_ar ? `<span style="direction:rtl;font-family:'Amiri',serif">${esc(p.grade_ar)}</span>` : ''}
+                ${p.death ? `<span>d. ${esc(p.death)}</span>` : ''}
+                ${p.city ? `<span>${esc(p.city)}</span>` : ''}
+                ${p.tabaqat ? `<span>${esc(p.tabaqat)}</span>` : ''}
+            </div>
+            <div class="card-detail">
+                ${p.dhahabi ? `<div class="detail-section"><div class="detail-label">Al-Dhahabi</div><div class="detail-text-ar">${esc(p.dhahabi)}</div></div>` : ''}
+                ${p.laqab ? `<div class="detail-section"><div class="detail-label">Laqab</div><div class="detail-text">${esc(p.laqab)}</div></div>` : ''}
+                ${p.nasab ? `<div class="detail-section"><div class="detail-label">Nasab / Nisba</div><div class="detail-text">${esc(p.nasab)}</div></div>` : ''}
+                ${p.namings && p.namings.length > 1 ? `<div class="detail-section"><div class="detail-label">Name variants (${p.namings.length})</div><div class="name-variants">${p.namings.map(n => `<span class="name-var">${esc(n)}</span>`).join('')}</div></div>` : ''}
+                ${p.jarh_wa_tadil ? renderJarh(p.jarh_wa_tadil) : ''}
+            </div>
+        `;
+        card.addEventListener('click', () => card.classList.toggle('expanded'));
+        grid.appendChild(card);
+    });
+
+    displayed += batch.length;
+}
+
+function renderJarh(jarh) {
+    const entries = Object.entries(jarh);
+    if (!entries.length) return '';
+    let html = '<div class="detail-section"><div class="detail-label">Jarh wa Ta\'dil (Scholar opinions)</div>';
+    entries.forEach(([scholar, opinion]) => {
+        html += `<div class="jarh-scholar">${esc(scholar)}</div>`;
+        html += `<div class="jarh-opinion">${esc(opinion)}</div>`;
+    });
+    return html + '</div>';
+}
+
+function esc(s) { return (s || '').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+init();
+</script>
+</body>
+</html>
