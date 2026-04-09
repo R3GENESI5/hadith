@@ -64,7 +64,7 @@ Itqan builds on three open-source projects (KASHAF, BasilSuhail, HadithRAG) — 
 
 | Source | What it was | What Itqan made it |
 |--------|------------|-------------------|
-| **KASHAF** | Bukhari-only CSV, Google Charts | **11 books**, D3-sankey, 37,454 parsed chains, narrator grading from Taqrib al-Tahdhib, interactive controls |
+| **KASHAF** | Bukhari-only CSV, Google Charts | **11 books**, D3-sankey, 100,656 parsed chains, narrator grading from Taqrib al-Tahdhib, interactive controls |
 | **BasilSuhail** | 15k hadiths, English-only model | **112,221 hadiths**, `multilingual-e5-small` (Arabic-native), root family tagging, HuggingFace deployment |
 | **HadithRAG** | GPT-3.5 (paid), no grounding | **Qwen2.5** (open-source, free), multi-turn conversation, source citations, deduplication |
 
@@ -574,7 +574,7 @@ The FAISS semantic index (112,221 hadiths, `intfloat/multilingual-e5-small`, 276
 
 **What Al-Itqan changes:**
 - Google Charts → **D3-sankey** (MIT, self-hosted, offline-capable)
-- Bukhari-only CSV → `isnad_graph.json` across **all 11 books** (37,454 parsed chains)
+- Bukhari-only CSV → `isnad_graph.json` across **all 11 books** (100,656 parsed chains)
 - Static CSV → dynamic: user selects book, min link weight, max nodes, height
 - Narrator nodes color-coded by grade: companion (purple), reliable (green), mostly reliable (amber), weak (red), abandoned (dark red), unknown (grey)
 - Arabic fuzzy name matching (`src/match_narrator_grades.py`) links short isnad names (الزهري, شعبة, مالك) to KASHAF full biographical entries via 5-strategy cascade + manual aliases

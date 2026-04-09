@@ -1,15 +1,17 @@
 cff-version: 1.2.0
-title: "Itqan: Quran-Hadith Study Platform"
+title: "Itqan: Computational Quran-Hadith Concordance & Rijal Database"
 message: "If you use this software, please cite it as below."
 type: software
 authors:
-  - alias: R3GENESI5
+  - given-names: Ali
+    family-names: Bin Shahid
+    alias: R3GENESI5
 repository-code: "https://github.com/R3GENESI5/Itqan"
 url: "https://r3genesi5.github.io/Itqan/"
 doi: "10.5281/zenodo.19453613"
 license: MIT
-version: "1.0.0"
-date-released: "2026-04-07"
+version: "1.4.0"
+date-released: "2026-04-09"
 keywords:
   - quran
   - hadith
@@ -18,9 +20,14 @@ keywords:
   - concordance
   - islamic-studies
   - digital-humanities
+  - ilm-al-rijal
+  - narrator-criticism
   - isnad
+  - computational-linguistics
 abstract: >-
-  A unified Quran and Hadith study platform connecting 6,236 Quran ayahs
-  to 87,000+ hadiths across 17 Sunni books through 1,201 shared Arabic
-  roots and 384,016 root links. Operates at the level of classical Arabic
-  root morphology. Fully static, offline-capable, no backend required.
+  The first open-source computational concordance connecting 6,236 Quran
+  ayahs to 112,221 hadiths across 18 books through 1,336 shared Arabic
+  roots (1,326,229 links). Includes a structured narrator database of
+  18,298 profiles with jarh wa ta'dil from classical scholars, isnad
+  chain visualization, 39 thematic families, and morphological
+  definitions for 32,413 Arabic words.
