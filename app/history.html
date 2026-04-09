@@ -60,16 +60,16 @@
 </div>
 
 <div class="scale">
-    <h2>Current Scale (v1.6)</h2>
+    <h2>Current Scale (v1.8)</h2>
     <div class="scale-grid">
         <div class="scale-card"><div class="scale-n">112,221</div><div class="scale-l">Hadiths</div></div>
         <div class="scale-card"><div class="scale-n">96.3%</div><div class="scale-l">Quran roots connected</div></div>
         <div class="scale-card"><div class="scale-n">1.53M</div><div class="scale-l">Root links</div></div>
-        <div class="scale-card"><div class="scale-n">65,391</div><div class="scale-l">Narrator profiles</div></div>
-        <div class="scale-card"><div class="scale-n">33,758</div><div class="scale-l">Words defined</div></div>
-        <div class="scale-card"><div class="scale-n">1.1M</div><div class="scale-l">Lines of JSON</div></div>
-        <div class="scale-card"><div class="scale-n">13,753</div><div class="scale-l">Lines of code</div></div>
-        <div class="scale-card"><div class="scale-n">3,587</div><div class="scale-l">Files in repo</div></div>
+        <div class="scale-card"><div class="scale-n">118,045</div><div class="scale-l">Narrator profiles</div></div>
+        <div class="scale-card"><div class="scale-n">59,365</div><div class="scale-l">Hadiths graded (52%)</div></div>
+        <div class="scale-card"><div class="scale-n">15</div><div class="scale-l">Classical texts parsed</div></div>
+        <div class="scale-card"><div class="scale-n">127k</div><div class="scale-l">Teacher-student links</div></div>
+        <div class="scale-card"><div class="scale-n">178,859</div><div class="scale-l">Name variants</div></div>
     </div>
 </div>
 
@@ -80,8 +80,8 @@
         <div class="v-title">The Foundation</div>
         <div class="v-story">
             Started with raw hadith JSON from sunnah.com (49k hadiths across the six canonical books) and
-            a basic reader. The breakthrough was running every Arabic word through CAMeL Tools &mdash; the Cairo
-            Arabic Morphological Analyzer &mdash; to extract three-letter roots. Then building the concordance:
+            a basic reader. The breakthrough was running every Arabic word through CAMeL Tools, the Cairo
+            Arabic Morphological Analyzer, to extract three-letter roots. Then building the concordance:
             an inverted index mapping every word to every hadith containing it. This was the computational
             equivalent of what Fuad Abd al-Baqi did by hand for the Quran in 1945.
         </div>
@@ -97,7 +97,7 @@
         <div class="v-header"><span class="v-tag">v1.0.1</span><span class="v-date">April 5&ndash;6</span></div>
         <div class="v-title">Musannaf + Root Bridge + Families</div>
         <div class="v-story">
-            Added Musannaf Ibn Abi Shaybah (37,943 hadiths &mdash; not available on Sunnah.com), pushing the
+            Added Musannaf Ibn Abi Shaybah (37,943 hadiths, not available on Sunnah.com), pushing the
             corpus to 87k. Built the Quran&ndash;Hadith root bridge: for each of 1,651 Quranic roots, find
             every hadith containing a word from that root. Created 39 thematic families grouping roots by
             semantic field from al-Raghib al-Isfahani's classical lexicography. Built the isnad parser extracting
@@ -116,10 +116,10 @@
         <div class="v-header"><span class="v-tag">v1.1</span><span class="v-date">April 7</span></div>
         <div class="v-title">Quran bil-Quran + Live App</div>
         <div class="v-story">
-            Built the Quran reader with interactive Arabic text &mdash; hover for meaning, click for root panel
+            Built the Quran reader with interactive Arabic text: hover for meaning, click for root panel
             with Mufradat al-Quran definitions. The reverse bridge: from any root in the Quran, jump to all
             connected hadiths. Deep-link URLs for sharing specific hadiths. GitHub Pages deployment.
-            The chord viewer was rebuilt from scratch &mdash; the old Book&times;Family tab was useless
+            The chord viewer was rebuilt from scratch. The old Book&times;Family tab was useless
             (every book connected to every family proportionally), replaced with Book Distinctiveness
             showing only over-represented connections.
         </div>
@@ -151,7 +151,7 @@
         <div class="v-header"><span class="v-tag">v1.3</span><span class="v-date">April 9</span></div>
         <div class="v-title">Musnad Ahmad Expansion</div>
         <div class="v-story">
-            Musnad Ahmad had only 1,374 hadiths from sunnah.com &mdash; the full book has 26,539.
+            Musnad Ahmad had only 1,374 hadiths from sunnah.com. The full book has 26,539.
             Found the complete Arnaut edition on OpenITI (the Open Islamicate Texts Initiative) and wrote
             a parser for their mARkdown format. Corpus jumped from 87k to 112k. Ahmad became the 2nd largest
             book. Rebuilt the FAISS semantic index (112k vectors) and uploaded to HuggingFace. Fixed both
@@ -169,11 +169,11 @@
         <div class="v-header"><span class="v-tag">v1.4</span><span class="v-date">April 9</span></div>
         <div class="v-title">Isnad Cleanup + Narrator Profiles</div>
         <div class="v-story">
-            Discovered that &ldquo;أبيه&rdquo; (his father) was appearing as a top narrator in ALL 11 books &mdash; it's not
+            Discovered that &ldquo;أبيه&rdquo; (his father) was appearing as a top narrator in ALL 11 books. It's not
             a person, it's a relative reference. Built a 37-entry genealogy lookup to resolve father-son chains
             (e.g., &lrm;هشام بن عروة&rlm; &rarr; &lrm;عروة بن الزبير&rlm;). Fixed kunya splitting where &lrm;أبي صالح&rlm; was being
             broken into two tokens. Merged AR-Sanad 280K (18,298 narrators) and hatemben (701 with full jarh
-            wa ta'dil) into a unified database. Built the Rijal page &mdash; a searchable narrator browser.
+            wa ta'dil) into a unified database. Built the Rijal page, a searchable narrator browser.
         </div>
         <div class="v-stats">
             <div class="v-stat"><b>18,298</b> narrator profiles</div>
@@ -187,7 +187,7 @@
         <div class="v-header"><span class="v-tag">v1.5</span><span class="v-date">April 9</span></div>
         <div class="v-title">8 Classical Rijal Texts Parsed</div>
         <div class="v-story">
-            Downloaded and parsed 8 foundational texts of ilm al-rijal from OpenITI &mdash; Tahdhib al-Kamal,
+            Downloaded and parsed 8 foundational texts of ilm al-rijal from OpenITI. Tahdhib al-Kamal,
             Mizan al-I'tidal, Al-Jarh wa al-Ta'dil, Al-Thiqat, Al-Kamil fi Du'afa, Tarikh Baghdad,
             Tahdhib al-Tahdhib, and Taqrib al-Tahdhib. 83,082 entries across 82.6 MB of Classical Arabic.
             Fuzzy name matching merged them into the narrator database, creating the largest structured
@@ -206,7 +206,7 @@
         <div class="v-header"><span class="v-tag">v1.6</span><span class="v-date">April 9</span></div>
         <div class="v-title">The Dual-Stemmer Breakthrough</div>
         <div class="v-story">
-            315 Quranic roots had zero hadith connections &mdash; not because the words don't exist in hadiths,
+            315 Quranic roots had zero hadith connections, not because the words don't exist in hadiths,
             but because CAMeL Tools canonicalizes roots differently from the Quranic Arabic Corpus. The Wensinck
             concordance was built independently as a digital recreation of the 33-year physical concordance.
             It was only after building it that we realized it solved the root gap: Wensinck's light stemmer,
@@ -214,7 +214,7 @@
             <br><br>
             1,345 surface forms discovered by the light stemmer were patched into the morphological dictionary.
             Two stemmers now cross-validate each other: where both agree a root has no hadith match,
-            we have the first empirical proof that it's genuinely absent &mdash; not a tooling failure.
+            we have the first empirical proof that it's genuinely absent. not a tooling failure.
         </div>
         <div class="v-stats">
             <div class="v-stat">Root coverage: 81% &rarr; <b>96.3%</b></div>
@@ -223,6 +223,98 @@
             <div class="v-stat"><b>1,345</b> new word forms patched</div>
         </div>
         <div class="v-files">Key files: <code>wensinck.json</code> (1,486 roots, 1,042,279 refs) <code>root_alias_map.json</code> (196 aliases)</div>
+    </div>
+
+    <!-- v1.6.1 -->
+    <div class="version">
+        <div class="v-header"><span class="v-tag">v1.6.1</span><span class="v-date">April 9, 2026</span></div>
+        <div class="v-title">Per-Hadith Grading + Ghost Narrators</div>
+        <div class="v-story">
+            112,000 hadiths and not a single one was graded. Bukhari and Muslim are self-authenticated
+            as Sahih, so those were tagged directly. Then Al-Albani's grades were scraped from sunnah.com
+            for four more books. Then Arnaut's tahqiq edition of Musnad Ahmad was found as a DOCX file
+            on Archive.org, and all 26,539 grades were parsed from it. Riyad al-Salihin grades extracted
+            from inline Arabic on web pages. 59,365 hadiths graded, 52% of the corpus.
+            <br><br>
+            Meanwhile, the isnad visualizer had ghost narrators everywhere. "أبيه" (his father) was a
+            top narrator in ALL 11 books. Then أبي, جده, عمه, أمه, خاله, مولاه. Each one needed a
+            different solution: 37 father-son pairs, 15 mother entries, 6 grandmother entries, 10 uncle
+            entries. And when the relative term was followed by a name ("عن عمه، واسع بن حبان"),
+            the parser had to extract the real name from the text. 76 genealogy entries, each researched
+            from classical rijal sources.
+        </div>
+        <div class="v-stats">
+            <div class="v-stat"><b>59,365</b> hadiths graded (52%)</div>
+            <div class="v-stat"><b>76</b> genealogy lookups</div>
+            <div class="v-stat"><b>9</b> books graded</div>
+        </div>
+    </div>
+
+    <!-- v1.8 -->
+    <div class="version">
+        <div class="v-header"><span class="v-tag">v1.8</span><span class="v-date">April 9-10, 2026</span></div>
+        <div class="v-title">15 Classical Texts + Teacher-Student Network</div>
+        <div class="v-story">
+            7 more classical texts parsed from OpenITI: Tabaqat Ibn Sa'd, Siyar A'lam al-Nubala,
+            Al-Isaba fi Tamyiz al-Sahaba, Tarikh al-Islam, Lisan al-Mizan, Al-Durar al-Kamina,
+            and Al-Kashif. 15 texts total, 152,000+ entries of classical Arabic biographical text.
+            <br><br>
+            The narrator database exploded from 65,391 to 118,045 profiles. 178,859 name variants.
+            41,131 death years (up from 9,141). Companions went from ~1,663 to ~10,489 because
+            Al-Isaba is specifically a companion encyclopedia.
+            <br><br>
+            Teacher-student links from AR-Sanad: 127,411 bidirectional connections mapping who taught
+            whom across 18,258 narrators. Global IDs from muslimscholars.info for 12,492 profiles.
+            <br><br>
+            Then came deduplication. 6,394 merges across two layers. But the really hard problem was
+            the false positives: 50 companion merges that looked correct but were actually different
+            people with the same name. "عبد الله بن الحارث" isn't one person. It's dozens. Arabic
+            biographical literature's oldest problem, now in code.
+        </div>
+        <div class="v-stats">
+            <div class="v-stat"><b>118,045</b> narrator profiles</div>
+            <div class="v-stat"><b>15</b> classical texts</div>
+            <div class="v-stat"><b>127k</b> teacher-student links</div>
+            <div class="v-stat"><b>6,394</b> dedup merges</div>
+        </div>
+    </div>
+
+    <!-- Wicked Problems -->
+    <div class="version" style="border-left:3px solid #e74c3c;padding-left:20px;border-bottom:none">
+        <div class="v-header"><span class="v-tag" style="background:rgba(231,76,60,.1);border-color:rgba(231,76,60,.3);color:#e74c3c">Wicked Problems</span></div>
+        <div class="v-title">The problems that made me laugh and cry</div>
+        <div class="v-story">
+            <strong style="color:#e0d8c8">The 42% that found a home.</strong>
+            When we merged 21,465 entries from 3 new classical texts (Tabaqat, Siyar, Al-Isaba),
+            8,913 (42%) matched existing profiles. But the 58% that didn't match wasn't all new
+            people. Many were the same narrators with slightly different spellings across texts,
+            and we couldn't merge them safely.
+            <br><br>
+            <strong style="color:#e0d8c8">Death years locked in prose.</strong>
+            98% of new profiles lack death years in structured form. The years ARE there, written
+            as "مات سنة ست وعشرين ومائة" (died in the year one hundred and twenty-six). Our regex
+            only catches numeric "سنة 126". Thousands of temporal anchors, locked behind Arabic
+            word-form numbers. We built a word-form parser that handles 21 different patterns.
+            <br><br>
+            <strong style="color:#e0d8c8">The collision that wasn't.</strong>
+            "أنس بن مالك" (Anas ibn Malik) exists as TWO separate profiles: ID 8 (the famous
+            companion, 13+ name variants, 5 classical sources) and ID 17074 (a different person
+            with mizan+jarh+tabaqat sources). Common names create phantom duplicates that look
+            like real merges.
+            <br><br>
+            <strong style="color:#e0d8c8">Teacher-student can't help (yet).</strong>
+            127,411 bidirectional teacher-student links. The strategy: if two profiles share 5+
+            teachers, they're probably the same person. Found 13,928 candidate pairs. Applied
+            name filtering. Result: ZERO dedup matches. Why? The teacher-student data only exists
+            for the original 18k AR-Sanad profiles. The 100k new profiles from classical texts
+            don't have it. Can't intersect what isn't there.
+            <br><br>
+            <strong style="color:#e0d8c8">The ceiling.</strong>
+            After three dedup strategies (companion anchoring, death-year clustering, teacher-student
+            intersection), we found exactly 2 safe merges out of 77,794 profiles. The algorithmic
+            approach hit its ceiling. The real solution isn't better code. It's better data: curated
+            IDs from scholars who already solved this problem by hand.
+        </div>
     </div>
 
 </div>

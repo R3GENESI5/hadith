@@ -180,8 +180,8 @@
     </div>
 
     <div class="milestone">
-        <div class="date">8 classical texts, 83,082 entries</div>
-        <div class="text">Parsed Tahdhib al-Kamal, Tahdhib al-Tahdhib, Taqrib al-Tahdhib, Mizan al-I'tidal, Al-Jarh wa al-Ta'dil, Al-Thiqat, Al-Kamil fi Du'afa, and Tarikh Baghdad from OpenITI. 83,082 entries of classical Arabic biographical text, each one a narrator profile. Fuzzy-matched them against the existing database. 65,391 profiles. The largest structured open-source narrator database available.</div>
+        <div class="date">15 classical texts, 118,045 profiles</div>
+        <div class="text">Parsed 15 classical texts of ilm al-rijal from OpenITI: Tahdhib al-Kamal, Tahdhib al-Tahdhib, Taqrib al-Tahdhib, Mizan al-I'tidal, Al-Jarh wa al-Ta'dil, Al-Thiqat, Al-Kamil fi Du'afa, Tarikh Baghdad, Tabaqat Ibn Sa'd, Siyar A'lam al-Nubala, Al-Isaba fi Tamyiz al-Sahaba, Tarikh al-Islam, Lisan al-Mizan, Al-Durar al-Kamina, and Al-Kashif. 152,000+ entries of classical Arabic biographical text. Fuzzy-matched them against the existing database. 118,045 profiles with 178,859 name variants. 127,411 teacher-student links. The largest structured open-source narrator database available.</div>
     </div>
 
     <div class="milestone">
@@ -194,9 +194,38 @@
         <div class="text">112,000 hadiths and not a single one was graded. Bukhari and Muslim are self-authenticated as Sahih, so I tagged those. Then scraped Al-Albani's grades from sunnah.com for four books. Then found Arnaut's tahqiq edition of Musnad Ahmad as a DOCX file on Archive.org and parsed all 26,539 grades from it. Riyad al-Salihin grades were extracted from inline Arabic on web pages. 59,365 hadiths graded, 52% of the corpus. Every grade traceable to a named scholar: Al-Albani, Arnaut, or the compilers themselves.</div>
     </div>
 
+    <h2>The problems that made me laugh and cry</h2>
+
+    <p>Every step forward revealed a new problem. Some of them were so absurd I had to laugh. Others made me want to give up.</p>
+
+    <div class="milestone">
+        <div class="date">The 42% that found a home</div>
+        <div class="text">When I merged 21,465 entries from 3 new classical texts (Tabaqat, Siyar, Al-Isaba), 8,913 (42%) matched existing profiles. But the 58% that didn't match wasn't all new people. Many were the same narrators with slightly different spellings across texts, and I couldn't merge them safely. The same person, written three different ways in three different centuries, by three different scholars.</div>
+    </div>
+
+    <div class="milestone">
+        <div class="date">50 false-positive companion merges</div>
+        <div class="text">I tried anchoring 8,243 single-source companions against 1,370 multi-source companions. Found 53 matches. Then checked them. 50 were FALSE. Multiple DIFFERENT people named "عبد الله بن الحارث" all matching the same anchor. The famous common-name problem of Arabic biographical literature. A problem that scholars have struggled with for a thousand years, now in my code.</div>
+    </div>
+
+    <div class="milestone">
+        <div class="date">Death years locked in prose</div>
+        <div class="text">98% of new profiles lack death years in structured form. The years ARE there, written as "مات سنة ست وعشرين ومائة" (died in the year one hundred and twenty-six). My regex only catches numeric "سنة 126". Thousands of temporal anchors, locked behind Arabic word-form numbers. I built a word-form parser that handles 21 different patterns. It now extracts death years that are written out in full Arabic words.</div>
+    </div>
+
+    <div class="milestone">
+        <div class="date">The collision that wasn't</div>
+        <div class="text">"أنس بن مالك" (Anas ibn Malik) exists as TWO separate profiles: ID 8 (the famous companion, 13+ name variants, 5 classical sources) and ID 17074 (a completely different person with mizan+jarh+tabaqat sources). Common names create phantom duplicates that look like real merges. You can't just match on name. You need death years, teachers, students, cities, and even then sometimes you can't be sure.</div>
+    </div>
+
+    <div class="milestone">
+        <div class="date">The ceiling</div>
+        <div class="text">After three dedup strategies (companion anchoring, death-year clustering, teacher-student intersection), I found exactly 2 safe merges out of 77,794 profiles. The algorithmic approach hit its ceiling. The real solution isn't better code. It's better data: curated IDs from scholars who already solved this problem by hand.</div>
+    </div>
+
     <h2>What it became</h2>
 
-    <p>112,221 hadiths across 18 books. 1,590 of 1,651 Quranic roots connected. 1,528,346 verified root links. 65,391 narrator profiles from 8 classical texts. 33,758 Arabic words with morphological definitions. 100,656 isnad chains parsed. A digital Wensinck concordance. A searchable rijal database with jarh wa ta'dil from multiple classical scholars.</p>
+    <p>112,221 hadiths across 18 books. 1,590 of 1,651 Quranic roots connected. 1,528,346 verified root links. 118,045 narrator profiles from 15 classical texts. 178,859 name variants. 127,411 teacher-student links. 33,758 Arabic words with morphological definitions. 100,656 isnad chains parsed. A digital Wensinck concordance. A searchable rijal database with jarh wa ta'dil from multiple classical scholars. 59,365 hadiths graded, 52% of the corpus.</p>
 
     <p>What took Wensinck's team 33 years, this computes in seconds. What took a scholar physically opening four volumes of biographical dictionaries, this consolidates into one search. What no one had ever done, connecting the Quran concordance to the hadith concordance through shared roots, is now a click away.</p>
 
@@ -209,17 +238,17 @@
 
     <div class="next">
         <h3>The narrator's portrait</h3>
-        <p>Every narrator has a story. The hadiths they narrate are the hadiths they carried through their lives, what they heard, what they memorized, what they chose to transmit. A narrator's collection IS their portrait: Abu Huraira's 5,000+ narrations paint a picture of a man who spent every moment near the Prophet. Aisha's narrations reveal the private life no one else had access to. Ali's cluster in Ahmad reflects the Kufan transmission school. The next step is to build this portrait: for every narrator, show not just their grade and biography, but the actual hadiths they carried, the themes they transmitted, the scholars they taught.</p>
+        <p>Every narrator has a story. The hadiths they narrate are the hadiths they carried through their lives, what they heard, what they memorized, what they chose to transmit. A narrator's collection IS their portrait: Abu Huraira's 5,000+ narrations paint a picture of a man who spent every moment near the Prophet. Aisha's narrations reveal the private life no one else had access to. Ali's cluster in Ahmad reflects the Kufan transmission school. The next step is to build this portrait: for every narrator, show the actual hadiths they carried, the themes they transmitted, the scholars they taught.</p>
     </div>
 
     <div class="next">
-        <h3>The complete narrator database</h3>
-        <p>65,391 profiles from 8 classical texts. But 47,000 of those may be duplicates across texts, the same narrator listed differently in Tahdhib al-Kamal and Mizan al-I'tidal. A deduplication pass would consolidate these. And the teacher-student links from AR-Sanad (16,886 narrators with who-taught-whom IDs) would transform the isnad visualizer from co-occurrence to actual biographical transmission paths.</p>
+        <h3>The dedup problem</h3>
+        <p>118,045 profiles from 15 classical texts. But thousands are duplicates across texts, the same narrator listed differently in Tahdhib al-Kamal and Mizan al-I'tidal and Tarikh al-Islam. The algorithmic approach hit its ceiling at 6,394 merges. The next step needs curated scholarly IDs from projects like dorar.net, n007rehan, and Mawsu'at al-Hadith, scholars who already solved this problem by hand over decades.</p>
     </div>
 
     <div class="next">
         <h3>The remaining 48%</h3>
-        <p>52% of hadiths are graded. The remaining 48%. Musannaf Ibn Abi Shaybah (38,000), Muwatta Malik, Darimi, and 7 smaller books. await grading sources. The Quran-only roots (61 confirmed by dual-stemmer validation) await deeper linguistic analysis. And the 8 classical texts have grades embedded in narrative prose that NLP could extract.</p>
+        <p>52% of hadiths are graded. The remaining 48%: Musannaf Ibn Abi Shaybah (38,000), Muwatta Malik, Darimi, and 7 smaller books await grading sources. The 15 classical texts have grades embedded in narrative prose that NLP could extract. And the 61 Quran-only roots (confirmed by dual-stemmer validation) await deeper linguistic analysis.</p>
     </div>
 
 </div>
