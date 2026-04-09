@@ -1,0 +1,23 @@
+{
+  "total_profiles": 118045,
+  "total_names": 178859,
+  "grades": {
+    "unknown": 71457,
+    "reliable": 21095,
+    "weak": 4498,
+    "mostly_reliable": 8321,
+    "companion": 10463,
+    "abandoned": 1409,
+    "fabricator": 802
+  },
+  "files": [
+    "by_name.json",
+    "profiles_unknown.json",
+    "profiles_reliable.json",
+    "profiles_weak.json",
+    "profiles_mostly_reliable.json",
+    "profiles_companion.json",
+    "profiles_abandoned.json",
+    "profiles_fabricator.json"
+  ]
+}

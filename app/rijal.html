@@ -179,10 +179,20 @@ function cleanTabaqa(t) {
 }
 
 async function init() {
-    const resp = await fetch('data/narrator_unified.json');
-    const data = await resp.json();
+    // Load split rijal data (by_name index + per-grade profile chunks)
+    const manifest = await fetch('data/rijal/manifest.json').then(r => r.json());
+    const grades = Object.keys(manifest.grades);
 
-    allProfiles = Object.values(data.profiles).sort((a, b) => {
+    // Load all profile chunks in parallel
+    const chunks = await Promise.all(
+        grades.map(g => fetch(`data/rijal/profiles_${g}.json`).then(r => r.json()))
+    );
+
+    // Merge into single profiles object
+    const profiles = {};
+    chunks.forEach(chunk => Object.assign(profiles, chunk));
+
+    allProfiles = Object.values(profiles).sort((a, b) => {
         const order = { companion: 0, reliable: 1, mostly_reliable: 2, weak: 3, abandoned: 4, fabricator: 5, unknown: 6 };
         return (order[a.grade_en] || 6) - (order[b.grade_en] || 6) || a.full_name.localeCompare(b.full_name, 'ar');
     });
