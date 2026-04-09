@@ -40,9 +40,13 @@ What Wensinck's team took decades to compile for 9 books, Itqan computes for 18.
 
 Existing platforms (Quran.com, Sunnah.com, islamweb.net) provide keyword search on translations. Itqan operates at the level classical scholars worked: **Arabic root morphology**. The root `صوم` connects every Quran verse about fasting to every hadith whose Arabic text contains a word derived from that root — whether the word is `صيام`, `يصوم`, `الصائم`, `صُمْتُ`, or `صوموا`. One root, all its forms, across both corpora at once. **1,590 of 1,651 Quranic roots (96.3%) are connected to hadiths** through 1,528,346 verified links across 18 books.
 
-### Dual-stemmer methodology
+### Dual-stemmer methodology (added in v1.6)
 
-A single Arabic NLP tool (CAMeL Tools) initially connected only 81% of Quranic roots to hadiths — 315 roots returned zero matches due to canonical form disagreements between the Quranic Arabic Corpus and CAMeL's morphological analyzer. Itqan solves this with a **dual-stemmer approach**: an independent light stemmer (modeled on Wensinck's concordance method) identifies 1,345 surface forms that CAMeL missed, and these are cross-validated against the primary analysis. Where CAMeL's contextual disambiguation fails, the light stemmer provides fallback coverage — raising root connectivity from 81% to 96.3%. The remaining 61 unconnected roots (3.7%, averaging 6.8 ayahs each) are confirmed by **both** methods to have no hadith attestation — the first empirically validated lower bound on the Quran's distinctive lexical stratum.
+The original concordance (v1.0–v1.5) used a single NLP tool — CAMeL Tools, the Cairo Arabic Morphological Analyzer — to extract roots from hadith text. This connected 81% of Quranic roots to hadiths, but **315 roots returned zero matches**. The problem wasn't the hadith corpus (the words existed in the text) but a systematic disagreement between how the Quranic Arabic Corpus and CAMeL Tools canonicalize roots — hamza-initial roots, defective verbs, and hollow verbs were affected.
+
+The Wensinck concordance (`wensinck.json`) was built independently as a digital recreation of the classical physical concordance. It was only *after* building it that we realized it solved the root gap: Wensinck's light stemmer, using a completely different method, found hadith attestations for 254 of the 315 "missing" roots.
+
+The solution: **use both stemmers**. CAMeL provides the primary analysis (contextual, grammar-aware). The Wensinck light stemmer provides fallback coverage for roots where CAMeL fails. 1,345 surface forms discovered by the light stemmer were patched into the morphological dictionary. The result: **96.3% root connectivity** — and the 61 remaining zeros are confirmed by *both* independent methods to have no hadith attestation, making them the first empirically validated lower bound on the Quran's distinctive lexical stratum.
 
 ### The narrator database
 

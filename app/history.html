@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Itqan — Development History</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0a0f; color: #e0d8c8; line-height: 1.7; }
+        a { color: #d4a855; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .top-nav { display: flex; gap: 12px; padding: 14px 24px; background: rgba(18,14,10,.92); border-bottom: 1px solid #2a2420; font-size: .85rem; flex-wrap: wrap; }
+        .top-nav a { color: #8a8070; padding: 2px 10px; border: 1px solid #333; border-radius: 4px; }
+        .top-nav a:hover { color: #d4a855; border-color: #d4a855; text-decoration: none; }
+        .hero { text-align: center; padding: 2.5rem 1.5rem 1.5rem; max-width: 700px; margin: 0 auto; }
+        .hero h1 { font-size: 1.8rem; color: #d4a855; margin-bottom: .5rem; }
+        .hero p { color: #8a8070; font-size: .95rem; }
+
+        /* Scale bar */
+        .scale { max-width: 800px; margin: 2rem auto; padding: 0 1.5rem; }
+        .scale h2 { text-align: center; font-size: 1rem; color: #8a8070; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 1.5rem; }
+        .scale-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+        .scale-card { background: #1a1612; border: 1px solid #2a2420; border-radius: 8px; padding: 14px; text-align: center; }
+        .scale-n { font-size: 1.4rem; font-weight: 700; color: #d4a855; }
+        .scale-l { font-size: .7rem; color: #8a8070; text-transform: uppercase; letter-spacing: .05em; }
+
+        /* Timeline */
+        .timeline { max-width: 800px; margin: 2rem auto 3rem; padding: 0 1.5rem; }
+        .version { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid #1e1a16; }
+        .version:last-child { border-bottom: none; }
+        .v-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; }
+        .v-tag { font-size: 1.1rem; font-weight: 700; color: #d4a855; background: rgba(212,168,85,.1); padding: 2px 12px; border-radius: 16px; border: 1px solid rgba(212,168,85,.3); }
+        .v-date { font-size: .78rem; color: #666; }
+        .v-title { font-size: 1.15rem; color: #e0d8c8; font-weight: 600; margin-bottom: 8px; }
+        .v-story { color: #a09888; font-size: .9rem; margin-bottom: 10px; }
+        .v-stats { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 10px; }
+        .v-stat { font-size: .78rem; color: #777; }
+        .v-stat b { color: #d4a855; }
+        .v-files { font-size: .78rem; color: #555; }
+        .v-files code { color: #8a8070; background: #1a1612; padding: 1px 6px; border-radius: 3px; font-size: .75rem; }
+
+        .footer { text-align: center; padding: 2rem; border-top: 1px solid #1e1a16; color: #555; font-size: .8rem; }
+    </style>
+</head>
+<body>
+
+<div class="top-nav">
+    <a href="../index.html" title="Home">&#x1F3E0;</a>
+    <a href="../quran/index.html">Quran</a>
+    <a href="index.html">Hadith</a>
+    <a href="families.html">Families</a>
+    <a href="rijal.html">Narrators</a>
+    <a href="isnad.html">Isnad</a>
+    <a href="../guide.html">How It Works</a>
+</div>
+
+<div class="hero">
+    <h1>Development History</h1>
+    <p>How Itqan grew from a simple hadith reader to the first computational Quran-Hadith concordance and the largest open-source narrator database.</p>
+</div>
+
+<div class="scale">
+    <h2>Current Scale (v1.6)</h2>
+    <div class="scale-grid">
+        <div class="scale-card"><div class="scale-n">112,221</div><div class="scale-l">Hadiths</div></div>
+        <div class="scale-card"><div class="scale-n">96.3%</div><div class="scale-l">Quran roots connected</div></div>
+        <div class="scale-card"><div class="scale-n">1.53M</div><div class="scale-l">Root links</div></div>
+        <div class="scale-card"><div class="scale-n">65,391</div><div class="scale-l">Narrator profiles</div></div>
+        <div class="scale-card"><div class="scale-n">33,758</div><div class="scale-l">Words defined</div></div>
+        <div class="scale-card"><div class="scale-n">1.1M</div><div class="scale-l">Lines of JSON</div></div>
+        <div class="scale-card"><div class="scale-n">13,753</div><div class="scale-l">Lines of code</div></div>
+        <div class="scale-card"><div class="scale-n">3,587</div><div class="scale-l">Files in repo</div></div>
+    </div>
+</div>
+
+<div class="timeline">
+
+    <div class="version">
+        <div class="v-header"><span class="v-tag">v1.0</span><span class="v-date">April 5, 2026</span></div>
+        <div class="v-title">The Foundation</div>
+        <div class="v-story">
+            Started with raw hadith JSON from sunnah.com (49k hadiths across the six canonical books) and
+            a basic reader. The breakthrough was running every Arabic word through CAMeL Tools &mdash; the Cairo
+            Arabic Morphological Analyzer &mdash; to extract three-letter roots. Then building the concordance:
+            an inverted index mapping every word to every hadith containing it. This was the computational
+            equivalent of what Fuad Abd al-Baqi did by hand for the Quran in 1945.
+        </div>
+        <div class="v-stats">
+            <div class="v-stat"><b>49k</b> hadiths</div>
+            <div class="v-stat"><b>6</b> books</div>
+            <div class="v-stat"><b>32,413</b> words defined</div>
+        </div>
+        <div class="v-files">Key files created: <code>word_defs_v2.json</code> <code>concordance.json</code> <code>roots_lexicon.json</code></div>
+    </div>
+
+    <div class="version">
+        <div class="v-header"><span class="v-tag">v1.0.1</span><span class="v-date">April 5&ndash;6</span></div>
+        <div class="v-title">Musannaf + Root Bridge + Families</div>
+        <div class="v-story">
+            Added Musannaf Ibn Abi Shaybah (37,943 hadiths &mdash; not available on Sunnah.com), pushing the
+            corpus to 87k. Built the Quran&ndash;Hadith root bridge: for each of 1,651 Quranic roots, find
+            every hadith containing a word from that root. Created 39 thematic families grouping roots by
+            semantic field from al-Raghib al-Isfahani's classical lexicography. Built the isnad parser extracting
+            narrator chains from Arabic text, and the chord visualizations showing how themes interconnect.
+        </div>
+        <div class="v-stats">
+            <div class="v-stat"><b>87k</b> hadiths</div>
+            <div class="v-stat"><b>18</b> books</div>
+            <div class="v-stat"><b>384,016</b> root links</div>
+            <div class="v-stat"><b>1,201</b> shared roots (73%)</div>
+        </div>
+        <div class="v-files">Key files: <code>quran_hadith_bridge.json</code> <code>family_corpus.json</code> <code>isnad_graph.json</code> <code>chord_matrices.json</code></div>
+    </div>
+
+    <div class="version">
+        <div class="v-header"><span class="v-tag">v1.1</span><span class="v-date">April 7</span></div>
+        <div class="v-title">Quran bil-Quran + Live App</div>
+        <div class="v-story">
+            Built the Quran reader with interactive Arabic text &mdash; hover for meaning, click for root panel
+            with Mufradat al-Quran definitions. The reverse bridge: from any root in the Quran, jump to all
+            connected hadiths. Deep-link URLs for sharing specific hadiths. GitHub Pages deployment.
+            The chord viewer was rebuilt from scratch &mdash; the old Book&times;Family tab was useless
+            (every book connected to every family proportionally), replaced with Book Distinctiveness
+            showing only over-represented connections.
+        </div>
+        <div class="v-stats">
+            <div class="v-stat"><b>Zenodo DOI</b> minted</div>
+            <div class="v-stat"><b>GitHub Pages</b> live</div>
+        </div>
+    </div>
+
+    <div class="version">
+        <div class="v-header"><span class="v-tag">v1.2</span><span class="v-date">April 8</span></div>
+        <div class="v-title">The Bridge Was Wrong</div>
+        <div class="v-story">
+            A user reported that Quran verse 19:85 connected to the wrong hadiths. Investigation revealed
+            that <code>idInBook</code> restarts at 1 for every chapter in 14 of 18 books. The bridge was matching
+            hadith #2 in ALL 97 Bukhari chapters instead of the correct one. Every Quran&rarr;Hadith filter
+            had been producing false positives since v1.0. Fixed with chapter-aware IDs, verified 100% accuracy.
+            Also fixed root word highlighting (isnad suppression was hiding matches) and built the How It Works
+            guide page with SVG flow diagram.
+        </div>
+        <div class="v-stats">
+            <div class="v-stat"><b>Bridge IDs</b> rebuilt chapter-aware</div>
+            <div class="v-stat"><b>0</b> false positives (verified)</div>
+        </div>
+        <div class="v-files">Key files: <code>bridge_ids/*.json</code> (1,324 files) <code>rebuild_bridge_ids.py</code></div>
+    </div>
+
+    <div class="version">
+        <div class="v-header"><span class="v-tag">v1.3</span><span class="v-date">April 9</span></div>
+        <div class="v-title">Musnad Ahmad Expansion</div>
+        <div class="v-story">
+            Musnad Ahmad had only 1,374 hadiths from sunnah.com &mdash; the full book has 26,539.
+            Found the complete Arnaut edition on OpenITI (the Open Islamicate Texts Initiative) and wrote
+            a parser for their mARkdown format. Corpus jumped from 87k to 112k. Ahmad became the 2nd largest
+            book. Rebuilt the FAISS semantic index (112k vectors) and uploaded to HuggingFace. Fixed both
+            HF apps (repo_type bug + Gradio CSS compatibility).
+        </div>
+        <div class="v-stats">
+            <div class="v-stat"><b>26,539</b> Ahmad hadiths (was 1,374)</div>
+            <div class="v-stat"><b>112,221</b> total hadiths</div>
+            <div class="v-stat"><b>1,326,229</b> root links</div>
+        </div>
+        <div class="v-files">Key files: <code>parse_openiti_musnad.py</code> <code>app/data/sunni/ahmed/</code> (1,014 chapter files)</div>
+    </div>
+
+    <div class="version">
+        <div class="v-header"><span class="v-tag">v1.4</span><span class="v-date">April 9</span></div>
+        <div class="v-title">Isnad Cleanup + Narrator Profiles</div>
+        <div class="v-story">
+            Discovered that &ldquo;أبيه&rdquo; (his father) was appearing as a top narrator in ALL 11 books &mdash; it's not
+            a person, it's a relative reference. Built a 37-entry genealogy lookup to resolve father-son chains
+            (e.g., &lrm;هشام بن عروة&rlm; &rarr; &lrm;عروة بن الزبير&rlm;). Fixed kunya splitting where &lrm;أبي صالح&rlm; was being
+            broken into two tokens. Merged AR-Sanad 280K (18,298 narrators) and hatemben (701 with full jarh
+            wa ta'dil) into a unified database. Built the Rijal page &mdash; a searchable narrator browser.
+        </div>
+        <div class="v-stats">
+            <div class="v-stat"><b>18,298</b> narrator profiles</div>
+            <div class="v-stat"><b>72,767</b> name variants</div>
+            <div class="v-stat">Isnad grading: 26% &rarr; <b>61%</b></div>
+        </div>
+        <div class="v-files">Key files: <code>narrator_unified.json</code> <code>rijal.html</code> <code>isnad_father_map.json</code> <code>isnad_kunya_map.json</code></div>
+    </div>
+
+    <div class="version">
+        <div class="v-header"><span class="v-tag">v1.5</span><span class="v-date">April 9</span></div>
+        <div class="v-title">8 Classical Rijal Texts Parsed</div>
+        <div class="v-story">
+            Downloaded and parsed 8 foundational texts of ilm al-rijal from OpenITI &mdash; Tahdhib al-Kamal,
+            Mizan al-I'tidal, Al-Jarh wa al-Ta'dil, Al-Thiqat, Al-Kamil fi Du'afa, Tarikh Baghdad,
+            Tahdhib al-Tahdhib, and Taqrib al-Tahdhib. 83,082 entries across 82.6 MB of Classical Arabic.
+            Fuzzy name matching merged them into the narrator database, creating the largest structured
+            open-source narrator database available.
+        </div>
+        <div class="v-stats">
+            <div class="v-stat"><b>65,391</b> narrator profiles (was 18,298)</div>
+            <div class="v-stat"><b>119,860</b> name variants</div>
+            <div class="v-stat"><b>83,082</b> classical entries parsed</div>
+            <div class="v-stat"><b>31,822</b> source cross-references</div>
+        </div>
+        <div class="v-files">Key files: <code>download_openiti_rijal.py</code> <code>parse_openiti_rijal.py</code> <code>merge_classical_rijal.py</code></div>
+    </div>
+
+    <div class="version">
+        <div class="v-header"><span class="v-tag">v1.6</span><span class="v-date">April 9</span></div>
+        <div class="v-title">The Dual-Stemmer Breakthrough</div>
+        <div class="v-story">
+            315 Quranic roots had zero hadith connections &mdash; not because the words don't exist in hadiths,
+            but because CAMeL Tools canonicalizes roots differently from the Quranic Arabic Corpus. The Wensinck
+            concordance was built independently as a digital recreation of the 33-year physical concordance.
+            It was only after building it that we realized it solved the root gap: Wensinck's light stemmer,
+            using a completely different method, found hadith attestations for 254 of the 315 &ldquo;missing&rdquo; roots.
+            <br><br>
+            1,345 surface forms discovered by the light stemmer were patched into the morphological dictionary.
+            Two stemmers now cross-validate each other: where both agree a root has no hadith match,
+            we have the first empirical proof that it's genuinely absent &mdash; not a tooling failure.
+        </div>
+        <div class="v-stats">
+            <div class="v-stat">Root coverage: 81% &rarr; <b>96.3%</b></div>
+            <div class="v-stat">Root links: 1.33M &rarr; <b>1.53M</b></div>
+            <div class="v-stat">Zero roots: 315 &rarr; <b>61</b></div>
+            <div class="v-stat"><b>1,345</b> new word forms patched</div>
+        </div>
+        <div class="v-files">Key files: <code>wensinck.json</code> (1,486 roots, 1,042,279 refs) <code>root_alias_map.json</code> (196 aliases)</div>
+    </div>
+
+</div>
+
+<div class="footer">
+    Researched, compiled &amp; developed by <a href="https://www.linkedin.com/in/alibinshahid/">Ali Bin Shahid</a>
+    &nbsp;&middot;&nbsp; <a href="../index.html">Home</a>
+    &nbsp;&middot;&nbsp; <a href="https://github.com/R3GENESI5/Itqan">GitHub</a>
+    &nbsp;&middot;&nbsp; <a href="https://doi.org/10.5281/zenodo.19453612">Paper</a>
+</div>
+
+</body>
+</html>
