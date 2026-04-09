@@ -68,6 +68,33 @@ if GRANDFATHER_MAP_PATH.exists():
         GRANDFATHER_MAP = {strip_diacritics(k): strip_diacritics(v)
                            for k, v in raw.items() if not k.startswith('_')}
 
+# Mother lookup for resolving عن أمه
+MOTHER_MAP_PATH = Path(__file__).parent / 'isnad_mother_map.json'
+MOTHER_MAP = {}
+if MOTHER_MAP_PATH.exists():
+    with open(MOTHER_MAP_PATH, encoding='utf-8') as f:
+        raw = json.load(f)
+        MOTHER_MAP = {strip_diacritics(k): strip_diacritics(v)
+                      for k, v in raw.items() if not k.startswith('_')}
+
+# Grandmother lookup for resolving عن جدته
+GRANDMOTHER_MAP_PATH = Path(__file__).parent / 'isnad_grandmother_map.json'
+GRANDMOTHER_MAP = {}
+if GRANDMOTHER_MAP_PATH.exists():
+    with open(GRANDMOTHER_MAP_PATH, encoding='utf-8') as f:
+        raw = json.load(f)
+        GRANDMOTHER_MAP = {strip_diacritics(k): strip_diacritics(v)
+                           for k, v in raw.items() if not k.startswith('_')}
+
+# Uncle lookup for resolving standalone عن عمه
+UNCLE_MAP_PATH = Path(__file__).parent / 'isnad_uncle_map.json'
+UNCLE_MAP = {}
+if UNCLE_MAP_PATH.exists():
+    with open(UNCLE_MAP_PATH, encoding='utf-8') as f:
+        raw = json.load(f)
+        UNCLE_MAP = {strip_diacritics(k): strip_diacritics(v)
+                     for k, v in raw.items() if not k.startswith('_')}
+
 # Name cleanup
 def clean_name(s):
     s = strip_diacritics(s.strip())
@@ -153,6 +180,20 @@ def extract_chain(arabic_text):
                         name_part = next_name
                         segs[idx + 1] = ''
                         resolved = True
+                # Third: try lookup tables (mother, grandmother, uncle)
+                if not resolved and chain:
+                    prev = chain[-1]
+                    lookup_maps = {
+                        'أمه': MOTHER_MAP, 'أمي': MOTHER_MAP,
+                        'جدته': GRANDMOTHER_MAP, 'جدتي': GRANDMOTHER_MAP,
+                        'عمه': UNCLE_MAP, 'عمي': UNCLE_MAP,
+                    }
+                    lmap = lookup_maps.get(name_part)
+                    if lmap:
+                        looked_up = lmap.get(prev)
+                        if looked_up:
+                            name_part = looked_up
+                            resolved = True
                 if not resolved:
                     continue  # truly standalone, drop
 
