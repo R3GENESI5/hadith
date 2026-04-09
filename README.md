@@ -25,11 +25,25 @@
 
 ## What This Is
 
-Existing Quran and Hadith platforms (Quran.com, Sunnah.com, islamweb.net) provide text search on translations. Al-Itqan operates at the level classical scholars worked: **Arabic root morphology**. The root `صوم` connects every Quran verse about fasting to every hadith whose Arabic text contains a word derived from that root — whether the word is `صيام`, `يصوم`, `الصائم`, `صُمْتُ`, or `صوموا`. One root, all its forms, across both corpora at once.
+For 1,400 years, studying the connection between the Quran and the Hadith required mastery of Classical Arabic, access to a physical library of biographical dictionaries, and years of training in root morphology and narrator criticism. A scholar wanting to trace how the Quranic concept of *rizq* (provision) manifests across the hadith corpus would need to know every Arabic word derived from the root ر-ز-ق, then manually search across multiple hadith collections, then cross-reference each narrator in the chain against several volumes of *ilm al-rijal*.
 
-Beyond the concordance, Itqan provides **the largest structured open-source narrator database available** — 65,391 profiles spanning 8 classical texts of hadith scholarship (Tahdhib al-Kamal, Mizan al-I'tidal, Al-Jarh wa al-Ta'dil, Al-Thiqat, Al-Kamil fi Du'afa, Tarikh Baghdad, Tahdhib al-Tahdhib, Taqrib al-Tahdhib), with grades from Ibn Hajar and al-Dhahabi, jarh wa ta'dil opinions from Abu Hatim, Ahmad ibn Hanbal, and Ibn Hibban, and a kunya→real name mapping that resolves أبو هريرة to عبد الرحمن بن صخر الدوسي.
+**Itqan does all of this computationally, instantly, and for free.**
 
-The result is a set of open JSON files that any developer or researcher can load and build on, plus a live web app that uses them.
+### The concordance
+
+Existing platforms (Quran.com, Sunnah.com, islamweb.net) provide keyword search on translations. Itqan operates at the level classical scholars worked: **Arabic root morphology**. The root `صوم` connects every Quran verse about fasting to every hadith whose Arabic text contains a word derived from that root — whether the word is `صيام`, `يصوم`, `الصائم`, `صُمْتُ`, or `صوموا`. One root, all its forms, across both corpora at once. **1,336 shared roots generate 1,326,229 verified connections** between 6,236 Quran ayahs and 112,221 hadiths across 18 books.
+
+### The narrator database
+
+Itqan provides **the largest structured open-source narrator database available** — 65,391 profiles spanning 8 classical texts of hadith scholarship (Tahdhib al-Kamal, Tahdhib al-Tahdhib, Taqrib al-Tahdhib, Mizan al-I'tidal, Al-Jarh wa al-Ta'dil, Al-Thiqat, Al-Kamil fi Du'afa, Tarikh Baghdad), with 119,860 name variants, 31,822 classical source cross-references, and 28,917 graded profiles. Each narrator's entry consolidates assessments from multiple classical scholars — Ibn Hajar, al-Dhahabi, Abu Hatim, Ahmad ibn Hanbal, Ibn Hibban — enabling the kind of multi-source comparison that previously required consulting several physical volumes.
+
+### The morphological dictionary
+
+Every Arabic word in every hadith is one click away from its three-letter root, Lane's Lexicon definition, and grammatical form. 32,413 words mapped. Click صلاة and see: root صلو, "to pray, perform the ritual prayer," verb form I — then every other hadith in the corpus sharing that root.
+
+### Open data
+
+Everything is open JSON files. A researcher can load `quran_hadith_bridge.json` and query all 1,326,229 root connections programmatically. A developer can build a new app on `narrator_unified.json` and its 65,391 profiles. No API keys, no rate limits, no backend. The live web app is fully static and works offline.
 
 | Quran bil-Quran — root panel | Hadith Reader — root filter mode |
 |---|---|
