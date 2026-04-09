@@ -3,6 +3,8 @@
 [![Paper DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19453612.svg)](https://doi.org/10.5281/zenodo.19453612)
 [![Code DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19453613.svg)](https://doi.org/10.5281/zenodo.19453613)
 
+**Researched, compiled & developed by [Ali Bin Shahid](https://www.linkedin.com/in/alibinshahid/)**
+
 > *"Itqan"* (إتقان) means mastery, perfection, and precision in craft. This project applies that principle to Islamic source texts: every connection between the Quran and the Hadith corpus is grounded in classical Arabic root morphology, not keyword guessing.
 
 A unified Quran and Hadith study platform — **1,336 shared Arabic roots** connecting **6,236 Quran ayahs** to **112k+ hadiths** through **1,326,229 root links**. Open the Quran, click any root, see every connected hadith across 18 books. Fully static, offline-capable, no backend required.
@@ -462,7 +464,76 @@ The stats bar shows: total *asanid* (chains) parsed from the book, ruwat and lin
 
 ### Narrator grade matching
 
-Grades are matched via a 5-strategy Arabic name cascade (`src/match_narrator_grades.py`): exact match, prefix match, stripped-diacritics match, short-name alias (e.g. الزهري → محمد بن مسلم بن عبيد الله بن شهاب الزهري), and `grade_ar` text markers (ثقة, إمام, حافظ). Match rate: **178/280 ruwat (63.6%)** across all 11 books. Major narrators colored: al-Zuhri, Shu'ba, Imam Malik, al-A'mash, al-Layth, Sufyan al-Thawri.
+Grades are matched from a unified database of **18,298 narrators** (72,767 name variants) compiled from three sources:
+
+| Source | Narrators | What it provides |
+|--------|-----------|-----------------|
+| **KASHAF** (OmarShafie/hadith) | 17,093 | Base grades from Taqrib al-Tahdhib |
+| **AR-Sanad 280K** (somaia02/Narrator-Disambiguation) | 18,298 | Full names, ALL name variants, Ibn Hajar rank, Dhahabi rank, kunya, death/birth year, city, tabaqat, teacher→student ID links |
+| **hatemben/hadithdb** | 1,524 | Full jarh wa ta'dil (multiple scholar opinions: Abu Hatim, Ahmad ibn Hanbal, Ibn Hibban, etc.) |
+
+Match rate per book after AR-Sanad integration:
+
+| Book | Graded | Rate |
+|------|--------|------|
+| Bukhari | 37/60 | **61%** |
+| Abu Dawud | 36/60 | **60%** |
+| Ahmad | 32/60 | **53%** |
+| Muslim | 30/60 | **50%** |
+
+### Isnad chain parsing fixes
+
+The isnad parser (`src/parse_isnad_chains.py`) handles several Arabic-specific challenges:
+
+| Problem | What it is | How it's fixed |
+|---------|-----------|---------------|
+| **أبيه / أبي** | "his father" — relative reference, not a name | 37-entry father lookup table resolving to actual names (e.g., هشام بن عروة → عروة بن الزبير) |
+| **جده** | "his grandfather" | 8-entry grandfather map (e.g., شعيب بن محمد → عبد الله بن عمرو) |
+| **Broken kunyas** | `عن أبي صالح` split into `أبي` + `صالح` | Peek-ahead repair: if `أبي` is standalone, merge with next segment |
+| **Honorific duplication** | `أبي هريرة` ≠ `أبي هريرة ـ رضى الله عنه ـ` | Strip رضى الله عنه, kashida (ـ), trailing قال |
+| **عمي / أمه** | "my uncle" / "his mother" | Dropped (too ambiguous to resolve) |
+
+### Kunya → real name tooltips
+
+32 kunya narrators mapped to their real names for the isnad tooltip display:
+
+| Kunya | Real name | English |
+|-------|-----------|---------|
+| أبو هريرة | عبد الرحمن بن صخر الدوسي | Abd al-Rahman ibn Sakhr al-Dawsi |
+| أبو صالح | ذكوان السمان | Dhakwan al-Samman |
+| أبي إسحاق | عمرو بن عبد الله السبيعي | Amr ibn Abdullah al-Sabi'i |
+| أبو أسامة | حماد بن أسامة القرشي | Hammad ibn Usama al-Qurashi |
+| أبو معاوية | محمد بن خازم الضرير | Muhammad ibn Khazim al-Darir |
+| ... | 27 more | See `src/isnad_kunya_map.json` |
+
+---
+
+## The Rijal Page — Narrator Profiles
+
+`app/rijal.html` — a searchable browser for **18,298 narrator biographies** from the classical hadith tradition.
+
+Every narrator who appears in the six canonical books (Kutub al-Sittah) and related collections is profiled with:
+
+- **Full name** and all known **name variants** (e.g., أبو هريرة has 12+ variant spellings across manuscripts)
+- **Kunya** (honorific patronymic), **laqab** (title), **nasab** (lineage), **nisba** (geographic/tribal affiliation)
+- **Ibn Hajar's grade** from *Taqrib al-Tahdhib* — the standard one-line assessment (ثقة, صدوق, ضعيف, etc.)
+- **Al-Dhahabi's assessment** — an independent second opinion
+- **Jarh wa ta'dil** (701 narrators) — the full critical opinions from multiple classical scholars: Abu Hatim al-Razi, Ahmad ibn Hanbal, Ibn Hibban, Ibn 'Adi, al-Nasa'i, etc. This is the raw material that hadith scholars use to evaluate narrator reliability.
+- **Death year**, **birth year**, **city of residence**, **tabaqat** (generation in the chain of transmission)
+
+### Data sources
+
+The unified narrator database (`app/data/narrator_unified.json`, 30 MB) merges three open-source datasets:
+
+1. **AR-Sanad 280K** (somaia02) — 18,298 narrators with 72,767 name variants and teacher→student ID links. This is the largest structured dataset of hadith narrators available.
+2. **hatemben/hadithdb** — 1,524 Bukhari narrators with detailed jarh wa ta'dil from Tahdhib al-Tahdhib (multiple scholar opinions per narrator, with source references to specific pages in classical texts).
+3. **KASHAF** (OmarShafie/hadith) — 17,093 entries with grades extracted from Tahdhib al-Tahdhib.
+
+### Interaction
+
+- **Search** by name, kunya, or city in Arabic or English
+- **Filter** by grade (Companion, Reliable, Weak, etc.) or generation (tabaqat)
+- **Click any card** to expand: name variants, laqab, nasab, and full jarh wa ta'dil opinions
 
 ---
 
@@ -654,6 +725,7 @@ Itqan/
 │   ├── hadith.html               Hadith reader with word panel
 │   ├── shia.html                 Standalone Shia hadith database
 │   ├── families.html             Thematic family browser (39 families, expandable root chips)
+│   ├── rijal.html                Narrator profiles browser (18,298 narrators, jarh wa ta'dil)
 │   ├── chord.html                Interactive chord graphs (3 tabs, data embedded)
 │   ├── concordance_audit.html    Data quality verification dashboard
 │   ├── css/
