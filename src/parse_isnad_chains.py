@@ -125,16 +125,45 @@ def extract_chain(arabic_text):
                 'زوجها', 'زوجي', 'زوجته',
                 'مولاه', 'مولاي', 'مولاته', 'مولاها',
             }
+            # Case 1: name_part is JUST the relative term (e.g. "عمه")
+            # The actual name may be after a comma in the SAME segment
+            # e.g. segment = "عمه، واسع بن حبان،" → name_part = "عمه"
+            # but "واسع بن حبان" is the real narrator
             if name_part in RELATIVE_TERMS:
-                continue  # standalone relative, no name follows
-            # Check if name_part STARTS with a relative term followed by a real name
+                resolved = False
+                # First: check the rest of the current segment after the comma
+                raw_seg = segs[idx]
+                comma_parts = re.split(r'[،,]', raw_seg)
+                if len(comma_parts) >= 2:
+                    after_comma = clean_name(comma_parts[1])
+                    if (after_comma and len(after_comma) >= 3
+                            and after_comma not in ('الله', 'رسول', 'النبي')
+                            and not after_comma.startswith('أن')
+                            and not after_comma.startswith('قال')):
+                        name_part = after_comma
+                        resolved = True
+                # Second: peek at next segment
+                if not resolved and idx + 1 < len(segs):
+                    next_seg = re.split(r'[،,\n]|(?:\s+(?:قال|ان|انه)\s)', segs[idx + 1])[0]
+                    next_name = clean_name(next_seg)
+                    if (next_name and len(next_name) >= 3
+                            and next_name not in ('الله', 'رسول', 'النبي', 'ذلك', 'هذا', 'كان')
+                            and not next_name.startswith('أن')
+                            and not next_name.startswith('قال')):
+                        name_part = next_name
+                        segs[idx + 1] = ''
+                        resolved = True
+                if not resolved:
+                    continue  # truly standalone, drop
+
+            # Case 2: name_part STARTS with relative term + name
             # e.g. "مولاه عبد الله بن الحارث" → extract "عبد الله بن الحارث"
-            for rel in RELATIVE_TERMS:
-                if name_part.startswith(rel + ' ') and len(name_part) > len(rel) + 2:
-                    name_part = name_part[len(rel):].strip()
-                    # Clean: remove leading comma or connector
-                    name_part = re.sub(r'^[،,]\s*', '', name_part).strip()
-                    break
+            else:
+                for rel in RELATIVE_TERMS:
+                    if name_part.startswith(rel + ' ') and len(name_part) > len(rel) + 2:
+                        name_part = name_part[len(rel):].strip()
+                        name_part = re.sub(r'^[،,]\s*', '', name_part).strip()
+                        break
             # Resolve relative references using previous narrator in chain
             # أبيه / أبي = "his father", جده = "his grandfather"
             if name_part in ('أبيه', 'ابيه', 'أبي') and chain:
