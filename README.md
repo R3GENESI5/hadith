@@ -745,31 +745,73 @@ python src/audit.py
 
 | Gap | Severity | Detail |
 |-----|----------|--------|
-| **Musnad Ahmad English** | Medium | 26,539 Arabic hadiths loaded (Arnaut edition via OpenITI), but English translations available for only ~1,374 (sunnah.com subset) |
-| **Narrator grades** | High | 26-38% of isnad narrators graded per book. Major names colored, but most secondary narrators show as grey/unknown |
-| **~315 zero-hadith roots** | Medium | Mostly hamza-initial roots (أتي, شيأ, رأي, أخذ) where CAMeL Tools normalization doesn't match concordance vocabulary |
-| **Family noise** | Medium | A single shared root is sufficient for a hadith to appear in a family. A hadith mentioning خرج (to leave) appears in end_of_times even if about ordinary travel |
-| **الله root (أله)** | Low | Appears in ~100% of hadiths — correctly treated as stop word. Cannot be meaningfully indexed |
-| **Isnad أبي residual** | Low | ~134 unresolvable "his father" references in Muslim (long-tail kunya misparses) |
-| **No per-hadith grades** | Medium | Source JSONs lack Sahih/Hasan/Da'if authentication grades. Must be sourced separately |
+| **Narrator grades** | High | 26-38% of isnad narrators graded per book. 17,093 KASHAF entries available but matching is partial |
+| **Per-hadith grades** | High | Source JSONs lack Sahih/Hasan/Da'if authentication grades. Arnaut's grades exist in the OpenITI Musnad edition footnotes |
+| **Musnad Ahmad English** | Medium | 26,539 Arabic hadiths (Arnaut edition), English translations for only ~1,374 (sunnah.com subset) |
+| **~315 zero-hadith roots** | Medium | Hamza-initial roots where CAMeL Tools normalization doesn't match concordance vocabulary |
+| **Family noise** | Medium | A single shared root is sufficient for family membership — relevance threshold (2+ roots) would improve precision |
+
+### Rijal Data Sources — Available for Integration
+
+A wealth of open-source narrator biographical data exists. These sources can dramatically improve the isnad visualizer, narrator grading, and kunya resolution:
+
+#### Structured datasets (JSON/CSV, ready to merge)
+
+| Source | Narrators | Key fields | Format |
+|--------|-----------|------------|--------|
+| **KASHAF** (OmarShafie/hadith) | 18,800+ | Name, grade from Tahdhib al-Tahdhib | CSV (already integrated) |
+| **AR-Sanad 280K** (somaia02/Narrator-Disambiguation) | 18,298 | Full name, ALL name variants, Ibn Hajar rank, Dhahabi rank, kunya, laqab, nasab, death/birth year, city, tabaqat, **teacher→student ID links** | CSV |
+| **hatemben/hadithdb** | 1,524 | Full jarh wa ta'dil (multiple scholars), Ibn Hajar grade, Dhahabi grade, kunya, death date, tabaqat | JSON |
+
+#### Classical rijal texts (OpenITI, need parsing)
+
+| Text | Author | Content | OpenITI path |
+|------|--------|---------|--------------|
+| **Tahdhib al-Kamal** | al-Mizzi (d. 742 AH) | Encyclopedia of narrators from the Six Books, ~8,000+ entries | `0750AH/0742Mizzi/0742Mizzi.TahdhibKamal` |
+| **Tahdhib al-Tahdhib** | Ibn Hajar (d. 852 AH) | Abridged Tahdhib al-Kamal with added grades | `0900AH/0852IbnHaworkar/...` |
+| **Taqrib al-Tahdhib** | Ibn Hajar | Concise single-line grades for each narrator | KASHAF source |
+| **Mizan al-I'tidal** | al-Dhahabi (d. 748 AH) | Narrators who faced scholarly criticism | `0750AH/0748Dhahabi/...` |
+| **Al-Jarh wa al-Ta'dil** | Ibn Abi Hatim (d. 327 AH) | Narrator reliability evaluations | `0350AH/0327IbnAbiHatworkim/...` |
+| **Al-Thiqat** | Ibn Hibban (d. 354 AH) | Reliable narrators | `0400AH/0354IbnHibworkan/...` |
+| **Al-Kamil fi Du'afa** | Ibn 'Adi (d. 365 AH) | Weak narrators | `0400AH/0365IbnCadi/...` |
+| **Tarikh Baghdad** | al-Khatib (d. 463 AH) | Biographies of Baghdad scholars | `0500AH/0463KhatibBagworddadi/...` |
+
+#### Per-hadith grading sources
+
+| Source | Coverage | Grader |
+|--------|----------|--------|
+| **Arnaut footnotes** | Full Musnad Ahmad (26,539) — already in our OpenITI source text | Shu'ayb al-Arna'ut |
+| **Zubair Ali Zai** | Abu Dawud, Tirmidhi, Ibn Majah | Zubair Ali Zai (d. 2013) |
+| **Darussalam** | Sunnah.com graded collections | Multiple scholars |
+| **dorar.net** | Comprehensive hadith grading database | Multiple scholars |
+
+#### What AR-Sanad 280K uniquely provides
+
+The `narrated_from` and `narrated_to` fields contain **narrator ID cross-references** — a complete teacher→student network across 18,298 narrators. This would allow:
+- Drawing actual biographical transmission paths in the isnad visualizer (not just co-occurrence)
+- Verifying chain continuity (did narrator A actually meet narrator B?)
+- Tabaqat-based generation coloring (which historical layer each narrator belongs to)
 
 ### Planned phases
+
 | Phase | What | Status |
 |---|---|---|
 | 0 | Data pipeline + concordance + bridge | ✅ Complete |
 | 1 | Isnad visualizer (D3 Sankey, 11 books) | ✅ Complete |
 | 2 | Semantic search (FAISS + multilingual-e5-small, 112k hadiths) | ✅ Complete |
 | 3 | Conversational Q&A (RAG + Qwen2.5-0.5B) | ✅ Complete |
-| 4 | Isnad narrator grade matching (5-strategy Arabic cascade) | ✅ Complete |
+| 4 | Isnad narrator grade matching + kunya→real name tooltips | ✅ Complete |
 | 5 | App scaffold: reader, root panel, family view | ✅ Complete |
 | 6 | v1.1: Reverse Quran bridge, deep links, families, chord rebuild | ✅ Complete |
 | 7 | v1.2: Bridge fix, guide page, isnad cleanup, explainers | ✅ Complete |
 | 8 | GitHub Pages + Zenodo DOIs (paper + code) | ✅ Complete |
-| 9 | Musnad Ahmad full corpus (26,539 hadiths from OpenITI Arnaut edition) | ✅ Complete |
-| 10 | Improve narrator grade matching (target: 60%+) | ⬜ Planned |
-| 11 | Per-hadith authentication grades (Sahih/Hasan/Da'if) | ⬜ Planned |
-| 12 | Curated HadithReference tafsir table | ⬜ Planned |
-| 13 | FAISS index rebuild with expanded corpus | ⬜ Planned |
+| 9 | v1.3: Musnad Ahmad (26,539 hadiths), FAISS rebuild (112k), pipeline rebuild | ✅ Complete |
+| 10 | Merge AR-Sanad 280K: 18,298 narrators with teacher-student network | ⬜ Next |
+| 11 | Merge hatemben: full jarh wa ta'dil (multiple scholar opinions per narrator) | ⬜ Next |
+| 12 | Parse Arnaut footnotes for per-hadith Musnad Ahmad grades | ⬜ Planned |
+| 13 | Parse Zubair Ali Zai / Darussalam for per-hadith grades (Abu Dawud, Tirmidhi, Ibn Majah) | ⬜ Planned |
+| 14 | Parse OpenITI Tahdhib al-Kamal for full narrator biographies | ⬜ Planned |
+| 15 | Curated HadithReference tafsir table | ⬜ Planned |
 
 ---
 
@@ -777,6 +819,8 @@ python src/audit.py
 
 Contributions are welcome in these areas:
 
+- **Rijal data integration** — merging AR-Sanad, hatemben, or parsing OpenITI biographical texts
+- **Per-hadith grading** — parsing Arnaut/Zubair Ali Zai/Darussalam grades into the hadith JSONs
 - **Adding hadith books** — especially graded collections with isnad data
 - **Improving root coverage** — fixing CAMeL Tools gaps for specific roots
 - **Curating HadithReference links** — scholarly tafsir connections between specific ayahs and hadiths
