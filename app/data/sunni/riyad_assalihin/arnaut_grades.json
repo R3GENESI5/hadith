@@ -1,0 +1,4646 @@
+{
+ "680": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "681": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "682": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "683": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "684": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "685": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "686": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "687": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "688": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "689": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "690": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "691": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "692": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "693": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "694": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "695": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "696": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "697": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "698": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "699": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "701": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "702": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "703": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "704": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "705": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "706": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "707": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "708": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "709": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "710": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "711": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "712": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "713": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "714": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "715": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "717": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "718": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "719": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "720": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "721": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "723": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "724": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "725": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "726": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "727": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "728": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi and Abu Dawud"
+ },
+ "729": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "730": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "731": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and An-Nasa'i"
+ },
+ "732": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "733": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "734": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "735": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "736": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "737": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "738": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "739": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "740": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "741": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "742": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "743": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "744": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "745": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "746": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "747": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "748": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "749": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "750": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "751": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "752": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "753": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "754": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "755": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "756": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "757": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "759": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "760": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "761": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "762": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "763": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "764": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "765": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "766": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "767": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "768": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "769": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "770": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "771": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "772": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "774": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "775": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "777": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "778": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "779": {
+  "grade": "Hasan",
+  "source": "An- Nasa'i and Al-Hakim"
+ },
+ "780": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "781": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "782": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "783": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "784": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "785": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "786": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "787": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "788": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi "
+ },
+ "789": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "790": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "791": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "792": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "793": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "794": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and An- Nasa'i"
+ },
+ "795": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "796": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "797": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "798": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "799": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "800": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "801": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "802": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "803": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "804": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "805": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "806": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "807": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "808": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "809": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "810": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "811": {
+  "grade": "Hasan",
+  "source": "Abu Dawud, At-Tirmidhi and An- Nasa'i"
+ },
+ "813": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "814": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "815": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "816": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "817": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "818": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "819": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "820": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "821": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "822": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "823": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "824": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "825": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "826": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "827": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "829": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "830": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "831": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "832": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and Al-Hakim"
+ },
+ "833": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "834": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "835": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "836": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "837": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "838": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "839": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim "
+ },
+ "840": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "841": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "842": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "843": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "844": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "845": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "846": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "847": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "848": {
+  "grade": "Sahih",
+  "source": "At- Tirmidhi, who classified it as Hasan Sahih"
+ },
+ "849": {
+  "grade": "Sahih",
+  "source": "Malik, with a sound chain"
+ },
+ "850": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi, who classified it as Hasan"
+ },
+ "851": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "852": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "853": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "854": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi, who classified it as Hasan"
+ },
+ "855": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "856": {
+  "grade": "Sahih",
+  "source": "Abu Dawud and At-Tirmidhi, who classified the hadith as Hasan Sahih"
+ },
+ "857": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "858": {
+  "grade": "Hasan",
+  "source": "Abu Dawud, with a sound chain"
+ },
+ "859": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "860": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "861": {
+  "grade": "Sahih",
+  "source": "At-Tirmidhi, who classified it as Hasan Sahih"
+ },
+ "862": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "863": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "864": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "865": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi who classified it as Hasan"
+ },
+ "866": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "867": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "868": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "869": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "870": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "871": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "872": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "873": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "874": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "875": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "876": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "877": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "878": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "879": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "880": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "882": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "883": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "884": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "885": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "886": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "887": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "888": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "890": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "891": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "892": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "893": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "894": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "895": {
+  "grade": "Hasan",
+  "source": "i.e., to say: 'Yarhamuk-Allah (may Allah bestow His Mercy on you),' when the sneezer praises Allah"
+ },
+ "896": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "897": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "898": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "899": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "900": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "901": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "902": {
+  "grade": "Hasan",
+  "source": "O Allah! the Rubb of mankind! Remove this disease and cure (him or her)! You are the Great Curer. There is no cure but through You, which leaves behind no disease"
+ },
+ "903": {
+  "grade": "Hasan",
+  "source": "O Allah! the Rubb of mankind! Take away this disease and cure (him or her). You are the Curer. There is no cure except through You. Cure (him or her), a cure that leaves no disease"
+ },
+ "904": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "905": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "906": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "907": {
+  "grade": "Hasan",
+  "source": "No harm, (it will be a) purification (from sins), if Allah wills"
+ },
+ "908": {
+  "grade": "Hasan",
+  "source": "With the Name of Allah. I recite over you (to cleanse you) from all that troubles you, and from every harmful mischief and from the evil of the eyes of an envier. Allah will cure you; and with the Name of Allah, I recite over you"
+ },
+ "909": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "910": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "911": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "912": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "913": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "914": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "915": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "916": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "917": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "918": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "919": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "920": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "921": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "922": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "923": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "924": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "925": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "926": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "927": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "928": {
+  "grade": "Hasan",
+  "source": "Al-Hakim"
+ },
+ "929": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "930": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "931": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "932": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "933": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "934": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "935": {
+  "grade": "Hasan",
+  "source": "if the dead person is a woman, one should change the ending of certain words in this supplication from hu to ha"
+ },
+ "936": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "937": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "938": {
+  "grade": "Hasan",
+  "source": "if the dead person is a man, or laha if the dead person is a woman"
+ },
+ "939": {
+  "grade": "Hasan",
+  "source": "name of the dead person"
+ },
+ "940": {
+  "grade": "Hasan",
+  "source": "Al-Hakim"
+ },
+ "941": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "942": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "943": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "944": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "945": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "946": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "947": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "948": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "949": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "950": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "951": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "952": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "953": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "954": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "955": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "956": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "957": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi and Abu Dawud"
+ },
+ "958": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "959": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi and Abu Dawud"
+ },
+ "960": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "961": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi and Abu Dawud"
+ },
+ "962": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "963": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "964": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "965": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "966": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "967": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "968": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "969": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "970": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "971": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "972": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "973": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "974": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "975": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "976": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "977": {
+  "grade": "Hasan",
+  "source": "None has the right to be worshipped but Allah, Who has no partner, to Whom the sovereignty belongs, to Whom all praise is due, and Who is Able to do all things. We are those who return (in safety), feel penitence, worship Allah, prostrate before our Rubb and praise Him. Allah has fulfilled His Promise, helped His slave (i.e., Muhammad (ﷺ)) and He Alone vanquished the Clans"
+ },
+ "978": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "979": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "980": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi and Abu Dawud"
+ },
+ "981": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and An- Nasa'i"
+ },
+ "982": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "983": {
+  "grade": "Hasan",
+  "source": "O land, my Rubb and your Rubb is Allah, I seek refuge in Him from your evils, the evils of what you contain, the evils of what has been created in you, and the evils of what walks upon you. I seek refuge in Allah from lions, black serpents, scorpions and from the inhabitants of the place, and from the parent (i.e., Satan) and his offspring who inhabit a settlement (i.e., helpers from amongst the devils)"
+ },
+ "984": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "985": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "986": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "987": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "988": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "989": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "990": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "991": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "992": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "993": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "994": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "995": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "996": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "997": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "998": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "999": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1000": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1001": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "1002": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1003": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1004": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1005": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1006": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1007": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1008": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1010": {
+  "grade": "Hasan",
+  "source": "Say: He is Allah (the) One"
+ },
+ "1011": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1012": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1013": {
+  "grade": "Hasan",
+  "source": "Say: He is Allah, (the) One"
+ },
+ "1014": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1015": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1016": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi and Abu Dawud"
+ },
+ "1017": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1018": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1019": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1020": {
+  "grade": "Hasan",
+  "source": " Allah! none has the right to be worshipped but He, the Ever Living, the One Who sustains and protects all that exists. Neither slumber nor sleep overtakes Him. To Him belongs whatever is in the heavens and whatever is on the earth. Who is he that can intercede with Him except with His Permission? He knows what happens to them (His creatures) in this world, and what will happen to them in the Hereafter. And they will never compass anything of His Knowledge except that which He wills. His Kursi encompasses the heavens and the earth, and preserving them does not fatigue Him. And He is the Most High, the Most Great"
+ },
+ "1021": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1022": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1023": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1024": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1025": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1026": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1027": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1028": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1029": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1030": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1031": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1032": {
+  "grade": "Hasan",
+  "source": "I testify that there so no true god except Allah Alone, Who has no partners and that Muhammad ((ﷺ) is His slave and Messenger"
+ },
+ "1034": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1036": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1037": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1038": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1039": {
+  "grade": "Hasan",
+  "source": "O Allah, Rubb of this perfect call (Da'wah) and of the established prayer (As-Salat), grant Muhammad the Wasilah and superiority, and raise him up to a praiseworthy position which You have promised him"
+ },
+ "1040": {
+  "grade": "Hasan",
+  "source": "I testify that there is no true god except Allah Alone; He has no partners and that Muhammad (ﷺ) is His slave and Messenger; I am content with Allah as my Rubb, with Muhammad as my Messenger and with Islam as my Deen"
+ },
+ "1041": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "1043": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1044": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1045": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1046": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1047": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1048": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1049": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1050": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1051": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1052": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1053": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1054": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1055": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1056": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1057": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1058": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi and Abu Dawud"
+ },
+ "1059": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1060": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1061": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1062": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1064": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1066": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1067": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1068": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1069": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1070": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1071": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1072": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1073": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1074": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1075": {
+  "grade": "Hasan",
+  "source": "of Allah (Ka'bah)"
+ },
+ "1076": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1077": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1078": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1079": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1080": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1081": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1082": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1083": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1084": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1085": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1086": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1087": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1088": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1089": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1090": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1091": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1092": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1093": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1094": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1095": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1096": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1097": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1098": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1099": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1100": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1101": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1102": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1103": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1104": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1106": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1107": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1108": {
+  "grade": "Hasan",
+  "source": "in the first Rak'ah"
+ },
+ "1109": {
+  "grade": "Hasan",
+  "source": "in the first Rak'ah"
+ },
+ "1110": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1111": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1112": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "1113": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1114": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1115": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1116": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "1117": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1119": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1120": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "1121": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1122": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1123": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1124": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1125": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1126": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1127": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1128": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1129": {
+  "grade": "Hasan",
+  "source": "Nawafil (voluntary)"
+ },
+ "1130": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1131": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1132": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi and Abu Dawud"
+ },
+ "1133": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1134": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1135": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1136": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1137": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "1138": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1139": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1140": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1141": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1142": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1143": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1145": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1146": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1147": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1148": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1149": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1150": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1151": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1152": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1153": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "1154": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1155": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1156": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1157": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1158": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1159": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1160": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1161": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1162": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1163": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1164": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1165": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1166": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1167": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1168": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1169": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1170": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1171": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1172": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1173": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1175": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1176": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1177": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1178": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1179": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1180": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1181": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1182": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1183": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1184": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1185": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1186": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1187": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1188": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1189": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1190": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1191": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1192": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1193": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1194": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1195": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1196": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1197": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1198": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1199": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1200": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1201": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1202": {
+  "grade": "Hasan",
+  "source": "An-Nasa'i and Ibn Khuzaimah"
+ },
+ "1203": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1204": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1206": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1207": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1208": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1209": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1211": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1212": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1214": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1215": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1216": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1217": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1218": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1219": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1220": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1221": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1222": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1223": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1224": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1225": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1226": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1227": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "1228": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1229": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1230": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1231": {
+  "grade": "Hasan",
+  "source": "call to Salat (prayer)"
+ },
+ "1232": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1233": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1234": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1235": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1236": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1237": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1238": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1239": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1240": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1242": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1243": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "1244": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1245": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1246": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1247": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1248": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1249": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1250": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1251": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1252": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1253": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1254": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1255": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1256": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1259": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1260": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1261": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1262": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1263": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1264": {
+  "grade": "Hasan",
+  "source": "An-Nasa'i"
+ },
+ "1265": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1266": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1267": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1268": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1269": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1270": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1271": {
+  "grade": "Hasan",
+  "source": "there is no true god except Allah, and Muhammad ((ﷺ)) is the Messenger of Allah"
+ },
+ "1272": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1273": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1274": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1276": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1277": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1278": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1279": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1280": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "1281": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1282": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1283": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1284": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1286": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1287": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1288": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1289": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1290": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1291": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1292": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "1293": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1294": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1295": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1296": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi and Abu Dawud"
+ },
+ "1297": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1299": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1300": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1301": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1302": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1303": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1304": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1306": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1307": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1308": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1309": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1310": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1311": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1312": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1313": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1314": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1315": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1316": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1318": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1319": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1320": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1321": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1322": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1323": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1324": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1325": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1326": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "1327": {
+  "grade": "Hasan",
+  "source": "Ahmad and Abu Dawud"
+ },
+ "1328": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1329": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1330": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1331": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1332": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1333": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1334": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1335": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1336": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1337": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "1338": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1339": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1340": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1341": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1342": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1343": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1344": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1345": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1346": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1347": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1348": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1349": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1350": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "1351": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1352": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1353": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1354": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1355": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1356": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "1357": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1359": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1360": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1361": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1362": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1363": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1365": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1366": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1367": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1368": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1369": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1370": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1371": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1372": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1373": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1375": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "1376": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1377": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1378": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1379": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1380": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1381": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1382": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1383": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1384": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1385": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1386": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1387": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1388": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "1389": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1390": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "1391": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1392": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1393": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1394": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1395": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1396": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1397": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1398": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1399": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1401": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1402": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1403": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1404": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "1405": {
+  "grade": "Sahih",
+  "source": "O Allah, exalt the mention of Muhammad and the family of Muhammad as you exalted the family of Ibrahim. You are Praised and Glorious. O Allah, bless Muhammad and the family of Muhammad as You blessed the family of Ibrahim. You are Praised and Glorious.\"'<br><br><b>[Al-Bukhari and Muslim"
+ },
+ "1406": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1407": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1408": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1409": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1410": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1411": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1412": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1413": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1414": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1415": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1416": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1417": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1418": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1419": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1420": {
+  "grade": "Hasan",
+  "source": "saying 'Subhan-Allah' (Allah is free from imperfection)"
+ },
+ "1421": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1422": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1423": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1424": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1425": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1426": {
+  "grade": "Sahih",
+  "source": "You are the Most Glorious. The Most Holy. You the Rubb of the angels and of Jibril<br><br><b>[Muslim"
+ },
+ "1427": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1428": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1429": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1431": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1432": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1433": {
+  "grade": "Hasan",
+  "source": "Allah is free from imperfection and I begin with His praise, as many times as the number of His creatures, in accordance with His Good Pleasure, equal to the weight of His Throne and equal to the ink that may be used in recording the words (for His Praise)"
+ },
+ "1434": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1435": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1436": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1437": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1439": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1440": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1441": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1442": {
+  "grade": "Hasan",
+  "source": "'Subhan-Allah' (Allah is free from imperfection)"
+ },
+ "1444": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1445": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1447": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1448": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1449": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1450": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1451": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1452": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1453": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi and Abu Dawud"
+ },
+ "1454": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "1455": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1456": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "1457": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "1458": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1459": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1460": {
+  "grade": "Hasan",
+  "source": "With Your Name, my Rubb, I place my side (upon the bed) and with Your Grace I will raise it up. If You withhold my soul (cause me to die), have mercy on it but if You let it go (let me live), guard it against which You guarded Your pious slaves"
+ },
+ "1462": {
+  "grade": "Hasan",
+  "source": "O Allah! I have submitted myself to You. I have turned my face to You, entrusted my affairs to You and relied completely on You out of desire for and fear of You (expecting Your reward and fearing Your punishment). There is no resort and no deliverer from (hardships) except You. I affirm my faith in Your Book which You have revealed, and in Your Prophet whom You have sent"
+ },
+ "1463": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1465": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1466": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1467": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1468": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1469": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1470": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1472": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1473": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1474": {
+  "grade": "Hasan",
+  "source": "O Allah! I seek refuge in You from helplessness (to do good), indolence, cowardice, senility, and miserliness; and I seek Your Protection against the torment of the grave and the trials of life and death"
+ },
+ "1475": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1476": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1477": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1478": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1479": {
+  "grade": "Hasan",
+  "source": "O Allah! I seek refuge in You from the inability (to do good), indolence, cowardice, miserliness, decrepitude and torment of the grave. O Allah! Grant me the sense of piety and purify my soul as You are the Best to purify it. You are its Guardian and its Protecting Friend. O Allah! I seek refuge in You from the knowledge which is not beneficial, and from a heart which does not fear (You), and from desire which is not satisfied, and from prayer which is not answered"
+ },
+ "1480": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1481": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "1482": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1483": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "1484": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1485": {
+  "grade": "Hasan",
+  "source": "O Allah! I seek refuge in You from hunger; surely, it is the worst companion. And I seek refuge in You from treachery; surely, it is a bad inner trait"
+ },
+ "1486": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1487": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1488": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1489": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1490": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1491": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1492": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1493": {
+  "grade": "Hasan",
+  "source": "Al-Hakim"
+ },
+ "1494": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1495": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1496": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1497": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1498": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1499": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1500": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1501": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1502": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1503": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1504": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1505": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1506": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1507": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1508": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1509": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1510": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1511": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1512": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1513": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1514": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1515": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1516": {
+  "grade": "Sahih",
+  "source": "Imam Malik and At-Tirmidhi"
+ },
+ "1517": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1518": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1519": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1520": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1521": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1523": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1524": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1525": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "1526": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1527": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1528": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1529": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1530": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1531": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1532": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1533": {
+  "grade": "Sahih",
+  "source": "Bukhari and Muslim"
+ },
+ "1534": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1535": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1536": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1537": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1538": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1539": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "1540": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1541": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1542": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1543": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1544": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1545": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1546": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1547": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1548": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1549": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1550": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1551": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1552": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1553": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1554": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "1556": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1557": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1558": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1559": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1560": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1561": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1562": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1563": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1565": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1566": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1567": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1568": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1569": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1570": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1571": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1572": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1573": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1574": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1575": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1576": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1577": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1578": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1579": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1580": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1581": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1583": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1584": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1586": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1587": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1588": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1589": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1590": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1591": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1592": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1593": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1594": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1595": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1596": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1597": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1598": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1599": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1600": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1601": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1602": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1603": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1604": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1605": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1606": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1607": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1608": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1609": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1610": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1611": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1612": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1613": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1614": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1615": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1616": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1617": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1618": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1619": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1620": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1621": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1622": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1623": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1624": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1625": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1626": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "1627": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1628": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1629": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1630": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1631": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1632": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1633": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1634": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1635": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1636": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1637": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1638": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1639": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1640": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1641": {
+  "grade": "Hasan",
+  "source": "An- Nasa'i"
+ },
+ "1642": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1644": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1645": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1646": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1647": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1649": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1650": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1651": {
+  "grade": "Hasan",
+  "source": "Abu Dawud with a good Isnad"
+ },
+ "1652": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1653": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1654": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1655": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1656": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1657": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1658": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1659": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1660": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1661": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1662": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1663": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1664": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1665": {
+  "grade": "Hasan",
+  "source": "i.e., all that Islam ordains (V:60:12)"
+ },
+ "1666": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1667": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1668": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1669": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1670": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1671": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1672": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1673": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1674": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1675": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1676": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1677": {
+  "grade": "Sahih",
+  "source": "Abu Dawud with Sahih Isnad"
+ },
+ "1678": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1679": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1680": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1681": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1682": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1683": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1684": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1685": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1686": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1687": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1688": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1689": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1690": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1691": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1692": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1693": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1694": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1695": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1696": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1697": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1698": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1699": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "1700": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1701": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1702": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1703": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1704": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1705": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At-Tirmidhi"
+ },
+ "1706": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1707": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1708": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1709": {
+  "grade": "Sahih",
+  "source": "Abu Dawud with authentic Isnad"
+ },
+ "1710": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1711": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1712": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1713": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1714": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1715": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1716": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1717": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1718": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1719": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1720": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1721": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1722": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1723": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and An- Nasa'i"
+ },
+ "1724": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1725": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1726": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1727": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1728": {
+  "grade": "Hasan",
+  "source": "Abu Dawud with good Isnad"
+ },
+ "1729": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1730": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1731": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1733": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1734": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1735": {
+  "grade": "Hasan",
+  "source": "At- Tirmidhi"
+ },
+ "1736": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1737": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "1738": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1739": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1740": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1741": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1742": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1744": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1745": {
+  "grade": "Sahih",
+  "source": "Abu Dawud with authentic Isnad"
+ },
+ "1746": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1747": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1748": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1749": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1750": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1751": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1752": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1753": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1754": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1755": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1756": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1757": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1758": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1759": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1760": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1761": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1762": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1763": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1764": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1765": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1766": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1767": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1768": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1769": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1770": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1771": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1772": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1773": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1774": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1775": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1776": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1777": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1778": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1779": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1780": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1781": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1782": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1783": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1784": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "1785": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1786": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1787": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1788": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1789": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1790": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1791": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1792": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1793": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1794": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1795": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1796": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1797": {
+  "grade": "Hasan",
+  "source": "Al-Baihaqi"
+ },
+ "1798": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1799": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1800": {
+  "grade": "Hasan",
+  "source": "Abu Dawud with Hasan (good) Isnad"
+ },
+ "1801": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1802": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1803": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1804": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1805": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1806": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1807": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1808": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1809": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1810": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1811": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1812": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1813": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1814": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1815": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1816": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1817": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1818": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1819": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1820": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1821": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1822": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1823": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1824": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1825": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1826": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1827": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1828": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1829": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1830": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1831": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1832": {
+  "grade": "Hasan",
+  "source": "Ad-Daraqutni and others"
+ },
+ "1833": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1834": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1835": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1836": {
+  "grade": "Sahih",
+  "source": "Al- Bukhari and Muslim"
+ },
+ "1837": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1838": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1839": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1840": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1841": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1842": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1843": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1844": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1846": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1847": {
+  "grade": "Sahih",
+  "source": "Muslim in a long Hadith"
+ },
+ "1848": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1849": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1850": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1851": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1852": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1853": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1854": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1855": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1856": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1857": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1858": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1859": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1861": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1862": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1863": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1864": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1865": {
+  "grade": "Hasan",
+  "source": "Al- Bukhari"
+ },
+ "1867": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1869": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1870": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1871": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1872": {
+  "grade": "Hasan",
+  "source": "Abu Dawud and At- Tirmidhi"
+ },
+ "1873": {
+  "grade": "Hasan",
+  "source": "Abu Dawud"
+ },
+ "1874": {
+  "grade": "Sahih",
+  "source": "Abu Dawud, At-Tirmidhi and Al-Hakim (on conditions of Al-Bukhari and Muslim for accepting Hadith)"
+ },
+ "1875": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1876": {
+  "grade": "Hasan",
+  "source": "by saying, 'Astaghfirullah' (3 times)"
+ },
+ "1878": {
+  "grade": "Hasan",
+  "source": "At-Tirmidhi"
+ },
+ "1879": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1880": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1881": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1882": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1883": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1884": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1885": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1886": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1887": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1888": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1889": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1890": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1891": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari"
+ },
+ "1892": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1893": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ },
+ "1894": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1895": {
+  "grade": "Sahih",
+  "source": "Al-Bukhari and Muslim"
+ },
+ "1896": {
+  "grade": "Sahih",
+  "source": "Muslim"
+ }
+}
