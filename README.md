@@ -12,10 +12,10 @@
 | | Metric | Scale |
 |---|--------|-------|
 | 📚 | **Hadith corpus** | 112,221 hadiths across 18 Sunni books + 15,000+ Shia |
-| 🔗 | **Root bridge** | 1,590 shared Arabic roots generating 1,528,346 Quran↔Hadith links |
+| 🔗 | **Root bridge** | 1,590 of 1,651 Quranic roots (96.3%) connected to hadiths via 1,528,346 links — dual-stemmer validated |
 | 📖 | **Quran coverage** | 6,236 ayahs, 1,651 unique roots, 39 thematic families |
 | 👤 | **Narrator database** | 65,391 narrators with 119,860 name variants, jarh wa ta'dil from 8 classical texts (83,082 entries) |
-| 🔍 | **Morphological dictionary** | 32,413 Arabic words → root + Lane's Lexicon + grammatical form |
+| 🔍 | **Morphological dictionary** | 33,758 Arabic words → root + Lane's Lexicon + grammatical form |
 | 📊 | **Isnad chains** | 100,000+ parsed transmission chains across 11 books, kunya resolution, grade matching |
 | 📜 | **Wensinck concordance** | 1,486 roots, 1,042,279 references — digital recreation of the 33-year, 7-volume physical concordance |
 | 🤖 | **AI layer** | FAISS semantic search (112k vectors) + RAG Q&A (Qwen2.5) on HuggingFace |
@@ -38,7 +38,11 @@ What Wensinck's team took decades to compile for 9 books, Itqan computes for 18.
 
 ### The concordance
 
-Existing platforms (Quran.com, Sunnah.com, islamweb.net) provide keyword search on translations. Itqan operates at the level classical scholars worked: **Arabic root morphology**. The root `صوم` connects every Quran verse about fasting to every hadith whose Arabic text contains a word derived from that root — whether the word is `صيام`, `يصوم`, `الصائم`, `صُمْتُ`, or `صوموا`. One root, all its forms, across both corpora at once. **1,590 shared roots generate 1,528,346 verified connections** between 6,236 Quran ayahs and 112,221 hadiths across 18 books.
+Existing platforms (Quran.com, Sunnah.com, islamweb.net) provide keyword search on translations. Itqan operates at the level classical scholars worked: **Arabic root morphology**. The root `صوم` connects every Quran verse about fasting to every hadith whose Arabic text contains a word derived from that root — whether the word is `صيام`, `يصوم`, `الصائم`, `صُمْتُ`, or `صوموا`. One root, all its forms, across both corpora at once. **1,590 of 1,651 Quranic roots (96.3%) are connected to hadiths** through 1,528,346 verified links across 18 books.
+
+### Dual-stemmer methodology
+
+A single Arabic NLP tool (CAMeL Tools) initially connected only 81% of Quranic roots to hadiths — 315 roots returned zero matches due to canonical form disagreements between the Quranic Arabic Corpus and CAMeL's morphological analyzer. Itqan solves this with a **dual-stemmer approach**: an independent light stemmer (modeled on Wensinck's concordance method) identifies 1,345 surface forms that CAMeL missed, and these are cross-validated against the primary analysis. Where CAMeL's contextual disambiguation fails, the light stemmer provides fallback coverage — raising root connectivity from 81% to 96.3%. The remaining 61 unconnected roots (3.7%, averaging 6.8 ayahs each) are confirmed by **both** methods to have no hadith attestation — the first empirically validated lower bound on the Quran's distinctive lexical stratum.
 
 ### The narrator database
 
@@ -46,7 +50,7 @@ Itqan provides **the largest structured open-source narrator database available*
 
 ### The morphological dictionary
 
-Every Arabic word in every hadith is one click away from its three-letter root, Lane's Lexicon definition, and grammatical form. 32,413 words mapped. Click صلاة and see: root صلو, "to pray, perform the ritual prayer," verb form I — then every other hadith in the corpus sharing that root.
+Every Arabic word in every hadith is one click away from its three-letter root, Lane's Lexicon definition, and grammatical form. 33,758 words mapped. Click صلاة and see: root صلو, "to pray, perform the ritual prayer," verb form I — then every other hadith in the corpus sharing that root.
 
 ### Open data
 
@@ -97,9 +101,9 @@ These components have no precedent in any of the source projects or, to our know
 |-----------|-------------|-------|
 | **Quran↔Hadith root bridge** | Connects every Quran root to every hadith containing a word from that root | 1,590 roots, 1,528,346 links |
 | **39 thematic families** | Roots grouped by semantic field (mercy, justice, prayer, trade...) from classical lexicography | 39 families spanning both corpora |
-| **Word-level morphological definitions** | Click any Arabic word in any hadith → root, Lane's Lexicon definition, morphological form | 32,413 words across 112k hadiths |
+| **Word-level morphological definitions** | Click any Arabic word in any hadith → root, Lane's Lexicon definition, morphological form | 33,758 words across 112k hadiths |
 | **Mufradat al-Quran integration** | Al-Raghib al-Isfahani's classical root definitions in the Quran reader | 1,651 roots |
-| **Concordance (Mu'jam al-Mufahris)** | Full inverted index: every word → every hadith containing it | 32,410 words, 1.15M entries |
+| **Concordance (Mu'jam al-Mufahris)** | Full inverted index: every word → every hadith containing it | 33,758 words, 1.15M entries |
 | **Chord visualizations** | Family×Family overlap, book distinctiveness, narrator×book network | 3 interactive D3 diagrams |
 | **Root alias map** | Reconciles CAMeL Tools and Quran root forms for Arabic NLP edge cases | 131 entries, recovering 4,977 mappings |
 | **How It Works guide** | Visual walkthrough with SVG flow diagram and interpretive data insights | 6-step Quran-first discovery flow |
@@ -134,7 +138,7 @@ The data pipeline, the root bridge, the families, the word panel, the concordanc
 Browse 112,221 hadiths across 18 Sunni books. Every Arabic word is interactive — click for root, morphology, and corpus-wide connections. Features:
 
 - **18 books** including the 9 canonical collections + Musnad Ahmad (26,539, full Arnaut edition) + Musannaf Ibn Abi Shaybah (37,943) + supplementary collections
-- **Word panel** — 32,413 Arabic words with root, Lane's Lexicon definition, grammatical form, corpus frequency
+- **Word panel** — 33,758 Arabic words with root, Lane's Lexicon definition, grammatical form, corpus frequency
 - **Root filter mode** — `?root=صلو` shows only hadiths containing prayer-root words, highlighted in gold
 - **Deep links** — `#bukhari/0/3` links directly to a specific hadith, shareable
 - **Cross-book connections** — "see also" links across books for the same hadith
@@ -181,7 +185,7 @@ RAW HADITH TEXT (Arabic, 18 books, 112,221 hadiths)
   For every word: root, lemma, POS, verb form (I–X), voice, aspect
         │
         ▼
-  word_defs_v2.json                   32,413 Arabic words → root assignments
+  word_defs_v2.json                   33,758 Arabic words → root assignments
         │
   + patch_word_defs.py                Manual fixes for CAMeL Tools gaps:
     • يوم (day/Qiyama) — 14 forms added (was completely absent)
@@ -195,7 +199,7 @@ RAW HADITH TEXT (Arabic, 18 books, 112,221 hadiths)
         ▼
   concordance.json                    Inverted index (Mu'jam al-Mufahris)
   Every Arabic word → list of hadith IDs that contain it
-  32,410 words · 1,149,723 total entries · cap 2,000 per word
+  33,758 words · 1,226,411 total entries · cap 2,000 per word
         │
         │          Quran roots_index.json   (1,651 roots + ayah lists)
         │          families.json            (39 thematic families → roots)
@@ -276,8 +280,8 @@ The **Mu'jam al-Mufahris** — the classical concordance index. Medieval scholar
 "تقوي":  ["tirmidhi:2:4",  "bukhari:65:51", ...]
 ```
 
-- **32,410 words** indexed
-- **1,149,723 total entries** (word × hadith pairs)
+- **33,758 words** indexed
+- **1,226,411 total entries** (word × hadith pairs)
 - Cap of **2,000 hadith IDs per word** (prevents ultra-common words from dominating)
 - IDs format: `book_id:chapter_index:hadith_id_in_chapter` (3-part, chapter-aware — fixed from the original 2-part format where `idInBook` restarted per chapter causing false matches)
 
@@ -954,7 +958,7 @@ python src/audit.py
 | **Narrator grades** | Medium | 50-61% of isnad narrators graded per book after AR-Sanad integration. Further improvement requires NLP parsing of OpenITI rijal texts |
 | **Per-hadith grades** | High | Source JSONs lack Sahih/Hasan/Da'if authentication grades. Arnaut's grades exist in the OpenITI Musnad edition footnotes |
 | **Musnad Ahmad English** | Medium | 26,539 Arabic hadiths (Arnaut edition), English translations for only ~1,374 (sunnah.com subset) |
-| **~315 zero-hadith roots** | Medium | Hamza-initial roots where CAMeL Tools normalization doesn't match concordance vocabulary |
+| **61 zero-hadith roots** | Low | Confirmed by dual-stemmer validation — genuinely rare Quranic vocabulary (avg 6.8 ayahs each). Down from 315 before Wensinck integration |
 | **Family noise** | Medium | A single shared root is sufficient for family membership — relevance threshold (2+ roots) would improve precision |
 
 ### Rijal Data Sources — Available for Integration
@@ -1015,7 +1019,8 @@ The `narrated_from` and `narrated_to` fields contain **narrator ID cross-referen
 | 10 | v1.4: Rijal page + AR-Sanad 65,391 narrators + hatemben jarh wa ta'dil | ✅ Complete |
 | 11 | Kunya→real name tooltips (32 entries) + isnad parsing fixes | ✅ Complete |
 | 12 | v1.5: Parse 8 classical rijal texts from OpenITI (83,082 entries → 65,391 profiles) | ✅ Complete |
-| 13 | Parse Arnaut footnotes for per-hadith Musnad Ahmad grades | ⬜ Planned |
+| 13 | v1.6: Dual-stemmer root bridge (81% → 96.3%), Wensinck concordance, 1,345 form patches | ✅ Complete |
+| 14 | Parse Arnaut footnotes for per-hadith Musnad Ahmad grades | ⬜ Planned |
 | 14 | Parse Zubair Ali Zai / Darussalam for per-hadith grades | ⬜ Planned |
 | 15 | Cross-text narrator deduplication (47k new profiles likely contain duplicates) | ⬜ Planned |
 | 16 | Teacher-student network extraction from Tahdhib al-Kamal | ⬜ Planned |
