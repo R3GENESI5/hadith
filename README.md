@@ -1,23 +1,35 @@
-# Itqan (الإتقان) — Quran–Hadith Study Platform
+# Itqan (الإتقان) — Computational Quran–Hadith Concordance & Rijal Database
 
 [![Paper DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19453612.svg)](https://doi.org/10.5281/zenodo.19453612)
 [![Code DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19453613.svg)](https://doi.org/10.5281/zenodo.19453613)
 
 **Researched, compiled & developed by [Ali Bin Shahid](https://www.linkedin.com/in/alibinshahid/)**
 
-> *"Itqan"* (إتقان) means mastery, perfection, and precision in craft. This project applies that principle to Islamic source texts: every connection between the Quran and the Hadith corpus is grounded in classical Arabic root morphology, not keyword guessing.
+> *"Itqan"* (إتقان) means mastery, perfection, and precision in craft. This project applies that principle to Islamic source texts: the first open-source computational concordance connecting the Quran and the complete Hadith corpus through Arabic root morphology, paired with the largest structured narrator database (ilm al-rijal) available in JSON format.
 
-A unified Quran and Hadith study platform — **1,336 shared Arabic roots** connecting **6,236 Quran ayahs** to **112k+ hadiths** through **1,326,229 root links**. Open the Quran, click any root, see every connected hadith across 18 books. Fully static, offline-capable, no backend required.
+### By the Numbers
 
-**[Itqan AI](https://huggingface.co/spaces/iqrossed/al-itqan-rag)** — an optional companion app providing concordance search and RAG-powered Q&A over the same corpus.
+| | Metric | Scale |
+|---|--------|-------|
+| 📚 | **Hadith corpus** | 112,221 hadiths across 18 Sunni books + 15,000+ Shia |
+| 🔗 | **Root bridge** | 1,336 shared Arabic roots generating 1,326,229 Quran↔Hadith links |
+| 📖 | **Quran coverage** | 6,236 ayahs, 1,651 unique roots, 39 thematic families |
+| 👤 | **Narrator database** | 18,298 narrators with 72,767 name variants, jarh wa ta'dil from 6+ classical scholars |
+| 🔍 | **Morphological dictionary** | 32,413 Arabic words → root + Lane's Lexicon + grammatical form |
+| 📊 | **Isnad chains** | 100,000+ parsed transmission chains across 11 books, kunya resolution, grade matching |
+| 🤖 | **AI layer** | FAISS semantic search (112k vectors) + RAG Q&A (Qwen2.5) on HuggingFace |
+
+**[Live App](https://r3genesi5.github.io/Itqan/)** · **[Itqan AI](https://huggingface.co/spaces/iqrossed/al-itqan-rag)** · **[Paper](https://doi.org/10.5281/zenodo.19453612)** · **[How It Works](https://r3genesi5.github.io/Itqan/guide.html)**
 
 ---
 
 ## What This Is
 
-Most Quran/Hadith apps do English keyword search on translations. Al-Itqan operates at the level classical scholars worked: **Arabic root morphology**. The root `صوم` connects every Quran verse about fasting to every hadith whose Arabic text contains a word derived from that root — whether the word is `صيام`, `يصوم`, `الصائم`, `صُمْتُ`, or `صوموا`. One root, all its forms, across both corpora at once.
+Existing Quran and Hadith platforms (Quran.com, Sunnah.com, islamweb.net) provide text search on translations. Al-Itqan operates at the level classical scholars worked: **Arabic root morphology**. The root `صوم` connects every Quran verse about fasting to every hadith whose Arabic text contains a word derived from that root — whether the word is `صيام`, `يصوم`, `الصائم`, `صُمْتُ`, or `صوموا`. One root, all its forms, across both corpora at once.
 
-The result is a set of open JSON files that any developer can load and build on, plus a live web app that uses them.
+Beyond the concordance, Itqan provides the **first structured JSON database of ilm al-rijal** (narrator criticism): 18,298 narrators with grades from Ibn Hajar and al-Dhahabi, jarh wa ta'dil opinions from Abu Hatim, Ahmad ibn Hanbal, and Ibn Hibban, and a kunya→real name mapping that resolves أبو هريرة to عبد الرحمن بن صخر الدوسي.
+
+The result is a set of open JSON files that any developer or researcher can load and build on, plus a live web app that uses them.
 
 | Quran bil-Quran — root panel | Hadith Reader — root filter mode |
 |---|---|
@@ -70,8 +82,11 @@ These components have no precedent in any of the source projects or, to our know
 | **Chord visualizations** | Family×Family overlap, book distinctiveness, narrator×book network | 3 interactive D3 diagrams |
 | **Root alias map** | Reconciles CAMeL Tools and Quran root forms for Arabic NLP edge cases | 131 entries, recovering 4,977 mappings |
 | **How It Works guide** | Visual walkthrough with SVG flow diagram and interpretive data insights | 6-step Quran-first discovery flow |
+| **Unified rijal database** | 18,298 narrator profiles with grades, kunya, jarh wa ta'dil merged from 3 sources | 72,767 name variants, 701 with full scholar opinions |
+| **Isnad parsing pipeline** | Chain extraction with father/grandfather resolution, kunya repair, honorific deduplication | 100k+ chains, 37-entry genealogy lookup, 32 kunya mappings |
+| **Musnad Ahmad expansion** | Full Arnaut edition (26,539 hadiths) parsed from OpenITI — 2nd largest book in the corpus | Was 1,374 from sunnah.com |
 
-The data pipeline, the root bridge, the families, the word panel, the concordance, the chord graphs, the guide, and the interpretive annotations — all of this is new.
+The data pipeline, the root bridge, the families, the word panel, the concordance, the chord graphs, the rijal database, the isnad parsing, the guide, and the interpretive annotations — all of this is new.
 
 ---
 
@@ -652,7 +667,8 @@ The model, vector store, language support, grounding, and conversation architect
 │  └──────────────────────────────────────────────────────┘   │
 │                                                              │
 │  ┌──────────────────────────────────────────────────────┐   │
-│  │  ISNAD VISUALIZER  (KASHAF engine, D3 Sankey)        │   │
+│  │  ISNAD VISUALIZER  (D3 Sankey, 11 books, 100k chains)│   │
+│  │  RIJAL PROFILES (18,298 narrators, jarh wa ta'dil)   │   │
 │  │  CHORD GRAPHS · CONCORDANCE AUDIT · THEMATIC STUDY   │   │
 │  └──────────────────────────────────────────────────────┘   │
 │                                                              │
@@ -694,7 +710,7 @@ The model, vector store, language support, grounding, and conversation architect
 | Bulugh al-Maram | 1,767 | Ungraded |
 | Mishkat al-Masabih | 4,427 | Ungraded |
 | Shamail Muhammadiyah | 400 | Ungraded |
-| **Musannaf Ibn Abi Shaybah** | **37,943** | Ungraded (largest single book, 43% of corpus) |
+| **Musannaf Ibn Abi Shaybah** | **37,943** | Ungraded (largest single book, 34% of corpus) |
 | Nawawi 40 | 42 | Ungraded |
 | Qudsi 40 | 40 | Ungraded |
 | Shah Waliullah 40 | 40 | Ungraded |
@@ -738,6 +754,7 @@ Itqan/
 │       ├── concordance.json           22 MB   — inverted index
 │       ├── word_defs_v2.json          6.7 MB  — morphological dictionary
 │       ├── narrator_index.json        0.6 MB  — narrator records
+│       ├── narrator_unified.json      30 MB   — 18,298 rijal profiles + jarh wa ta'dil
 │       ├── hadith_connections.json    4.2 MB  — cross-book links
 │       ├── roots_lexicon.json         1.5 MB  — Lane's definitions
 │       ├── bridge_ids/                1,181 per-root JSON files {book:{ch:[ids]}}
@@ -761,15 +778,17 @@ Itqan/
 │   ├── build_chord.py            Chord graph HTML generator
 │   ├── visualize_concordance.py  Audit dashboard generator
 │   ├── audit.py                  Full data quality audit
+│   ├── parse_openiti_musnad.py    OpenITI Musnad Ahmad parser
+│   ├── parse_isnad_chains.py     Isnad chain extraction + father/kunya resolution
+│   ├── match_narrator_grades.py  Grade matching (KASHAF + AR-Sanad)
+│   ├── isnad_father_map.json     37 father-son genealogy pairs
+│   ├── isnad_grandfather_map.json 8 grandfather pairs
+│   ├── isnad_kunya_map.json      32 kunya→real name mappings
 │   ├── root_alias_map.json       131 CAMeL↔Quran root form corrections
 │   └── requirements.txt
 │
 ├── guide.html                    How It Works — discovery flow guide with SVG diagram
-├── Dockerfile                    Docker deployment (nginx:alpine, port 8099)
-├── docker-compose.yml            Docker Compose for NAS deployment
-├── nginx.conf                    Nginx config (gzip, tiered caching)
 ├── netlify.toml                  Netlify config (publish = app)
-├── PLAN.md                       Architecture and roadmap
 └── README.md                     This file
 ```
 
@@ -817,7 +836,7 @@ python src/audit.py
 
 | Gap | Severity | Detail |
 |-----|----------|--------|
-| **Narrator grades** | High | 26-38% of isnad narrators graded per book. 17,093 KASHAF entries available but matching is partial |
+| **Narrator grades** | Medium | 50-61% of isnad narrators graded per book after AR-Sanad integration. Further improvement requires NLP parsing of OpenITI rijal texts |
 | **Per-hadith grades** | High | Source JSONs lack Sahih/Hasan/Da'if authentication grades. Arnaut's grades exist in the OpenITI Musnad edition footnotes |
 | **Musnad Ahmad English** | Medium | 26,539 Arabic hadiths (Arnaut edition), English translations for only ~1,374 (sunnah.com subset) |
 | **~315 zero-hadith roots** | Medium | Hamza-initial roots where CAMeL Tools normalization doesn't match concordance vocabulary |
@@ -878,8 +897,8 @@ The `narrated_from` and `narrated_to` fields contain **narrator ID cross-referen
 | 7 | v1.2: Bridge fix, guide page, isnad cleanup, explainers | ✅ Complete |
 | 8 | GitHub Pages + Zenodo DOIs (paper + code) | ✅ Complete |
 | 9 | v1.3: Musnad Ahmad (26,539 hadiths), FAISS rebuild (112k), pipeline rebuild | ✅ Complete |
-| 10 | Merge AR-Sanad 280K: 18,298 narrators with teacher-student network | ⬜ Next |
-| 11 | Merge hatemben: full jarh wa ta'dil (multiple scholar opinions per narrator) | ⬜ Next |
+| 10 | v1.4: Rijal page + AR-Sanad 18,298 narrators + hatemben jarh wa ta'dil | ✅ Complete |
+| 11 | Kunya→real name tooltips (32 entries) + isnad parsing fixes | ✅ Complete |
 | 12 | Parse Arnaut footnotes for per-hadith Musnad Ahmad grades | ⬜ Planned |
 | 13 | Parse Zubair Ali Zai / Darussalam for per-hadith grades (Abu Dawud, Tirmidhi, Ibn Majah) | ⬜ Planned |
 | 14 | Parse OpenITI Tahdhib al-Kamal for full narrator biographies | ⬜ Planned |
@@ -913,13 +932,30 @@ CAMeL Tools: BSD-2-Clause
 
 ## Acknowledgements
 
-- **CAMeL Lab** (AUC Cairo) — Arabic NLP toolkit that made root extraction possible at scale
+### Data sources
+- **AR-Sanad 280K** (somaia02) — 18,298 narrators with name variants, grades, and teacher-student links
+- **hatemben/hadithdb** — 1,524 narrators with full jarh wa ta'dil from Tahdhib al-Tahdhib
+- **OpenITI** — open corpus of classical Islamic texts, including the Arnaut edition of Musnad Ahmad
+
+### Source projects (concept origins)
 - **KASHAF** (Omar Shafie) — isnad visualization concept and Sankey data model
 - **BasilSuhail** — two-corpus unified semantic search concept
 - **HadithRAG** (Quchluk) — isnad-preserving vector store schema
-- **Lane's Lexicon** — the definitive Arabic-English lexicon, digitized by the community
-- **Raghib al-Isfahani** (d. 1108 CE) — *Mufradat Alfaz al-Quran*, the classical root-meaning reference
+
+### Classical sources
+- **Ibn Hajar al-Asqalani** (d. 852 AH) — *Taqrib al-Tahdhib* and *Tahdhib al-Tahdhib*, the standard narrator grading references
+- **al-Dhahabi** (d. 748 AH) — *Mizan al-I'tidal*, independent narrator assessment
+- **Raghib al-Isfahani** (d. 1108 CE) — *Mufradat Alfaz al-Quran*, the classical root-meaning lexicon
+- **Edward William Lane** (1863–1893) — *Arabic-English Lexicon*, the definitive classical Arabic dictionary
+
+### Tools
+- **CAMeL Lab** (AUC Cairo) — Arabic morphological analyzer that made root extraction possible at 112k-hadith scale
+- **D3.js** — visualizations (isnad Sankey, chord diagrams)
+- **FAISS** (Meta) — similarity search over 112k hadith vectors
+- **intfloat/multilingual-e5-small** — Arabic-native sentence embeddings
 
 ---
 
-*Built with the intention that every student of Islam, regardless of language or resources, can access the depth of scholarship that previously required a library and years of Arabic study.*
+*Researched, compiled and developed with the intention that every student of Islam, regardless of language or resources, can access the depth of scholarship that previously required a library and years of Arabic study.*
+
+*This is a sadaqah jariyah — ongoing charity through beneficial knowledge.*
