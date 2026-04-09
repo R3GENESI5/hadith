@@ -160,15 +160,22 @@ def clean_name(name):
 
 
 def extract_death_year(text):
-    """Extract death year from Arabic text like 'مات سنة ست وثلاثين'."""
-    # Numeric: مات سنة 197
-    m = re.search(r'(?:مات|توفي|قتل)\s+سنة\s+(\d+)', strip_diacritics(text))
-    if m:
-        return m.group(1) + ' هـ'
-    # Word-form: مات سنة ست وثلاثين
+    """Extract death year from Arabic text, using both numeric and word-form parsing."""
+    import sys, os
+    sys.path.insert(0, os.path.dirname(__file__))
+    from arabic_year_parser import extract_death_year_word
+
+    clean = strip_diacritics(text)
+
+    # Try the full word-form parser (handles both numeric and word-form)
+    year = extract_death_year_word(clean)
+    if year:
+        return str(year) + ' هـ'
+
+    # Fallback: raw word capture for non-standard patterns
     m = re.search(
         r'(?:مات|توفي|قتل)\s+سنة\s+([\u0600-\u06FF\s]+?)(?:\s+(?:وله|وقد|وقيل|[دتسقخمع]|$))',
-        strip_diacritics(text)
+        clean
     )
     if m:
         return m.group(1).strip() + ' هـ'
@@ -803,6 +810,522 @@ def parse_tahdhib_tahdhib(text):
     return entries
 
 
+def parse_tabaqat_ibn_saad(text):
+    """Tabaqat al-Kubra (Ibn Sa'd, d.230) — earliest biographical dictionary.
+    Format: ### $ NUM- NAME, optional kunya/nisba
+    Body: prose biography with hadiths, death info, etc.
+    First ~20k lines are Sira (Prophet's biography), entries start after.
+    """
+    lines = text.split('\n')
+    joined = []
+    for line in lines:
+        if line.startswith('~~'):
+            if joined:
+                joined[-1] += ' ' + line[2:].strip()
+            else:
+                joined.append(line[2:].strip())
+        else:
+            joined.append(line)
+
+    full = '\n'.join(joined)
+    full = PAGE_RE.sub('', full)
+    full = MS_RE.sub('', full)
+
+    entry_re = re.compile(r'^### \$ (\d+)\s*-?\s*(.+)', re.MULTILINE)
+    raw_entries = split_entries(full, entry_re)
+    entries = []
+
+    for match, body in raw_entries:
+        num = int(match.group(1))
+        header = match.group(2).strip()
+
+        # Name: everything up to first comma or period
+        name_end = re.search(r'[،,.]', header)
+        name = header[:name_end.start()].strip() if name_end else header.strip()
+        name = re.sub(r'\s+رضي\s+الله\s+عن[هـ].*', '', name).strip()
+        name = re.sub(r'\s+رحمه\s+الله.*', '', name).strip()
+        # Strip "ذكر" prefix common in Tabaqat headers
+        name = re.sub(r'^ذكر\s+', '', name).strip()
+        name = clean_name(name)
+
+        kunya = extract_kunya(header)
+        death = extract_death_year(body)
+        grade_en, grade_ar = extract_grade(body[:500])
+
+        # Tabaqat are mostly companions/tabi'in
+        if not grade_en:
+            # Check for companion markers in body
+            comp_markers = ['صحابي', 'صحب النبي', 'شهد بدرا', 'شهد أحدا',
+                           'هاجر إلى', 'بايع', 'أسلم يوم']
+            if any(m in body[:300] for m in comp_markers):
+                grade_en = 'companion'
+                grade_ar = 'صحابي'
+
+        entries.append({
+            'id': num,
+            'name': name,
+            'kunya': kunya,
+            'grade_en': grade_en or 'unknown',
+            'grade_ar': grade_ar or '',
+            'color': GRADE_COLORS.get(grade_en or 'unknown', '#95a5a6'),
+            'death': death,
+            'source': 'tabaqat_ibn_saad',
+        })
+
+    return entries
+
+
+def parse_siyar(text):
+    """Siyar A'lam al-Nubala (al-Dhahabi, d.748) — major biographical encyclopedia.
+    Format: ### $ NUM - NAME * (sigla)
+    Body: detailed biography with death year, city, grades, teachers/students.
+    """
+    lines = text.split('\n')
+    joined = []
+    for line in lines:
+        if line.startswith('~~'):
+            if joined:
+                joined[-1] += ' ' + line[2:].strip()
+            else:
+                joined.append(line[2:].strip())
+        else:
+            joined.append(line)
+
+    full = '\n'.join(joined)
+    full = PAGE_RE.sub('', full)
+    full = MS_RE.sub('', full)
+
+    entry_re = re.compile(r'^### \$ (\d+)\s*-?\s*(.+)', re.MULTILINE)
+    raw_entries = split_entries(full, entry_re)
+    entries = []
+
+    for match, body in raw_entries:
+        num = int(match.group(1))
+        header = match.group(2).strip()
+        # Clean body: strip # line markers for text analysis
+        body_clean = re.sub(r'^#\s+', '', body, flags=re.MULTILINE)
+        body_clean = re.sub(r'\s+', ' ', body_clean).strip()
+
+        # Remove sigla markers: * (م، ق) or * (ع)
+        header_clean = re.sub(r'\s*\*\s*(\([^)]*\)\s*)?\.?$', '', header).strip()
+        # Remove trailing period
+        header_clean = header_clean.rstrip('.')
+
+        # Name: everything up to first period, comma, or # boundary
+        name_end = re.search(r'[،,]', header_clean)
+        name = header_clean[:name_end.start()].strip() if name_end else header_clean.strip()
+        name = clean_name(name)
+
+        # Extract sigla from header
+        books = []
+        sigla_m = re.search(r'\*\s*\(([^)]+)\)', header)
+        if sigla_m:
+            raw = sigla_m.group(1).replace('،', ' ').replace(',', ' ')
+            books = [s.strip() for s in raw.split() if s.strip()]
+
+        # Kunya from NAME portion only (not body text)
+        kunya = extract_kunya(name)
+
+        # Death from body -- Siyar uses various patterns
+        death = extract_death_year(body_clean)
+        if not death:
+            m = re.search(r'(?:توفي|مات)\s+(?:في\s+)?سنة\s+(\d+)', body_clean)
+            if m:
+                death = m.group(1) + ' هـ'
+
+        # Check companion markers FIRST (before general grade extraction)
+        grade_en, grade_ar = None, None
+        comp_markers = ['صحابي', 'صاحب رسول', 'شهد بدرا', 'من السابقين',
+                       'أحد العشرة', 'من المهاجرين', 'حواري رسول',
+                       'أسلم قديما', 'من أهل بدر', 'بايع تحت الشجرة',
+                       'أحد السابقين']
+        if any(m in body_clean[:600] for m in comp_markers):
+            grade_en = 'companion'
+            grade_ar = 'صحابي'
+
+        # If not companion, extract grade from body
+        if not grade_en:
+            grade_en, grade_ar = extract_grade(body_clean[:600])
+
+        # City extraction from body
+        city = ''
+        city_m = re.search(
+            r'(?:نزيل|سكن|من أهل)\s+([\u0600-\u06FF]+(?:\s+[\u0600-\u06FF]+)?)',
+            body_clean[:600]
+        )
+        if city_m:
+            city = city_m.group(1).strip()
+
+        entry = {
+            'id': num,
+            'name': name,
+            'kunya': kunya,
+            'grade_en': grade_en or 'unknown',
+            'grade_ar': grade_ar or '',
+            'color': GRADE_COLORS.get(grade_en or 'unknown', '#95a5a6'),
+            'death': death,
+            'city': city,
+            'books': books,
+            'source': 'siyar',
+        }
+        entries.append(entry)
+
+    return entries
+
+
+def parse_isaba(text):
+    """Al-Isaba fi Tamyiz al-Sahaba (Ibn Hajar, d.852) — companion encyclopedia.
+    Format: ### $ NUM NAME inline_biography
+    Body: continuation of biography. All entries are companions.
+    """
+    lines = text.split('\n')
+    joined = []
+    for line in lines:
+        if line.startswith('~~'):
+            if joined:
+                joined[-1] += ' ' + line[2:].strip()
+            else:
+                joined.append(line[2:].strip())
+        else:
+            joined.append(line)
+
+    full = '\n'.join(joined)
+    full = PAGE_RE.sub('', full)
+    full = MS_RE.sub('', full)
+
+    entry_re = re.compile(r'^### \$ (\d+)\s+(.+)', re.MULTILINE)
+    raw_entries = split_entries(full, entry_re)
+    entries = []
+
+    for match, body in raw_entries:
+        num = int(match.group(1))
+        header = match.group(2).strip()
+
+        # The name runs until a descriptor keyword or clause
+        # Common patterns: NAME ... قال ... / NAME ... روى ... / NAME ... صحابي ...
+        name_end = re.search(
+            r'\s+(?:قال|روى|صحابي[ة]?|له صحبة|لها صحبة|ذكره|أخرج|كان|هو|يأتي|تقدم|مشهور|من بني|ممن|شهد|أسلم|هاجر)',
+            header
+        )
+        if name_end and name_end.start() > 3:
+            name = header[:name_end.start()].strip()
+        else:
+            # Fallback: take up to first sentence break
+            name_end2 = re.search(r'[.،]', header)
+            name = header[:name_end2.start()].strip() if name_end2 else header[:80].strip()
+
+        name = clean_name(name)
+        kunya = extract_kunya(name)  # from name only, not full header
+
+        # All Isaba entries are companions (the book's scope)
+        grade_en = 'companion'
+        grade_ar = 'صحابي'
+
+        # Death from body
+        death = extract_death_year(header + ' ' + body)
+
+        entries.append({
+            'id': num,
+            'name': name,
+            'kunya': kunya,
+            'grade_en': grade_en,
+            'grade_ar': grade_ar,
+            'color': GRADE_COLORS.get(grade_en, '#95a5a6'),
+            'death': death,
+            'source': 'isaba',
+        })
+
+    return entries
+
+
+def parse_tarikh_islam(text):
+    """Tarikh al-Islam (al-Dhahabi, d.748) — chronological history, organized by decade.
+    Format: ### $BIO_MAN$ followed by name with [الوفاة: N ه] inline.
+    30,000+ biographical entries, each with structured death year.
+    """
+    lines = text.split('\n')
+    joined = []
+    for line in lines:
+        if line.startswith('~~'):
+            if joined:
+                joined[-1] += ' ' + line[2:].strip()
+            else:
+                joined.append(line[2:].strip())
+        else:
+            joined.append(line)
+
+    full = '\n'.join(joined)
+    full = PAGE_RE.sub('', full)
+    full = MS_RE.sub('', full)
+
+    entry_re = re.compile(r'^### \$BIO_MAN\$\s*$', re.MULTILINE)
+    raw_entries = split_entries(full, entry_re)
+    entries = []
+
+    for idx, (match, body) in enumerate(raw_entries):
+        # Clean body
+        body_clean = re.sub(r'^#\s+', '', body, flags=re.MULTILINE)
+        body_clean = re.sub(r'--- misc', '', body_clean)
+        body_clean = re.sub(r'### NB.*', '', body_clean)
+        body_clean = re.sub(r'\s+', ' ', body_clean).strip()
+
+        # Extract death year from [الوفاة: N ه] marker
+        death = ''
+        death_m = re.search(r'\[الوفاة\s*:\s*(\d+)(?:\s*-\s*(\d+))?\s*ه\s*\]', body_clean)
+        if death_m:
+            if death_m.group(2):
+                # Range: take midpoint or first value
+                death = death_m.group(1) + ' هـ'
+            else:
+                death = death_m.group(1) + ' هـ'
+
+        # Extract name: first line of body, before [الوفاة]
+        name_line = body_clean.split('[الوفاة')[0] if '[الوفاة' in body_clean else body_clean[:200]
+        name = name_line.strip()
+
+        # Strip leading junk: dashes, entry numbers, sigla, section markers
+        # Pattern: optional "- NUM -" then optional "sigla:" then the name
+        name = re.sub(r'^-\s*', '', name)  # leading dash
+        name = re.sub(r'^\d+\s*-\s*', '', name)  # leading number + dash
+        name = re.sub(r'^[خمدتسقعبرف\s]+:\s*', '', name)  # sigla prefix like "ع:" or "ت ق:"
+        name = re.sub(r'^-\s*', '', name)  # another dash after sigla removal
+        # Strip section-style prefixes: "ترجمة", "وفاة", "موت", "ذكر"
+        name = re.sub(r'^(?:ترجمة|وفاة|موت|ذكر|وفيات|بقية)\s+', '', name)
+        # Strip brackets
+        name = re.sub(r'\[([^\]]*)\]', r'\1', name)
+
+        # Take up to first comma, period, or sentence break
+        name_end = re.search(r'[،,.]|\s+(?:قال|كان|سمع|روى|ولد|أخذ|له|هو|من أهل)', name)
+        if name_end and name_end.start() > 3:
+            name = name[:name_end.start()].strip()
+        else:
+            name = name[:100].strip()
+        # Remove honorifics
+        name = re.sub(r'\s*-\s*رضي\s*الله\s*عن[هاـ]\s*-\s*', ' ', name).strip()
+        name = re.sub(r'\s*رضي\s*الله\s*عن[هاـ].*', '', name).strip()
+        name = re.sub(r'\s*صلى\s*الله\s*عليه\s*وسلم.*', '', name).strip()
+        name = clean_name(name)
+
+        if not name or len(name) < 3:
+            continue
+
+        kunya = extract_kunya(name)
+        grade_en, grade_ar = extract_grade(body_clean[:500])
+
+        # Companion detection
+        if not grade_en:
+            comp_markers = ['صحابي', 'صاحب رسول', 'شهد بدرا', 'من السابقين',
+                           'أحد العشرة', 'من المهاجرين', 'أسلم قديما']
+            if any(m in body_clean[:400] for m in comp_markers):
+                grade_en = 'companion'
+                grade_ar = 'صحابي'
+
+        entries.append({
+            'id': idx,
+            'name': name,
+            'kunya': kunya,
+            'grade_en': grade_en or 'unknown',
+            'grade_ar': grade_ar or '',
+            'color': GRADE_COLORS.get(grade_en or 'unknown', '#95a5a6'),
+            'death': death,
+            'source': 'tarikh_islam',
+        })
+
+    return entries
+
+
+def parse_lisan_mizan(text):
+    """Lisan al-Mizan (Ibn Hajar, d.852) — expansion of Mizan al-I'tidal.
+    Format: ### $ NUM - NAME. Body has grades and biographical info.
+    """
+    lines = text.split('\n')
+    joined = []
+    for line in lines:
+        if line.startswith('~~'):
+            if joined:
+                joined[-1] += ' ' + line[2:].strip()
+            else:
+                joined.append(line[2:].strip())
+        else:
+            joined.append(line)
+
+    full = '\n'.join(joined)
+    full = PAGE_RE.sub('', full)
+    full = MS_RE.sub('', full)
+
+    entry_re = re.compile(r'^### \$ (\d+)\s*-?\s*(.+)', re.MULTILINE)
+    raw_entries = split_entries(full, entry_re)
+    entries = []
+
+    for match, body in raw_entries:
+        num = int(match.group(1))
+        header = match.group(2).strip()
+
+        # Remove (ز) marker (indicates addition by editor)
+        header = re.sub(r'^\s*\(ز\)\s*:?\s*', '', header).strip()
+
+        # Name: up to first period or # boundary
+        name_end = re.search(r'[.،#]', header)
+        name = header[:name_end.start()].strip() if name_end else header[:100].strip()
+        name = clean_name(name)
+
+        body_clean = re.sub(r'^#\s+', '', body, flags=re.MULTILINE)
+        body_clean = re.sub(r'\s+', ' ', body_clean).strip()
+
+        kunya = extract_kunya(name)
+        death = extract_death_year(header + ' ' + body_clean[:500])
+        grade_en, grade_ar = extract_grade(header + ' ' + body_clean[:500])
+
+        entries.append({
+            'id': num,
+            'name': name,
+            'kunya': kunya,
+            'grade_en': grade_en or 'unknown',
+            'grade_ar': grade_ar or '',
+            'color': GRADE_COLORS.get(grade_en or 'unknown', '#95a5a6'),
+            'death': death,
+            'source': 'lisan_mizan',
+        })
+
+    return entries
+
+
+def parse_durar_kamina(text):
+    """Al-Durar al-Kamina (Ibn Hajar, d.852) — 8th century scholars.
+    Format: ### $ NUM - followed by name on next line.
+    """
+    lines = text.split('\n')
+    joined = []
+    for line in lines:
+        if line.startswith('~~'):
+            if joined:
+                joined[-1] += ' ' + line[2:].strip()
+            else:
+                joined.append(line[2:].strip())
+        else:
+            joined.append(line)
+
+    full = '\n'.join(joined)
+    full = PAGE_RE.sub('', full)
+    full = MS_RE.sub('', full)
+
+    entry_re = re.compile(r'^### \$ (\d+)\s*-?\s*(.*)', re.MULTILINE)
+    raw_entries = split_entries(full, entry_re)
+    entries = []
+
+    for match, body in raw_entries:
+        num = int(match.group(1))
+        header = match.group(2).strip()
+
+        body_clean = re.sub(r'^#\s+', '', body, flags=re.MULTILINE)
+        body_clean = re.sub(r'\s+', ' ', body_clean).strip()
+
+        # Name is often in the body (header might be empty after the number)
+        name_text = (header + ' ' + body_clean[:200]).strip()
+        # Take up to common break words
+        name_end = re.search(r'\s+(?:ولد|مات|توفي|سمع|كان|برع|ناب|ذكره|قال|روى|أخذ)', name_text)
+        if name_end and name_end.start() > 3:
+            name = name_text[:name_end.start()].strip()
+        else:
+            name_end2 = re.search(r'[.،]', name_text)
+            name = name_text[:name_end2.start()].strip() if name_end2 else name_text[:80].strip()
+
+        name = clean_name(name)
+
+        # Death: Durar often has "مات سنة NNN" or "سنة NNN"
+        death = extract_death_year(body_clean[:500])
+        if not death:
+            # Try: مات في المحرم سنة 774
+            dm = re.search(r'(?:مات|توفي)\s+(?:في\s+)?(?:[\u0600-\u06FF]+\s+)?سنة\s+(\d+)', body_clean)
+            if dm:
+                death = dm.group(1) + ' هـ'
+
+        kunya = extract_kunya(name)
+        grade_en, grade_ar = extract_grade(body_clean[:400])
+
+        entries.append({
+            'id': num,
+            'name': name,
+            'kunya': kunya,
+            'grade_en': grade_en or 'unknown',
+            'grade_ar': grade_ar or '',
+            'color': GRADE_COLORS.get(grade_en or 'unknown', '#95a5a6'),
+            'death': death,
+            'source': 'durar_kamina',
+        })
+
+    return entries
+
+
+def parse_kashif(text):
+    """Al-Kashif (al-Dhahabi, d.748) — condensed version of Tahdhib al-Kamal.
+    Format: ### $ NUM - followed by name and brief bio.
+    """
+    lines = text.split('\n')
+    joined = []
+    for line in lines:
+        if line.startswith('~~'):
+            if joined:
+                joined[-1] += ' ' + line[2:].strip()
+            else:
+                joined.append(line[2:].strip())
+        else:
+            joined.append(line)
+
+    full = '\n'.join(joined)
+    full = PAGE_RE.sub('', full)
+    full = MS_RE.sub('', full)
+
+    entry_re = re.compile(r'^### \$ (\d+)\s*-?\s*(.*)', re.MULTILINE)
+    raw_entries = split_entries(full, entry_re)
+    entries = []
+
+    for match, body in raw_entries:
+        num = int(match.group(1))
+        header = match.group(2).strip()
+
+        body_clean = re.sub(r'^#\s+', '', body, flags=re.MULTILINE)
+        body_clean = re.sub(r'\s+', ' ', body_clean).strip()
+        full_text = (header + ' ' + body_clean).strip()
+
+        # Name: up to "عن" (narrated from) or comma
+        name_end = re.search(r'[،,]\s*عن\s+|،', full_text)
+        name = full_text[:name_end.start()].strip() if name_end and name_end.start() > 3 else full_text[:80].strip()
+        name = clean_name(name)
+
+        kunya = extract_kunya(name)
+
+        # Death: Kashif often ends entries with "توفي NNN" or just a number + sigla
+        death = ''
+        dm = re.search(r'(?:توفي|مات)\s+(\d+)', full_text)
+        if dm:
+            death = dm.group(1) + ' هـ'
+        else:
+            death = extract_death_year(full_text)
+
+        grade_en, grade_ar = extract_grade(full_text[:500])
+
+        # Sigla at end (خ م د ت س ق ع)
+        books = []
+        sigla_m = re.search(r'[.]\s*([خمدتسقع](?:\s+[خمدتسقع])*)\s*[.#]?\s*$', full_text)
+        if sigla_m:
+            books = sigla_m.group(1).split()
+
+        entries.append({
+            'id': num,
+            'name': name,
+            'kunya': kunya,
+            'grade_en': grade_en or 'unknown',
+            'grade_ar': grade_ar or '',
+            'color': GRADE_COLORS.get(grade_en or 'unknown', '#95a5a6'),
+            'death': death,
+            'books': books,
+            'source': 'kashif',
+        })
+
+    return entries
+
+
 # ──────────────────────────────────────────────────────────────────────
 # Registry and main
 # ──────────────────────────────────────────────────────────────────────
@@ -847,6 +1370,41 @@ PARSERS = {
         'file': 'tarikh_baghdad.txt',
         'parser': parse_tarikh_baghdad,
         'title': 'Tarikh Baghdad (al-Khatib)',
+    },
+    'tabaqat': {
+        'file': 'tabaqat_ibn_saad.txt',
+        'parser': parse_tabaqat_ibn_saad,
+        'title': "Tabaqat al-Kubra (Ibn Sa'd)",
+    },
+    'siyar': {
+        'file': 'siyar.txt',
+        'parser': parse_siyar,
+        'title': "Siyar A'lam al-Nubala (al-Dhahabi)",
+    },
+    'isaba': {
+        'file': 'isaba.txt',
+        'parser': parse_isaba,
+        'title': 'Al-Isaba fi Tamyiz al-Sahaba (Ibn Hajar)',
+    },
+    'tarikh_islam': {
+        'file': 'tarikh_islam.txt',
+        'parser': parse_tarikh_islam,
+        'title': 'Tarikh al-Islam (al-Dhahabi)',
+    },
+    'lisan_mizan': {
+        'file': 'lisan_mizan.txt',
+        'parser': parse_lisan_mizan,
+        'title': 'Lisan al-Mizan (Ibn Hajar)',
+    },
+    'durar_kamina': {
+        'file': 'durar_kamina.txt',
+        'parser': parse_durar_kamina,
+        'title': 'Al-Durar al-Kamina (Ibn Hajar)',
+    },
+    'kashif': {
+        'file': 'kashif.txt',
+        'parser': parse_kashif,
+        'title': 'Al-Kashif (al-Dhahabi)',
     },
 }
 

@@ -110,7 +110,13 @@ def main():
     sources = [
         'taqrib', 'mizan', 'jarh', 'thiqat', 'kamil',
         'tarikh', 'tahdhib_tahdhib', 'tahdhib_kamal',
+        'tabaqat', 'siyar', 'isaba',
     ]
+
+    # Allow running only specific sources via CLI: python merge_classical_rijal.py tabaqat siyar isaba
+    cli_sources = [a for a in sys.argv[1:] if not a.startswith('--')]
+    if cli_sources:
+        sources = cli_sources
 
     all_entries = {}
     for src in sources:

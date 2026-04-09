@@ -29,6 +29,9 @@ nginx.conf
 .dockerignore
 PLAN.md
 
+# Narrator unified database (118MB — regenerate with merge_classical_rijal.py)
+app/data/narrator_unified.json
+
 # OpenITI raw texts and parsed JSON (79MB + 27MB — regenerate with scripts)
 src/rijal_raw/
 src/rijal_parsed/
