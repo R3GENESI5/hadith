@@ -113,8 +113,22 @@ def extract_chain(arabic_text):
         if (len(name_part) >= 3
                 and not re.search(r'\d', name_part)
                 and name_part not in ('الله', 'رسول', 'النبي', 'ذلك', 'هذا', 'كان')):
-            # Drop unresolvable relative references (uncle, mother, etc.)
-            if name_part in ('عمه', 'عمي', 'أمه', 'أخيه', 'خاله', 'ابنه', 'جدته', 'ابنته'):
+            # Drop unresolvable relative references
+            # عمه/عمي = his/my paternal uncle, أمه/أمي = his/my mother
+            # أخيه/أخي = his/my brother, خاله/خالي = his/my maternal uncle
+            # جدته/جدتي = his/my grandmother, مولاه = his freed slave/patron
+            # ابنه/ابني/ابنته/ابنتي = his/my son/daughter, زوجها/زوجي = her/my spouse
+            RELATIVE_TERMS = {
+                'عمه', 'عمي', 'عمته', 'عمتي',
+                'أمه', 'أمي',
+                'أخيه', 'أخي', 'أخته', 'أختي',
+                'خاله', 'خالي', 'خالته', 'خالتي',
+                'ابنه', 'ابني', 'ابنته', 'ابنتي',
+                'جدته', 'جدتي',
+                'زوجها', 'زوجي', 'زوجته',
+                'مولاه', 'مولاي', 'مولاته',
+            }
+            if name_part in RELATIVE_TERMS:
                 continue
             # Resolve relative references using previous narrator in chain
             # أبيه / أبي = "his father", جده = "his grandfather"
