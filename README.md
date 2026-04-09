@@ -18,7 +18,7 @@
 | 🔍 | **Morphological dictionary** | 33,758 Arabic words → root + Lane's Lexicon + grammatical form |
 | 📊 | **Isnad chains** | 100,000+ parsed transmission chains across 11 books, kunya resolution, grade matching |
 | 📜 | **Wensinck concordance** | 1,486 roots, 1,042,279 references — digital recreation of the 33-year, 7-volume physical concordance |
-| ✅ | **Per-hadith grading** | 58,552 hadiths graded (52%) — Kutub al-Sittah + Musnad Ahmad fully covered (52%) |
+| ✅ | **Per-hadith grading** | 59,365 hadiths graded (52%) — Kutub al-Sittah + Musnad Ahmad fully covered (52%) |
 | 🤖 | **AI layer** | FAISS semantic search (112k vectors) + RAG Q&A (Qwen2.5) on HuggingFace |
 
 **[Live App](https://r3genesi5.github.io/Itqan/)** · **[Itqan AI](https://huggingface.co/spaces/iqrossed/al-itqan-rag)** · **[Paper](https://doi.org/10.5281/zenodo.19453612)** · **[How It Works](https://r3genesi5.github.io/Itqan/guide.html)** · **[Dev History](https://r3genesi5.github.io/Itqan/app/history.html)**
@@ -879,7 +879,7 @@ graph TD
 | Musnad Ahmad | 26,539 | ✅ Arnaut grades (25,509 graded, 96%) |
 | Muwatta Malik | 1,985 | Not graded |
 | Sunan ad-Darimi | 2,757 | Not graded |
-| Riyad as-Salihin | 1,217 | Not graded |
+| Riyad as-Salihin | 1,217 | ✅ Arnaut grades (813 graded, 66%) |
 | Al-Adab Al-Mufrad | 1,326 | Not graded |
 | Bulugh al-Maram | 1,767 | Not graded |
 | Mishkat al-Masabih | 4,427 | Not graded |
@@ -1015,7 +1015,7 @@ python src/audit.py
 | Gap | Severity | Detail |
 |-----|----------|--------|
 | **Narrator grades** | Medium | 50-61% of isnad narrators graded per book after AR-Sanad integration. Further improvement requires NLP parsing of OpenITI rijal texts |
-| **Per-hadith grades (remaining)** | Medium | 58,552 of 112,221 graded (52%). 8 books covered (Kutub al-Sittah + Ahmad + Shamail). Remaining 10 books (53k) have no known grading source |
+| **Per-hadith grades (remaining)** | Medium | 59,365 of 112,221 graded (52%). 9 books covered (Kutub al-Sittah + Ahmad + Shamail + Riyad). Remaining 9 books (52k) have no known grading source |
 | **Musnad Ahmad English** | Medium | 26,539 Arabic hadiths (Arnaut edition), English translations for only ~1,374 (sunnah.com subset) |
 | **61 zero-hadith roots** | Low | Confirmed by dual-stemmer validation — genuinely rare Quranic vocabulary (avg 6.8 ayahs each). Down from 315 before Wensinck integration |
 | **Family noise** | Medium | A single shared root is sufficient for family membership — relevance threshold (2+ roots) would improve precision |
@@ -1103,7 +1103,7 @@ The `narrated_from` and `narrated_to` fields contain **narrator ID cross-referen
 | **v1.4** | Apr 9 | Isnad cleanup, AR-Sanad merge, rijal page | 18,298 narrators, 61% graded |
 | **v1.5** | Apr 9 | 8 classical rijal texts parsed from OpenITI | 65,391 narrators, 83k entries |
 | **v1.6** | Apr 9 | Dual-stemmer bridge (Wensinck solved the 315-root gap) | 96.3% coverage, 1.53M links |
-| **v1.6.1** | Apr 9 | Per-hadith grading (58k, 8 books) + isnad relative resolution (76 genealogy entries) + UI fixes | 58,552 graded, 76 genealogy lookups, charts + history page |
+| **v1.6.1** | Apr 9 | Per-hadith grading (58k, 8 books) + isnad relative resolution (76 genealogy entries) + UI fixes | 59,365 graded, 76 genealogy lookups, charts + history page |
 
 **Scale:** 1.1M lines of JSON · 13,753 lines of code · 21 Python scripts · 3,587 files · 798 MB of data
 
