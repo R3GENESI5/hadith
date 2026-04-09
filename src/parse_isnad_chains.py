@@ -113,11 +113,8 @@ def extract_chain(arabic_text):
         if (len(name_part) >= 3
                 and not re.search(r'\d', name_part)
                 and name_part not in ('الله', 'رسول', 'النبي', 'ذلك', 'هذا', 'كان')):
-            # Drop unresolvable relative references
-            # عمه/عمي = his/my paternal uncle, أمه/أمي = his/my mother
-            # أخيه/أخي = his/my brother, خاله/خالي = his/my maternal uncle
-            # جدته/جدتي = his/my grandmother, مولاه = his freed slave/patron
-            # ابنه/ابني/ابنته/ابنتي = his/my son/daughter, زوجها/زوجي = her/my spouse
+            # Relative references: عن مولاه X, عن عمه X, عن أمه X
+            # If the name follows the relative term, use the name; otherwise drop
             RELATIVE_TERMS = {
                 'عمه', 'عمي', 'عمته', 'عمتي',
                 'أمه', 'أمي',
@@ -126,10 +123,18 @@ def extract_chain(arabic_text):
                 'ابنه', 'ابني', 'ابنته', 'ابنتي',
                 'جدته', 'جدتي',
                 'زوجها', 'زوجي', 'زوجته',
-                'مولاه', 'مولاي', 'مولاته',
+                'مولاه', 'مولاي', 'مولاته', 'مولاها',
             }
             if name_part in RELATIVE_TERMS:
-                continue
+                continue  # standalone relative, no name follows
+            # Check if name_part STARTS with a relative term followed by a real name
+            # e.g. "مولاه عبد الله بن الحارث" → extract "عبد الله بن الحارث"
+            for rel in RELATIVE_TERMS:
+                if name_part.startswith(rel + ' ') and len(name_part) > len(rel) + 2:
+                    name_part = name_part[len(rel):].strip()
+                    # Clean: remove leading comma or connector
+                    name_part = re.sub(r'^[،,]\s*', '', name_part).strip()
+                    break
             # Resolve relative references using previous narrator in chain
             # أبيه / أبي = "his father", جده = "his grandfather"
             if name_part in ('أبيه', 'ابيه', 'أبي') and chain:
