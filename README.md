@@ -476,7 +476,7 @@ This repo contains the **data layer** that powers Al-Itqan. Three open-source to
 | BasilSuhail — Semantic Search | [iqrossed/al-itqan-search](https://huggingface.co/spaces/iqrossed/al-itqan-search) | ✅ Deployed |
 | HadithRAG — Conversational Q&A | [iqrossed/al-itqan-rag](https://huggingface.co/spaces/iqrossed/al-itqan-rag) | ✅ Deployed |
 
-The FAISS semantic index (87,056 hadiths — needs rebuild to include Ahmad expansion; `intfloat/multilingual-e5-small`, 216MB) is hosted at [`iqrossed/al-itqan-index`](https://huggingface.co/datasets/iqrossed/al-itqan-index) and shared by both Spaces.
+The FAISS semantic index (112,221 hadiths, `intfloat/multilingual-e5-small`, 276MB) is hosted at [`iqrossed/al-itqan-index`](https://huggingface.co/datasets/iqrossed/al-itqan-index) and shared by both Spaces.
 
 ### KASHAF — Isnad Visualizer
 **Source:** `github.com/OmarShafie/hadith`
