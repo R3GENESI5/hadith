@@ -15,7 +15,7 @@
     --chapter-w:    256px;
     --radius:       8px;
     --font-ar:      'Amiri', serif;
-    --font-en:      -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --font-en:      'Segoe UI', system-ui, -apple-system, sans-serif;
     --text-scale:   1;
     --grade-sahih:  #2d7a4f;
     --grade-hasan:  #3a6ea8;
