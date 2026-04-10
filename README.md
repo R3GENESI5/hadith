@@ -156,7 +156,7 @@ Browse 112,221 hadiths across 18 Sunni books. Every Arabic word is interactive �
 - Full name, kunya, laqab, nasab, death year, city, tabaqat
 - **Ibn Hajar's grade** and **al-Dhahabi's assessment**
 - **Jarh wa ta'dil** for 701 narrators — opinions from Abu Hatim, Ahmad ibn Hanbal, Ibn Hibban, with source references
-- **160,614 name variants** — every spelling a narrator appears under across manuscripts
+- **199,820 name variants** — every spelling a narrator appears under across manuscripts
 
 ### Isnad Visualizer
 
@@ -648,31 +648,13 @@ Every narrator who appears in the six canonical books (Kutub al-Sittah) and rela
 - **Kunya** (honorific patronymic), **laqab** (title), **nasab** (lineage), **nisba** (geographic/tribal affiliation)
 - **Ibn Hajar's grade** from *Taqrib al-Tahdhib* — the standard one-line assessment (ثقة, صدوق, ضعيف, etc.)
 - **Al-Dhahabi's assessment** from *Mizan al-I'tidal* — an independent second opinion
-- **Classical source cross-references** — which of the 8 parsed texts mention this narrator, with entry ID and grade from each
+- **Classical source cross-references** — which of the 22 parsed texts mention this narrator, with entry ID and grade from each
 - **Jarh wa ta'dil** — the full critical opinions from multiple classical scholars: Abu Hatim al-Razi, Ahmad ibn Hanbal, Ibn Hibban, Ibn 'Adi, al-Nasa'i, etc. This is the raw material that hadith scholars use to evaluate narrator reliability.
 - **Death year**, **birth year**, **city of residence**, **tabaqat** (generation in the chain of transmission)
 
 ### Data sources
 
-The unified narrator database (`app/data/narrator_unified.json`, 118 MB) is compiled from:
-
-**Structured datasets (JSON/CSV):**
-1. **AR-Sanad 280K** (somaia02) — 18,298 base narrators with name variants and teacher→student ID links
-2. **hatemben/hadithdb** — 1,524 Bukhari narrators with detailed jarh wa ta'dil (multiple scholar opinions with page references)
-3. **KASHAF** (OmarShafie/hadith) — 17,093 entries with grades from Tahdhib al-Tahdhib
-
-**Classical texts parsed from OpenITI (152,000+ entries total):**
-
-| Text | Author (d.) | Entries | Focus |
-|------|-------------|---------|-------|
-| **Taqrib al-Tahdhib** | Ibn Hajar (852 AH) | 8,522 | Concise narrator grades |
-| **Tahdhib al-Tahdhib** | Ibn Hajar (852 AH) | 11,761 | Expanded narrator assessments |
-| **Tahdhib al-Kamal** | al-Mizzi (742 AH) | 8,158 | Six Books narrator encyclopedia |
-| **Mizan al-I'tidal** | al-Dhahabi (748 AH) | 10,888 | Criticized narrators |
-| **Al-Jarh wa al-Ta'dil** | Ibn Abi Hatim (327 AH) | 17,516 | Reliability evaluations |
-| **Al-Thiqat** | Ibn Hibban (354 AH) | 16,189 | Reliable narrators |
-| **Al-Kamil fi Du'afa** | Ibn 'Adi (365 AH) | 2,210 | Weak narrators |
-| **Tarikh Baghdad** | al-Khatib (463 AH) | 7,838 | Baghdad scholar biographies |
+The unified narrator database (`app/data/narrator_unified.json`) is compiled from 3 structured datasets (AR-Sanad, KASHAF, hatemben) plus 22 classical texts parsed from OpenITI (152,000+ entries total). See [Rijal Data Sources](#rijal-data-sources--integrated) for the full breakdown.
 
 ### Interaction
 
@@ -918,7 +900,7 @@ Itqan/
 │   ├── shia.html                 Standalone Shia hadith database
 │   ├── families.html             Thematic family browser (39 families, expandable root chips)
 │   ├── rijal.html                Narrator profiles browser (115,112 narrators, jarh wa ta'dil)
-│   ├── history.html              Development history (v1.0–v1.6 with key files and stats)
+│   ├── history.html              Development history (v1.0–v1.9 with key files and stats)
 │   ├── chord.html                Interactive chord graphs (3 tabs, data embedded)
 │   ├── concordance_audit.html    Data quality verification dashboard
 │   ├── css/
@@ -1014,36 +996,44 @@ python src/audit.py
 
 | Gap | Severity | Detail |
 |-----|----------|--------|
-| **Narrator grades** | Medium | 50-61% of isnad narrators graded per book after AR-Sanad integration. Further improvement requires NLP parsing of OpenITI rijal texts |
+| **Narrator grades** | Medium | 72.9% of 115,112 narrators graded. Grading engine at 77% accuracy vs Albani. Remaining 27.1% are genuinely unknown or from obscure sources |
 | **Per-hadith grades (remaining)** | Medium | 59,365 of 112,221 graded (52%). 9 books covered (Kutub al-Sittah + Ahmad + Shamail + Riyad). Remaining 9 books (52k) have no known grading source |
 | **Musnad Ahmad English** | Medium | 26,539 Arabic hadiths (Arnaut edition), English translations for only ~1,374 (sunnah.com subset) |
 | **61 zero-hadith roots** | Low | Confirmed by dual-stemmer validation — genuinely rare Quranic vocabulary (avg 6.8 ayahs each). Down from 315 before Wensinck integration |
 | **Family noise** | Medium | A single shared root is sufficient for family membership — relevance threshold (2+ roots) would improve precision |
 
-### Rijal Data Sources — Available for Integration
+### Rijal Data Sources — Integrated
 
-A wealth of open-source narrator biographical data exists. These sources can dramatically improve the isnad visualizer, narrator grading, and kunya resolution:
+The unified database (115,112 profiles) is compiled from three structured datasets plus 22 classical texts parsed from OpenITI:
 
-#### Structured datasets (JSON/CSV, ready to merge)
+#### Structured datasets (integrated)
 
-| Source | Narrators | Key fields | Format |
-|--------|-----------|------------|--------|
-| **KASHAF** (OmarShafie/hadith) | 18,800+ | Name, grade from Tahdhib al-Tahdhib | CSV (already integrated) |
-| **AR-Sanad 280K** (somaia02/Narrator-Disambiguation) | 18,298 | Full name, ALL name variants, Ibn Hajar rank, Dhahabi rank, kunya, laqab, nasab, death/birth year, city, tabaqat, **teacher→student ID links** | CSV |
-| **hatemben/hadithdb** | 1,524 | Full jarh wa ta'dil (multiple scholars), Ibn Hajar grade, Dhahabi grade, kunya, death date, tabaqat | JSON |
+| Source | Narrators | What it provides |
+|--------|-----------|-----------------|
+| **KASHAF** (OmarShafie/hadith) | 17,093 | Base grades from Taqrib al-Tahdhib |
+| **AR-Sanad 280K** (somaia02) | 18,298 | Full names, all name variants, Ibn Hajar rank, Dhahabi rank, kunya, death/birth year, city, tabaqat, teacher→student ID links |
+| **hatemben/hadithdb** | 1,524 | Full jarh wa ta'dil (multiple scholar opinions) |
 
-#### Classical rijal texts (OpenITI, need parsing)
+#### 22 classical rijal texts (all parsed from OpenITI)
 
-| Text | Author | Content | OpenITI path |
-|------|--------|---------|--------------|
-| **Tahdhib al-Kamal** | al-Mizzi (d. 742 AH) | Encyclopedia of narrators from the Six Books, ~8,000+ entries | `0750AH/0742Mizzi/0742Mizzi.TahdhibKamal` |
-| **Tahdhib al-Tahdhib** | Ibn Hajar (d. 852 AH) | Abridged Tahdhib al-Kamal with added grades | `0900AH/0852IbnHaworkar/...` |
-| **Taqrib al-Tahdhib** | Ibn Hajar | Concise single-line grades for each narrator | KASHAF source |
-| **Mizan al-I'tidal** | al-Dhahabi (d. 748 AH) | Narrators who faced scholarly criticism | `0750AH/0748Dhahabi/...` |
-| **Al-Jarh wa al-Ta'dil** | Ibn Abi Hatim (d. 327 AH) | Narrator reliability evaluations | `0350AH/0327IbnAbiHatworkim/...` |
-| **Al-Thiqat** | Ibn Hibban (d. 354 AH) | Reliable narrators | `0400AH/0354IbnHibworkan/...` |
-| **Al-Kamil fi Du'afa** | Ibn 'Adi (d. 365 AH) | Weak narrators | `0400AH/0365IbnCadi/...` |
-| **Tarikh Baghdad** | al-Khatib (d. 463 AH) | Biographies of Baghdad scholars | `0500AH/0463KhatibBagworddadi/...` |
+| Text | Author (d.) | Entries | Focus |
+|------|-------------|---------|-------|
+| **Taqrib al-Tahdhib** | Ibn Hajar (852 AH) | 8,522 | Concise narrator grades |
+| **Tahdhib al-Tahdhib** | Ibn Hajar (852 AH) | 11,761 | Expanded narrator assessments |
+| **Tahdhib al-Kamal** | al-Mizzi (742 AH) | 8,158 | Six Books narrator encyclopedia |
+| **Mizan al-I'tidal** | al-Dhahabi (748 AH) | 10,888 | Criticized narrators |
+| **Al-Jarh wa al-Ta'dil** | Ibn Abi Hatim (327 AH) | 17,516 | Reliability evaluations |
+| **Al-Thiqat** | Ibn Hibban (354 AH) | 16,189 | Reliable narrators |
+| **Al-Kamil fi Du'afa** | Ibn 'Adi (365 AH) | 2,210 | Weak narrators |
+| **Tarikh Baghdad** | al-Khatib (463 AH) | 7,838 | Baghdad scholar biographies |
+| **Al-Isaba fi Tamyiz al-Sahaba** | Ibn Hajar (852 AH) | 10,489 | Companion encyclopedia |
+| **Tabaqat Ibn Sa'd** | Ibn Sa'd (230 AH) | 4,729 | Earliest biographical dictionary |
+| **Siyar A'lam al-Nubala** | al-Dhahabi (748 AH) | 5,765 | 800 years of scholars |
+| **Tarikh al-Islam** | al-Dhahabi (748 AH) | 4,212 | Universal chronological history |
+| **Lisan al-Mizan** | Ibn Hajar (852 AH) | 3,891 | Expansion of Mizan |
+| **Al-Kashif** | al-Dhahabi (748 AH) | 2,744 | Condensed Tahdhib reference |
+| **Al-Durar al-Kamina** | Ibn Hajar (852 AH) | 1,923 | 8th-century contemporaries |
+| + 7 more specialized texts | Various | ~5,000+ | Du'afa lists, huffaz, qurra, shuyukh |
 
 #### Per-hadith grading sources
 
@@ -1081,11 +1071,12 @@ The `narrated_from` and `narrated_to` fields contain **narrator ID cross-referen
 | 13 | v1.6: Dual-stemmer root bridge (81% → 96.3%), Wensinck concordance, 1,345 form patches | ✅ Complete |
 | 14 | Per-hadith grading: Bukhari+Muslim (Sahih) + Al-Albani (4 books) + Shamail | ✅ Complete |
 | 15 | Arnaut grades for Musnad Ahmad (25,509 graded from DOCX tahqiq edition) | ✅ Complete |
-| 16 | Parse Zubair Ali Zai / Darussalam for additional grades | ⬜ Planned |
-| 15 | Cross-text narrator deduplication (47k new profiles likely contain duplicates) | ⬜ Planned |
-| 16 | Teacher-student network extraction from Tahdhib al-Kamal | ⬜ Planned |
-| 17 | Prose-grade NLP for Jarh wa Ta'dil and Tahdhib al-Kamal narratives | ⬜ Planned |
-| 18 | Curated HadithReference tafsir table | ⬜ Planned |
+| 16 | v1.8: Name cleaning (42% to 99.5%), confidence scoring, 14 more classical texts | ✅ Complete |
+| 17 | v1.9: Gawami al-Kalim cracked (49,845 GK narrators, 255k links), grading engine (77%) | ✅ Complete |
+| 18 | Break past 77% using GK isnad/matn boundary markers as training data | ⬜ Next |
+| 19 | Expand to more of GK's 1,004 hadith collections (currently using 6) | ⬜ Planned |
+| 20 | Cross-text narrator deduplication | ⬜ Planned |
+| 21 | Curated HadithReference tafsir table | ⬜ Planned |
 
 ---
 
