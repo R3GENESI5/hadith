@@ -180,8 +180,8 @@
     </div>
 
     <div class="milestone">
-        <div class="date">22 classical texts, 106,207 profiles</div>
-        <div class="text">Parsed 22 classical texts of ilm al-rijal from OpenITI: Tahdhib al-Kamal, Tahdhib al-Tahdhib, Taqrib al-Tahdhib, Mizan al-I'tidal, Al-Jarh wa al-Ta'dil, Al-Thiqat, Al-Kamil fi Du'afa, Tarikh Baghdad, Tabaqat Ibn Sa'd, Siyar A'lam al-Nubala, Al-Isaba fi Tamyiz al-Sahaba, Tarikh al-Islam, Lisan al-Mizan, Al-Durar al-Kamina, and Al-Kashif. 152,000+ entries of classical Arabic biographical text. Fuzzy-matched them against the existing database. 106,207 profiles with 178,859 name variants. 127,411 teacher-student links. The largest structured open-source narrator database available.</div>
+        <div class="date">22 classical texts, 111,604 profiles</div>
+        <div class="text">Parsed 22 classical texts of ilm al-rijal from OpenITI: Tahdhib al-Kamal, Tahdhib al-Tahdhib, Taqrib al-Tahdhib, Mizan al-I'tidal, Al-Jarh wa al-Ta'dil, Al-Thiqat, Al-Kamil fi Du'afa, Tarikh Baghdad, Tabaqat Ibn Sa'd, Siyar A'lam al-Nubala, Al-Isaba fi Tamyiz al-Sahaba, Tarikh al-Islam, Lisan al-Mizan, Al-Durar al-Kamina, and Al-Kashif. 152,000+ entries of classical Arabic biographical text. Fuzzy-matched them against the existing database. 111,604 profiles with 178,859 name variants. 127,411 teacher-student links. The largest structured open-source narrator database available.</div>
     </div>
 
     <div class="milestone">
@@ -223,9 +223,44 @@
         <div class="text">After three dedup strategies (companion anchoring, death-year clustering, teacher-student intersection), I found exactly 2 safe merges out of 77,794 profiles. The algorithmic approach hit its ceiling. The real solution isn't better code. It's better data: curated IDs from scholars who already solved this problem by hand.</div>
     </div>
 
+    <div class="milestone">
+        <div class="date">Abu Huraira lost his عبد</div>
+        <div class="text">The most prolific hadith narrator in Islamic history, Abu Huraira (عبد الرحمن بن صخر), was listed as "الرحمن بن صخر." The عبد had been silently stripped from 13,189 names (10.3% of all profiles). عبد الملك بن مروان became "الملك بن مروان." عبد الله بن عباس became "الله بن عباس." Every major companion and caliph had a broken name. I only discovered it when cross-referencing unknown profiles against graded ones and the names didn't match. The fix was a function that detects any name starting with a divine attribute (الله, الرحمن, الملك) and prepends عبد. 80+ divine attributes catalogued.</div>
+    </div>
+
+    <div class="milestone">
+        <div class="date">"بن ماجة" is not a father</div>
+        <div class="text">1,388 profiles started with "بن ماجة." The parser was capturing the book source marker ("in Ibn Majah's collection") as the narrator's name. The text reads "ق بن ماجة أحمد بن إسماعيل" where ق is the sigla for Ibn Majah's Sunan. The parser ate "بن ماجة" along with the sigla, leaving either a broken name or nothing. The key insight: بن ماجة as a book name is ALWAYS preceded by a sigla. Real patronymics are ALWAYS followed by another name. This disambiguation rule fixed 11,761 entries with zero false positives.</div>
+    </div>
+
+    <div class="milestone">
+        <div class="date">The names that aren't names</div>
+        <div class="text">Entire sentences posing as names: "قال مطين مات سنة ثمان وخمسين ومائتين" (Muteen said: he died in 258 AH) was listed as a narrator name. Complete hadith texts masquerading as names. The parsers were guessing where a name ends and a biography begins in a stream of Arabic text with no punctuation. I built a categorized verb system: citation verbs, editorial markers, isnad verbs, transmission verbs, biography verbs. A universal post-processing gate runs on every name regardless of what the parser did. Result: 31,000 names cleaned. Name quality went from 82.5% to 99.5%.</div>
+    </div>
+
+    <div class="milestone">
+        <div class="date">The Gawami al-Kalim heist</div>
+        <div class="text">I needed an independent narrator database to validate our grades. Every website was a dead end: dorar.net blocks automation, islamweb.net is a book reader, sunnah.com needs an API key, Shamela has Cloudflare. Then I found it: inside a 2.8GB Windows desktop app from 2010, archived on archive.org. Gawami al-Kalim 4.5. Inside was Data/Rawy.zip (116 MB). The files were in a custom binary format, record separator 0x01 (SOH), tab-delimited, scattered control bytes. Cracked it open: 27,756 narrator profiles with pre-assigned grades. Cross-referenced: 2,578 new grades for unknowns. Validated: 91.4% agreement on 5,062 overlapping narrators.</div>
+    </div>
+
+    <div class="milestone">
+        <div class="date">The isnad chain that grades itself</div>
+        <div class="text">40,000 hadiths from 6 canonical collections have explicit grades from Albani, Zubair Ali Zai, and Arnaut. Every graded hadith implicitly tells you something about its narrators. If a narrator appears in 191 sahih hadiths and only 12 da'if ones, they're demonstrably reliable. I extracted narrator names from 40,000 Arabic isnad chains, counted their appearances in sahih vs. da'if hadiths, and inferred grades. The danger: short names like "محمد بن أحمد" appear in chains of 358 different narrators. Safety rule: only match if 15+ characters AND matches 3 or fewer profiles. This gave 3,479 safe grades, each backed by statistical evidence from actual hadith chains.</div>
+    </div>
+
+    <div class="milestone">
+        <div class="date">100% traceability</div>
+        <div class="text">5,593 profiles had no classical_sources field. They entered the database through AR-Sanad teacher/student chains or the Kaggle dataset, with no pointer back to a specific book entry. But they weren't phantoms. They all had teacher/student links, the chain IS the provenance. I built a provenance field for every profile: classical text entry (95%), Kaggle ID (1%), or teacher/student chain (4%). Result: 100.00% traceable. Every profile links to its origin. Not a single orphan.</div>
+    </div>
+
+    <div class="milestone">
+        <div class="date">Confidence scoring</div>
+        <div class="text">Not all profiles are equal. An "أبو بشر" graded "reliable" could be any of multiple famous scholars with that kunya. The answer was the teacher/student graph. An Abu Bishr who teaches محمد بن جعفر and learns from سعيد بن جبير is a DIFFERENT person from an Abu Bishr who teaches يحيى بن أبي كثير. I built composite unique keys: name + death year + kunya + first teacher + first student. This resolved 7,511 previously ambiguous profiles. Now every profile has a confidence tier: A (ready for hadith grading), B (usable with caution), C (needs isnad context), D (unreliable identity), F (unusable). 96% of the database is uniquely identified.</div>
+    </div>
+
     <h2>What it became</h2>
 
-    <p>112,221 hadiths across 18 books. 1,590 of 1,651 Quranic roots connected. 1,528,346 verified root links. 106,207 narrator profiles from 22 classical texts. 178,859 name variants. 127,411 teacher-student links. 33,758 Arabic words with morphological definitions. 100,656 isnad chains parsed. A digital Wensinck concordance. A searchable rijal database with jarh wa ta'dil from multiple classical scholars. 59,365 hadiths graded, 52% of the corpus.</p>
+    <p>112,221 hadiths across 18 books. 1,590 of 1,651 Quranic roots connected. 1,528,346 verified root links. 111,604 narrator profiles from 22 classical texts, 70.6% graded, 99.5% clean, 96% uniquely identified, 100% traceable. 160,614 name variants. 127,411 teacher-student links. 33,758 Arabic words with morphological definitions. 100,656 isnad chains parsed. A digital Wensinck concordance. Confidence scoring on every profile. 59,365 hadiths graded, 52% of the corpus.</p>
 
     <p>What took Wensinck's team 33 years, this computes in seconds. What took a scholar physically opening four volumes of biographical dictionaries, this consolidates into one search. What no one had ever done, connecting the Quran concordance to the hadith concordance through shared roots, is now a click away.</p>
 
@@ -243,7 +278,7 @@
 
     <div class="next">
         <h3>The dedup problem</h3>
-        <p>106,207 profiles from 22 classical texts. But thousands are duplicates across texts, the same narrator listed differently in Tahdhib al-Kamal and Mizan al-I'tidal and Tarikh al-Islam. The algorithmic approach hit its ceiling at 6,394 merges. The next step needs curated scholarly IDs from projects like dorar.net, n007rehan, and Mawsu'at al-Hadith, scholars who already solved this problem by hand over decades.</p>
+        <p>111,604 profiles from 22 classical texts. But thousands are duplicates across texts, the same narrator listed differently in Tahdhib al-Kamal and Mizan al-I'tidal and Tarikh al-Islam. The algorithmic approach hit its ceiling at 6,394 merges. The next step needs curated scholarly IDs from projects like dorar.net, n007rehan, and Mawsu'at al-Hadith, scholars who already solved this problem by hand over decades.</p>
     </div>
 
     <div class="next">
