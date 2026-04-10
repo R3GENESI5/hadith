@@ -181,7 +181,19 @@
 
     <div class="milestone">
         <div class="date">22 classical texts, 111,604 profiles</div>
-        <div class="text">Parsed 22 classical texts of ilm al-rijal from OpenITI: Tahdhib al-Kamal, Tahdhib al-Tahdhib, Taqrib al-Tahdhib, Mizan al-I'tidal, Al-Jarh wa al-Ta'dil, Al-Thiqat, Al-Kamil fi Du'afa, Tarikh Baghdad, Tabaqat Ibn Sa'd, Siyar A'lam al-Nubala, Al-Isaba fi Tamyiz al-Sahaba, Tarikh al-Islam, Lisan al-Mizan, Al-Durar al-Kamina, and Al-Kashif. 152,000+ entries of classical Arabic biographical text. Fuzzy-matched them against the existing database. 111,604 profiles with 178,859 name variants. 127,411 teacher-student links. The largest structured open-source narrator database available.</div>
+        <div class="text">Parsed 22 classical texts of ilm al-rijal from OpenITI. Each one a different challenge, a different parser, a different set of problems:
+            <br><br>
+            <strong>The core eight</strong> (Ibn Hajar + al-Dhahabi + early critics):<br>
+            Taqrib al-Tahdhib, Tahdhib al-Tahdhib, Tahdhib al-Kamal (al-Mizzi), Mizan al-I'tidal (al-Dhahabi), Al-Jarh wa al-Ta'dil (Ibn Abi Hatim), Al-Thiqat (Ibn Hibban), Al-Kamil fi Du'afa (Ibn 'Adi), Tarikh Baghdad (al-Khatib).
+            <br><br>
+            <strong>The biographical encyclopedias</strong>:<br>
+            Tabaqat Ibn Sa'd (the earliest), Siyar A'lam al-Nubala (al-Dhahabi's magnum opus), Al-Isaba fi Tamyiz al-Sahaba (Ibn Hajar's companion encyclopedia), Tarikh al-Islam (al-Dhahabi's universal history).
+            <br><br>
+            <strong>The specialized works</strong>:<br>
+            Lisan al-Mizan (Ibn Hajar's expansion of Mizan), Al-Durar al-Kamina (Ibn Hajar's contemporaries), Al-Kashif (al-Dhahabi's condensed reference), Tadhkirat al-Huffaz (al-Dhahabi's hadith masters), Mughni fi al-Du'afa (al-Dhahabi's weak narrators), Diwan al-Du'afa (al-Dhahabi), Dhayl Diwan al-Du'afa (supplement), Mu'jam al-Shuyukh (al-Dhahabi's personal teachers), Ma'rifat al-Qurra (Quran reciters), Mu'in fi Tabaqat al-Muhaddithin (generation list).
+            <br><br>
+            152,000+ entries of classical Arabic biographical text. Fuzzy-matched against the existing database. 111,604 profiles with 160,614 name variants. 127,411 teacher-student links. 70.6% graded. 99.5% clean names. The largest structured open-source narrator database available.
+        </div>
     </div>
 
     <div class="milestone">
@@ -256,6 +268,31 @@
     <div class="milestone">
         <div class="date">Confidence scoring</div>
         <div class="text">Not all profiles are equal. An "أبو بشر" graded "reliable" could be any of multiple famous scholars with that kunya. The answer was the teacher/student graph. An Abu Bishr who teaches محمد بن جعفر and learns from سعيد بن جبير is a DIFFERENT person from an Abu Bishr who teaches يحيى بن أبي كثير. I built composite unique keys: name + death year + kunya + first teacher + first student. This resolved 7,511 previously ambiguous profiles. Now every profile has a confidence tier: A (ready for hadith grading), B (usable with caution), C (needs isnad context), D (unreliable identity), F (unusable). 96% of the database is uniquely identified.</div>
+    </div>
+
+    <div class="milestone">
+        <div class="date">Every website is a dead end</div>
+        <div class="text">We had 38,747 unknown narrators. External databases must exist somewhere. We tried dorar.net: 11,436 names came back but they were short-form hadith attributions with no grades, no death years, no biographical data. Just name labels for search filtering. Islamweb.net: navigated to their "Scholar Biographies" section through browser automation. Found Siyar A'lam al-Nubala. The EXACT SAME text we already parsed from OpenITI. Sunnah.com: needs an API key, has hadith grades not narrator grades. Shamela: Cloudflare protection, same texts we already have. The lesson: there is no publicly accessible, structured narrator grading database anywhere on the internet. The only way to get narrator grades is to BUILD the database yourself.</div>
+    </div>
+
+    <div class="milestone">
+        <div class="date">Abu Bakr graded "unknown"</div>
+        <div class="text">We parsed al-Mu'in fi Tabaqat al-Muhaddithin. Entry 1: Abu Bakr al-Siddiq. Grade: unknown. Entry 2: Umar ibn al-Khattab. Unknown. Entry 3: Uthman. Unknown. Entry 4: Ali. Unknown. The four Rightly Guided Caliphs graded as "unknown." The parser searched for grade keywords and found nothing, because al-Mu'in is a TABAQAT book with no inline grades. But the BOOK STRUCTURE is the grade: the first section header says "remaining companions in alphabetical order." Everything before the "greatest of the Successors" section is a companion. We built section tracking into the parser. Abu Bakr went from "unknown" to "companion." 144 profiles recovered, including the ten promised paradise.</div>
+    </div>
+
+    <div class="milestone">
+        <div class="date">The 42% garbage names</div>
+        <div class="text">After the full pipeline, we ran a name quality audit. Result: 42.4% of all profiles had name issues. Transmission chains embedded in names ("عبيد الله عن موسى بن طلحة"). Colon-separated alternates. Names over 100 characters. Book sigla leaked into names. Grade words embedded in names. The problem: 15 of 22 parsers either used minimal cleaning or none at all. Tarikh Baghdad was 67.9% garbage. We built a universal post-processing gate, three cleaning passes, and a categorized verb system. Result: 82.5% to 99.5% clean names. The cleaning also unlocked 2,927 new dedup merges.</div>
+    </div>
+
+    <div class="milestone">
+        <div class="date">The book that grades by existing</div>
+        <div class="text">After expanding grade keywords from 30 to 104, running verb-form extraction, and trying every external source, we still had narrators graded "unknown" who appeared in books whose ENTIRE PURPOSE is to grade narrators. Mizan al-I'tidal: 5,071 unknowns. Lisan al-Mizan: 7,777 unknowns. These are CRITICISM BOOKS. They only list narrators who have been criticized. Being LISTED in "The Book of Weak Narrators" IS the grade. We built BOOK_GRADE_DEFAULTS in the lexicon. One mapping, applied after keyword extraction fails. Result: 19,633 grades recovered in one stroke. The single highest-yield fix in the entire project.</div>
+    </div>
+
+    <div class="milestone">
+        <div class="date">The editorial brackets that weren't brackets</div>
+        <div class="text">17,378 names had digits in them. Sample: "حبيب بن [أبي - 5] ثابت (6)". These aren't data errors. They're manuscript editorial annotations from the critical editions of the classical texts. [أبي - 5] means "أبي, see footnote 5." The OpenITI texts are digitized from printed critical editions, and the editors' footnote markers came along for the ride. One regex cleaned 14,226 names: extract the text content, discard the footnote number, remove the brackets.</div>
     </div>
 
     <h2>What it became</h2>
