@@ -60,3 +60,13 @@ docs/Itqan-Blog-Post*.docx
 docs/generate_blog_post.py
 docs/screenshot-node-portal.png
 .claude/
+
+# v1 backups (restoreable via --restore flag)
+app/data/narrator_unified_v1_backup.json
+app/data/rijal_v1_backup/
+
+# v2 parsed intermediate files (regenerate with parse_rijal_v2.py)
+src/rijal_parsed_v2/
+
+# CSV exports (regenerate with build_rijal_database.py)
+app/data/rijal/csv/
