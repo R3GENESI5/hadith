@@ -1105,7 +1105,7 @@ The `narrated_from` and `narrated_to` fields contain **narrator ID cross-referen
 | **v1.6** | Apr 9 | Dual-stemmer bridge (Wensinck solved the 315-root gap) | 96.3% coverage, 1.53M links |
 | **v1.6.1** | Apr 9 | Per-hadith grading (58k, 8 books) + isnad relative resolution (76 genealogy entries) + UI fixes | 59,365 graded, 76 genealogy lookups, charts + history page |
 | **v1.8** | Apr 10 | Name cleaning (42% to 99.5%), confidence scoring, 14 more classical texts | 111,604 profiles, 70.6% graded |
-| **v4.0** | Apr 11 | Gawami al-Kalim cracked, grading engine (77%), GK graph (49,845 narrators, 255k links) | 115,112 profiles, 72.9% graded, 77% accuracy |
+| **v1.9** | Apr 11 | Gawami al-Kalim cracked, grading engine (77%), GK graph (49,845 narrators, 255k links) | 115,112 profiles, 72.9% graded, 77% accuracy |
 
 **Scale:** 1.1M lines of JSON · 13,753 lines of code · 21 Python scripts · 3,587 files · 798 MB of data
 
