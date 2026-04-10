@@ -931,7 +931,7 @@ Itqan/
 │       ├── concordance.json           22 MB   — inverted index
 │       ├── word_defs_v2.json          6.7 MB  — morphological dictionary
 │       ├── narrator_index.json        0.6 MB  — narrator records
-│       ├── narrator_unified.json      118 MB   — 65,391 rijal profiles + jarh wa ta'dil
+│       ├── narrator_unified.json      118 MB   — 117,893 rijal profiles (gitignored, regenerable)
 │       ├── hadith_connections.json    4.2 MB  — cross-book links
 │       ├── roots_lexicon.json         1.5 MB  — Lane's definitions
 │       ├── wensinck.json              9.6 MB  — digital Wensinck concordance (1,486 roots)
