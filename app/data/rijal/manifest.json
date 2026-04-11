@@ -8,48 +8,48 @@
       "name": "profiles_companion.json",
       "type": "profiles",
       "grade": "companion",
-      "count": 10861
+      "count": 10880
     },
     {
       "name": "profiles_reliable.json",
       "type": "profiles",
       "grade": "reliable",
-      "count": 26395
+      "count": 26467
     },
     {
       "name": "profiles_mostly_reliable.json",
       "type": "profiles",
       "grade": "mostly_reliable",
-      "count": 21691
+      "count": 21800
     },
     {
       "name": "profiles_weak.json",
       "type": "profiles",
       "grade": "weak",
-      "count": 21438
+      "count": 21413
     },
     {
       "name": "profiles_abandoned.json",
       "type": "profiles",
       "grade": "abandoned",
-      "count": 1383
+      "count": 1386
     },
     {
       "name": "profiles_fabricator.json",
       "type": "profiles",
       "grade": "fabricator",
-      "count": 2102
+      "count": 2094
     },
     {
       "name": "profiles_unknown.json",
       "type": "profiles",
       "grade": "unknown",
-      "count": 31242
+      "count": 31695
     }
   ],
-  "total_profiles": 115112,
-  "total_variants": 199820,
+  "total_profiles": 115735,
+  "total_variants": 217762,
   "classical_texts": 22,
-  "graded_pct": 72.9,
-  "version": "4.6"
+  "graded_pct": 72.6,
+  "version": "1.20"
 }
